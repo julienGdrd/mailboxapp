@@ -2,7 +2,7 @@ import styles from '../styles/Home.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight, faBars, faCaretDown, faCircle, faCircleChevronDown, faCircleInfo, faEllipsisVertical, faGear, faInbox, faMagnifyingGlass, faPaperclip, faPen, faPlus, faRotateRight, faSliders, faTag, faUser, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark, faClock, faFile, faSquare, faStar } from '@fortawesome/free-regular-svg-icons';
-import  RowMail  from '../components/Mail';
+import RowMail from '../components/Mail';
 import FullMail from './FullMail';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,7 +10,7 @@ import { resetMailToDisplay } from '../reducers/mailDisplayer';
 
 function Home() {
 
-  const dispatch= useDispatch();
+  const dispatch = useDispatch();
   const mailList = [
     {
       autor: "Aliénor",
@@ -85,16 +85,16 @@ function Home() {
   ]
 
   const fullMailToDisplay = useSelector((state) => state.mailDisplayer.value)
-  console.log('useselector',fullMailToDisplay)
+  console.log('useselector', fullMailToDisplay)
 
   const displayedMail = <FullMail {...fullMailToDisplay} />
 
   const inbox = mailList.map((mail, i) => {
-    return <RowMail key={i} {...mail} 
+    return <RowMail key={i} {...mail}
     />
   });
 
-  
+
   return (
     <div>
       <div className={styles.main}>
@@ -166,20 +166,23 @@ function Home() {
             <div className={styles.sideNavigator}>
               <div className={styles.primaryLeftSelectorsContainer}>
 
-                <div className={styles.leftTabs}>
-                  <div 
-                  className={styles.tabLabelIcon}
-                  onClick={()=>{dispatch(resetMailToDisplay())}}
+                <div
+                  className={styles.leftTabs}
+                  onClick={() => { dispatch(resetMailToDisplay()) }}
+                >
+                  <div
+                    className={styles.tabLabelIcon}
                   >
                     <div
-                     className={styles.leftTabsIconContainer}
-                     >
+                      className={styles.leftTabsIconContainer}
+                    >
                       <FontAwesomeIcon icon={faInbox}
                         className={styles.iconLeftTab}
                       />
                     </div>
                     Boîte de réception
                   </div>
+                  <span className={styles.counterLeft}>{inbox.length}</span>
                 </div>
 
                 <div className={styles.leftTabs}>
@@ -354,8 +357,8 @@ function Home() {
 
               {/* mails container ---------------------- */}
               <div className={styles.mailsContainer}>
-                {fullMailToDisplay.autor ? <div>{displayedMail}</div> : <div>{inbox}</div> }
-                
+                {fullMailToDisplay.autor ? <div>{displayedMail}</div> : <div>{inbox}</div>}
+
               </div>
             </div>
           </div>
