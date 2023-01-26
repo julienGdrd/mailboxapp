@@ -1,0 +1,97 @@
+
+.mainMessageContainer{
+    background-color: white;
+}
+.contentContainer{
+    display: flex;
+}
+.leftColumn{
+    width: 72px;
+    height: 65vh;
+}
+.rightContainer{
+    width: 95%;
+}
+.objectContainer{
+    padding: 20px 0 8px 72px;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+}
+.objectIconContainer{
+    margin: 0 25px;
+    width: 32px;
+    height: 32px;
+    clip-path: circle();
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+}
+.objectIcon{
+    font-size: 17px;
+    color: rgb(92, 92, 92);
+}
+.objectIconContainer:hover>.objectIcon{
+    color: black;
+}
+.objectIconContainer:hover{
+    background-color: rgb(225, 225, 225);
+}
+.autorInfos{
+    padding: 20px 0 0;
+}
+.autorInfosUpPart{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 20px;
+}
+.nameContainer{
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+.rightDateControlsContainer{
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+.deliveryDate{
+    margin: 0 30px 0 0;
+}
+.controlIconsRow{
+    display: flex;
+    align-items: center;
+   
+}
+.controlIconContainer{
+    width: 32px;
+    height: 32px;
+    clip-path: circle();
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 0 10px
+}
+.controlIcon{
+    font-size: 14px;
+    color: rgb(92, 92, 92);
+}
+.controlIconContainer:hover{
+    background-color: rgb(225, 225, 225);
+}
+.controlIconContainer:hover>.controlIcon{
+    color: black;
+}
+
+.autorInfosDownPart{
+    font-size: 12px;
+}
+
+.textContent{
+    padding: 20px 20px 0 0;
+    font-size: 14px;
+}
