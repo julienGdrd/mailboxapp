@@ -33,85 +33,11 @@ import FullMail from "./FullMail";
 import { useSelector, useDispatch } from "react-redux";
 import { resetMailToDisplay } from "../reducers/mailDisplayer";
 
+import { mailList } from "../data/mailData";
+
 function Home() {
   const dispatch = useDispatch();
-  const mailList = [
-    {
-      autor: "Aliénor",
-      emailAdress: "fake@gmail.com",
-      object: "Résultat de ton passage du titre",
-      content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae conse Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae conse",
-      deliveryDate: "19 janv.",
-      unRead: true,
-      important: false,
-      followed: false,
-      spam: false,
-      pro: false,
-      perso: false,
-      categorie: "",
-    },
-    {
-      autor: "Jhon",
-      emailAdress: "Jhon@gmail.com",
-      object: "Offre exceptionnelle",
-      content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae conse Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae conse",
-      deliveryDate: "17 janv.",
-      unRead: true,
-      important: false,
-      followed: false,
-      spam: false,
-      pro: false,
-      perso: false,
-      categorie: "",
-    },
-    {
-      autor: "Martin",
-      emailAdress: "martin@gmail.com",
-      object: "Weekend ski",
-      content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae conse Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae conse",
-      deliveryDate: "12 janv.",
-      unRead: true,
-      important: false,
-      followed: false,
-      spam: false,
-      pro: false,
-      perso: false,
-      categorie: "",
-    },
-    {
-      autor: "Julie",
-      emailAdress: "julie@gmail.com",
-      object: "Réunion du lundi",
-      content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae conse Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae conse",
-      deliveryDate: "10 janv.",
-      unRead: true,
-      important: false,
-      followed: false,
-      spam: false,
-      pro: false,
-      perso: false,
-      categorie: "",
-    },
-    {
-      autor: "Mr smith",
-      emailAdress: "smith@gmail.com",
-      object: "Votre coli est en chemin",
-      content:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae conse Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae conse",
-      deliveryDate: "05 janv.",
-      unRead: true,
-      important: false,
-      followed: false,
-      spam: false,
-      pro: false,
-      perso: false,
-      categorie: "",
-    },
-  ];
+  
 
   const fullMailToDisplay = useSelector((state) => state.mailDisplayer.value);
   console.log("useselector", fullMailToDisplay);
