@@ -12,3 +12,8 @@ body {
   box-sizing: border-box;
   /* border: solid 1px red; */
 }
+.panel {
+  height: 90vh;
+  max-width: 99vw;
+  display: flex;
+}

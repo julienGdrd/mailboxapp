@@ -1,4 +1,5 @@
 import styles from "../styles/FullMail.module.css";
+import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleRight,
@@ -29,24 +30,36 @@ import {
   faStar,
 } from "@fortawesome/free-regular-svg-icons";
 
-function FullMail(props) {
+import { useSelector } from "react-redux";
+function FullMail() {
+
+    const fullMailToDisplay = useSelector((state) => state.mailDisplayer.value);
+    console.log("useselector", fullMailToDisplay);
   return (
     <div className={styles.mainMessageContainer}>
       <div className={styles.objectContainer}>
-        {props.object}
+        {fullMailToDisplay.object}
         <div className={styles.objectIconContainer}>
           <FontAwesomeIcon className={styles.objectIcon} icon={faBookmark} />
         </div>
       </div>
       <div className={styles.contentContainer}>
-        <div className={styles.leftColumn}></div>
+        <div className={styles.leftColumn}>
+            <div className={styles.avatarContainer}>
+                <Image src='/../public/avatar.png'
+                alt='avatar'
+                width ={45}
+                height={45}
+                className={styles.avatarImg}/>
+            </div>
+        </div>
         <div className={styles.rightContainer}>
           <div className={styles.autorInfos}>
             <div className={styles.autorInfosUpPart}>
-              <div className={styles.nameContainer}>{props.autor}</div>
+              <div className={styles.nameContainer}>{fullMailToDisplay.autor}</div>
               <div className={styles.rightDateControlsContainer}>
                 <div className={styles.deliveryDate}>
-                  {props.deliveryDate} 2023 12:00
+                  {fullMailToDisplay.deliveryDate} 2023 12:00
                 </div>
                 <div className={styles.controlIconsRow}>
                   <div className={styles.controlIconContainer}>
@@ -75,7 +88,7 @@ function FullMail(props) {
               <span>moi</span>
             </div>
           </div>
-          <div className={styles.textContent}>{props.content}</div>
+          <div className={styles.textContent}>{fullMailToDisplay.content}</div>
         </div>
       </div>
     </div>

@@ -1,7 +1,9 @@
-import Home from '../components/Home';
+
+import MainBox from '../components/MainBox';
+
 
 function Index() {
-  return <Home />;
+  return <MainBox />;
 }
 
 export default Index;

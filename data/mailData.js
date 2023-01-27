@@ -7,7 +7,7 @@ export const mailList = [
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae conse Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae conse",
       deliveryDate: "19 janv.",
       unRead: true,
-      important: false,
+      important: true,
       followed: false,
       spam: false,
       pro: false,

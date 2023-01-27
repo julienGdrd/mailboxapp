@@ -1,0 +1,106 @@
+.leftPanel {
+    width: 14%;
+    min-width: 268px;
+    /* border: solid 1px red; */
+    height: 90vh;
+  }
+
+  .newMessageBtn {
+    height: 56px;
+    width: fit-content;
+    background-color: #C2E7FF;
+    font-size: .875rem;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    border-radius: 16px;
+    margin: 8px 0 16px 8px;
+    cursor: pointer;
+  }
+  
+  .newMessageBtn:hover {
+    box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);
+  }
+  
+  .iconNewMessageBtn {
+    font-size: 20px;
+    margin: 0 15px 0 0;
+  }
+
+  
+.leftTabs {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(92, 92, 92);
+    height: 32px;
+    width: 90%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 0 16px 16px 0;
+  }
+  
+  .leftTabs:hover {
+    background-color: rgb(225, 225, 225);
+  }
+  
+  .leftTabsIconContainer {
+    white-space: nowrap;
+    width: 60px;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .iconLeftTab {
+    font-size: 17px;
+    /* margin: 0 20px; */
+  }
+  .counterLeft{
+    color: black;
+    margin-right: 15px;
+    font-size: 14px;
+  }
+  
+  .primaryLeftSelectorsContainer {
+    margin-bottom: 50px;
+  }
+  
+  .secondarySelectorTitle {
+    color: rgb(92, 92, 92);
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    width: 90%;
+    padding-left: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .tabLabelIcon {
+    display: flex;
+  }
+  
+  .secondTabOptionIcon {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    clip-path: circle();
+    color: black;
+  
+  }
+  
+  .leftTabs:hover>.secondTabOptionIcon {
+    display: flex;
+  }
+  
+  .secondTabOptionIcon:hover {
+    background-color: rgb(201, 201, 201);
+  }

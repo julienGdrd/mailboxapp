@@ -1,0 +1,106 @@
+.rightPanel {
+   
+    border-radius: 10px;
+  }
+  
+  .inboxHeader {
+    background-color: white;
+    height: 48px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  
+  }
+  
+  .leftControls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 10%;
+    height: 100%;
+    padding: 0 0 0 15px;
+  }
+  
+  .iconsLeftControl {
+    font-size: 14px;
+    color: rgb(92, 92, 92);
+  
+  }
+  .iconsRight {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: circle();
+    cursor: pointer;
+  }
+  
+  .iconsRight:hover {
+    background-color: rgb(225, 225, 225);
+  }
+  
+  .selectBox {
+    display: flex;
+    margin: 0 10px 0 0;
+  
+  }
+  
+  .checkBox {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+  }
+  
+  .checkBox:hover {
+    background-color: rgb(225, 225, 225);
+  }
+  
+  .iconCaretDown {
+    cursor: pointer;
+    height: 30px;
+    width: 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .iconCaretDown:hover {
+    background-color: rgb(225, 225, 225);
+  }
+  
+  .tabContainer {
+    display: flex;
+    background-color: white;
+    border-bottom: solid 1px rgb(232, 232, 232);
+  }
+  
+  .tabItem {
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+    font-size: .875rem;
+    font-weight: 500;
+    line-height: 16px;
+    width: 15%;
+    height: 56px;
+    color: rgb(92, 92, 92);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 15px;
+    cursor: pointer;
+  }
+  
+  .tabItem:hover {
+    background-color: rgb(225, 225, 225);
+  
+  }
+  
+  .tabIcon {
+    margin: 0 8px;
+  }

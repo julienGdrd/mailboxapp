@@ -40,6 +40,10 @@
   .mailIcon:hover {
     background-color: rgb(225, 225, 225);
   }
+  .midColumn{
+    display: flex;
+    align-items: center;
+  }
   
   .mailAutor {
   
