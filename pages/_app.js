@@ -9,11 +9,15 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 
 import mailDisplayer from "../reducers/mailDisplayer";
+import allMails from "../reducers/allMails";
 
 const store = configureStore({
-  reducer: { mailDisplayer },
+  reducer: { mailDisplayer, allMails },
 });
 function App({ Component, pageProps }) {
+
+  
+  
   return (
     <>
       <Provider store={store}>

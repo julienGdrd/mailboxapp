@@ -30,17 +30,29 @@ import {
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addMailToDisplay } from "../reducers/mailDisplayer";
+import { handleUpdateImportant } from "../reducers/allMails";
 
 function RowMail(props) {
   const dispatch = useDispatch();
+  // format date
+  let deliveryDate = new Date(props.deliveryDate);
+  let deliveryDateFormatted = deliveryDate.toLocaleDateString("fr-FR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
 
   const openMail = (props) => {
     console.log("openMail reached", props);
     dispatch(addMailToDisplay(props));
   };
 
-  const handleImportant = () => {
-    console.log("important");
+  const handleImportant = (emailId, important) => {
+    const payload = {
+      emailId: emailId,
+      importantStatus: important,
+    };
+    dispatch(handleUpdateImportant(payload));
   };
   return (
     <div>
@@ -58,26 +70,25 @@ function RowMail(props) {
             <div className={styles.mailIcon}>
               <FontAwesomeIcon icon={faStar} />
             </div>
-            <div className={styles.mailIcon}>
+            <div
+              className={styles.mailIcon}
+              onClick={() => handleImportant(props._id, !props.important)}
+            >
               <FontAwesomeIcon
                 icon={faBookmark}
                 style={props.important ? { color: "#E8AB02" } : {}}
-                onClick={() => handleImportant()}
               />
             </div>
           </div>
-          <Link href="/fullMail"
-          >
+          <Link href="/fullMail">
             <div className={styles.midColumn}>
-        
-            {/* mails autor ---------------------- */}
-            <div className={styles.mailAutor}>{props.autor}</div>
-            {/* mail Content ------------------- */}
-            <div className={styles.mailAbstract}>
-              <span className={styles.mailObject}>{props.object}</span>
-              <p className={styles.mailContent}>- {props.content}</p>
-            </div>
-                  
+              {/* mails autor ---------------------- */}
+              <div className={styles.mailAutor}>{props.autor}</div>
+              {/* mail Content ------------------- */}
+              <div className={styles.mailAbstract}>
+                <span className={styles.mailObject}>{props.object}</span>
+                <p className={styles.mailContent}>- {props.content}</p>
+              </div>
             </div>
           </Link>
         </div>
@@ -93,7 +104,7 @@ function RowMail(props) {
             className={styles.mailDate}
             style={props.unRead ? { color: "black" } : {}}
           >
-            {props.deliveryDate}
+            {deliveryDateFormatted}
           </div>
         </div>
       </div>

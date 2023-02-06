@@ -80,6 +80,7 @@
   
   .rightColumns {
     display: flex;
+    margin-right: 20px;
   }
   
   .enclosedIcon {

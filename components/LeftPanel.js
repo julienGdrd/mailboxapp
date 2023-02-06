@@ -51,20 +51,18 @@ export default function LeftPanel() {
         <div className={styles.sideNavigator}>
           <div className={styles.primaryLeftSelectorsContainer}>
             <Link href="/">
-            <div
-              className={styles.leftTabs}
-            >
-              <div className={styles.tabLabelIcon}>
-                <div className={styles.leftTabsIconContainer}>
-                  <FontAwesomeIcon
-                    icon={faInbox}
-                    className={styles.iconLeftTab}
-                  />
+              <div className={styles.leftTabs}>
+                <div className={styles.tabLabelIcon}>
+                  <div className={styles.leftTabsIconContainer}>
+                    <FontAwesomeIcon
+                      icon={faInbox}
+                      className={styles.iconLeftTab}
+                    />
+                  </div>
+                  Boîte de réception
                 </div>
-                Boîte de réception
+                <span className={styles.counterLeft}></span>
               </div>
-              <span className={styles.counterLeft}></span>
-            </div>
             </Link>
 
             <div className={styles.leftTabs}>
@@ -91,18 +89,19 @@ export default function LeftPanel() {
               </div>
             </div>
 
-            <div className={styles.leftTabs}>
-              <div className={styles.tabLabelIcon}>
-                <div className={styles.leftTabsIconContainer}>
-                  <FontAwesomeIcon
-                    icon={faBookmark}
-                    className={styles.iconLeftTab}
-                  />
+            <Link href="/importantBox">
+              <div className={styles.leftTabs}>
+                <div className={styles.tabLabelIcon}>
+                  <div className={styles.leftTabsIconContainer}>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      className={styles.iconLeftTab}
+                    />
+                  </div>
+                  Important
                 </div>
-                Important
               </div>
-            </div>
-
+            </Link>
             <div className={styles.leftTabs}>
               <div className={styles.tabLabelIcon}>
                 <div className={styles.leftTabsIconContainer}>
