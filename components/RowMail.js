@@ -30,7 +30,7 @@ import {
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addMailToDisplay } from "../reducers/mailDisplayer";
-import { handleUpdateImportant } from "../reducers/allMails";
+import { handleUpdateImportant, handleUpdateUnRead } from "../reducers/allMails";
 
 function RowMail(props) {
   const dispatch = useDispatch();
@@ -54,6 +54,8 @@ function RowMail(props) {
     };
     dispatch(handleUpdateImportant(payload));
   };
+
+ 
   return (
     <div>
       <div

@@ -13,18 +13,23 @@ const initialState = {
             console.log('reducer allMails', action.payload)
         },
         handleUpdateImportant: (state, action) => {
-          console.log('hui', state.value)
-          console.log('recu :', action.payload)
           state.value = state.value.map(email => {
             if (email._id === action.payload.emailId) {
-              console.log('updating')
               return { ...email, important: action.payload.importantStatus };
             }
             return email;
           });
       },
+      handleUpdateUnRead: (state, action) => {
+        state.value = state.value.map(email => {
+          if (email._id === action.payload.emailId) {
+            return { ...email, unRead: action.payload.unReadStatus };
+          }
+          return email;
+        });
+    },
     },
   });
 
-  export const { setAllMailsList, handleUpdateImportant } = allMailsSlice.actions;
+  export const { setAllMailsList, handleUpdateImportant, handleUpdateUnRead } = allMailsSlice.actions;
   export default allMailsSlice.reducer;

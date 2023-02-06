@@ -30,9 +30,22 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 
 import { resetMailToDisplay } from "../reducers/mailDisplayer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import Link from "next/link";
 export default function LeftPanel() {
+  const allMails = useSelector((state) => state.allMails.value);
+  let importantLength = 0;
+  let unReadLength = 0;
+  for (let email of allMails) {
+    if (email.important) {
+      importantLength++;
+    }
+    if(email.unRead){
+      unReadLength++;
+    }
+  }
+  console.log(importantLength);
   const dispatch = useDispatch();
   return (
     <div>
@@ -61,7 +74,9 @@ export default function LeftPanel() {
                   </div>
                   Boîte de réception
                 </div>
-                <span className={styles.counterLeft}></span>
+                <span className={styles.counterLeft}>
+                  {unReadLength > 0 ? unReadLength : ""}
+                </span>
               </div>
             </Link>
 
@@ -100,6 +115,9 @@ export default function LeftPanel() {
                   </div>
                   Important
                 </div>
+                <span className={styles.counterLeft}>
+                  {importantLength > 0 ? importantLength : ""}
+                </span>
               </div>
             </Link>
             <div className={styles.leftTabs}>

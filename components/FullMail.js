@@ -31,7 +31,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { handleUpdateImportant } from "../reducers/allMails";
+import { handleUpdateImportant, handleUpdateUnRead } from "../reducers/allMails";
 
 function FullMail() {
   const dispatch = useDispatch();
@@ -48,15 +48,23 @@ function FullMail() {
     year: "numeric",
   });
 
-  const handleImportant = (emailId, important) => {
+  const handleImportant = (emailId) => {
+    setIsImportant(!isImportant);
     const payload = {
       emailId: emailId,
-      importantStatus: important,
+      importantStatus: !isImportant,
     };
-    setIsImportant(!isImportant);
     dispatch(handleUpdateImportant(payload));
   };
 
+  const handleUnRead = (emailId) => {
+    const payload = {
+      emailId: emailId,
+      unReadStatus: false,
+    };
+    dispatch(handleUpdateUnRead(payload));
+  };
+  handleUnRead(fullMailToDisplay._id)
   return (
     <div className={styles.mainMessageContainer}>
       <div className={styles.objectContainer}>

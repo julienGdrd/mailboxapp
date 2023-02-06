@@ -95,6 +95,7 @@
     justify-content: flex-start;
     padding: 0 15px;
     cursor: pointer;
+    position: relative;
   }
   
   .tabItem:hover {
@@ -104,4 +105,11 @@
   
   .tabIcon {
     margin: 0 8px;
+  }
+
+  .unReadCounter{
+   position: absolute;
+   right: 20px;
+   color: black;
+   font-weight: 500;
   }

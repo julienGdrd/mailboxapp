@@ -61,14 +61,27 @@ export default function MainBox() {
   let promotionList = [];
   let reseauxList = [];
 
+  let principalUnReadCounter=0;
+  let promotionUnReadCounter=0;
+  let reseauxUnReadCounter=0;
+
   for (let mail of allMails) {
     console.log(mail.categorie === "principal");
     if (mail.categorie === "principal") {
       principalList.push(mail);
+      if(mail.unRead){
+        principalUnReadCounter ++;
+      }
     } else if (mail.categorie === "promotion") {
       promotionList.push(mail);
+      if(mail.unRead){
+        promotionUnReadCounter ++;
+      }
     } else {
       reseauxList.push(mail);
+      if(mail.unRead){
+        reseauxUnReadCounter ++;
+      }
     }
   }
 
@@ -139,6 +152,7 @@ export default function MainBox() {
                 <FontAwesomeIcon icon={faInbox} />
               </div>
               <span>Principale</span>
+              <span className={styles.unReadCounter}>{principalUnReadCounter>0 ? principalUnReadCounter : ''}</span>
             </div>
             <div
               className={styles.tabItem}
@@ -153,6 +167,7 @@ export default function MainBox() {
                 <FontAwesomeIcon icon={faTag} />
               </div>
               <span>Promotions</span>
+              <span className={styles.unReadCounter}>{promotionUnReadCounter>0 ? promotionUnReadCounter : ''}</span>
             </div>
             <div
               className={styles.tabItem}
@@ -167,6 +182,8 @@ export default function MainBox() {
                 <FontAwesomeIcon icon={faUserGroup} />
               </div>
               <span>Réseaux sociaux</span>
+              <span className={styles.unReadCounter}>{reseauxUnReadCounter>0 ? reseauxUnReadCounter : ''}</span>
+
             </div>
           </div>
 
