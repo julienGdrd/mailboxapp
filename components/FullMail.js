@@ -21,17 +21,17 @@ import {
   faTag,
   faUser,
   faUserGroup,
+  faStar,
+  faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
 import {
-  faBookmark,
   faClock,
   faFile,
   faSquare,
-  faStar,
 } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { handleUpdateImportant, handleUpdateUnRead } from "../reducers/allMails";
+import { handleUpdateImportant, handleUpdateUnRead, handleUpdateFollowed } from "../reducers/allMails";
 
 function FullMail() {
   const dispatch = useDispatch();
@@ -39,6 +39,7 @@ function FullMail() {
   const fullMailToDisplay = useSelector((state) => state.mailDisplayer.value);
   console.log("useselector", fullMailToDisplay);
   const [isImportant, setIsImportant] = useState(fullMailToDisplay.important);
+  const [isFollowed, setIsFollowed] = useState(fullMailToDisplay.followed);
 
   // format date
   let deliveryDate = new Date(fullMailToDisplay.deliveryDate);
@@ -55,6 +56,15 @@ function FullMail() {
       importantStatus: !isImportant,
     };
     dispatch(handleUpdateImportant(payload));
+  };
+
+  const handleFollowed = (emailId) => {
+    setIsFollowed(!isFollowed)
+    const payload = {
+      emailId: emailId,
+      followedStatus: !isFollowed,
+    };
+    dispatch(handleUpdateFollowed(payload));
   };
 
   const handleUnRead = (emailId) => {
@@ -105,10 +115,13 @@ function FullMail() {
                   {deliveryDateFormatted}
                 </div>
                 <div className={styles.controlIconsRow}>
-                  <div className={styles.controlIconContainer}>
+                  <div className={styles.controlIconContainer}
+                   onClick={() => handleFollowed(fullMailToDisplay._id, !fullMailToDisplay.followed)}
+                  >
                     <FontAwesomeIcon
                       className={styles.controlIcon}
                       icon={faStar}
+                      style={isFollowed ? { color: "#E8AB02" } : {}}
                     />
                   </div>
                   <div className={styles.controlIconContainer}>

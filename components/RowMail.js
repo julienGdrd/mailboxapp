@@ -20,17 +20,18 @@ import {
   faTag,
   faUser,
   faUserGroup,
+  faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faClock,
   faFile,
   faSquare,
-  faStar,
+  // faStar,
 } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addMailToDisplay } from "../reducers/mailDisplayer";
-import { handleUpdateImportant, handleUpdateUnRead } from "../reducers/allMails";
+import { handleUpdateImportant, handleUpdateFollowed } from "../reducers/allMails";
 
 function RowMail(props) {
   const dispatch = useDispatch();
@@ -55,6 +56,14 @@ function RowMail(props) {
     dispatch(handleUpdateImportant(payload));
   };
 
+  const handleFollowed = (emailId, followed) => {
+    const payload = {
+      emailId: emailId,
+      followedStatus: followed,
+    };
+    dispatch(handleUpdateFollowed(payload));
+  };
+
  
   return (
     <div>
@@ -67,10 +76,16 @@ function RowMail(props) {
           {/* icons---------------------- */}
           <div className={styles.rowIcons}>
             <div className={styles.mailIcon}>
-              <FontAwesomeIcon icon={faSquare} />
+              <FontAwesomeIcon icon={faSquare}
+              
+              />
             </div>
-            <div className={styles.mailIcon}>
-              <FontAwesomeIcon icon={faStar} />
+            <div className={styles.mailIcon}
+              onClick={() => handleFollowed(props._id, !props.followed)}
+            >
+              <FontAwesomeIcon icon={faStar}
+              style={props.followed ? { color: "#E8AB02" } : {}}
+              />
             </div>
             <div
               className={styles.mailIcon}

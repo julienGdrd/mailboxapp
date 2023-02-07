@@ -37,12 +37,16 @@ export default function LeftPanel() {
   const allMails = useSelector((state) => state.allMails.value);
   let importantLength = 0;
   let unReadLength = 0;
+  let followedLength = 0;
   for (let email of allMails) {
     if (email.important) {
       importantLength++;
     }
-    if(email.unRead){
+    if (email.unRead) {
       unReadLength++;
+    }
+    if (email.followed){
+      followedLength++;
     }
   }
   console.log(importantLength);
@@ -80,17 +84,22 @@ export default function LeftPanel() {
               </div>
             </Link>
 
-            <div className={styles.leftTabs}>
-              <div className={styles.tabLabelIcon}>
-                <div className={styles.leftTabsIconContainer}>
-                  <FontAwesomeIcon
-                    icon={faStar}
-                    className={styles.iconLeftTab}
-                  />
+            <Link href="/followedBox">
+              <div className={styles.leftTabs}>
+                <div className={styles.tabLabelIcon}>
+                  <div className={styles.leftTabsIconContainer}>
+                    <FontAwesomeIcon
+                      icon={faStar}
+                      className={styles.iconLeftTab}
+                    />
+                  </div>
+                  Messages suivis
                 </div>
-                Messages suivis
+                <span className={styles.counterLeft}>
+                  {followedLength > 0 ? followedLength : ""}
+                </span>
               </div>
-            </div>
+            </Link>
 
             <div className={styles.leftTabs}>
               <div className={styles.tabLabelIcon}>

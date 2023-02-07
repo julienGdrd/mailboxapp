@@ -28,8 +28,16 @@ const initialState = {
           return email;
         });
     },
+    handleUpdateFollowed: (state, action) => {
+      state.value = state.value.map(email => {
+        if (email._id === action.payload.emailId) {
+          return { ...email, followed: action.payload.followedStatus };
+        }
+        return email;
+      });
+  },
     },
   });
 
-  export const { setAllMailsList, handleUpdateImportant, handleUpdateUnRead } = allMailsSlice.actions;
+  export const { setAllMailsList, handleUpdateImportant, handleUpdateUnRead, handleUpdateFollowed } = allMailsSlice.actions;
   export default allMailsSlice.reducer;
