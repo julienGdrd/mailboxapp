@@ -2,42 +2,25 @@ import styles from "../styles/FullMail.module.css";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faAngleRight,
-  faBars,
-  faCaretDown,
-  faCircle,
-  faCircleChevronDown,
-  faCircleInfo,
   faEllipsisVertical,
-  faGear,
-  faInbox,
-  faMagnifyingGlass,
-  faPaperclip,
-  faPen,
-  faPlus,
   faReply,
-  faRotateRight,
-  faSliders,
-  faTag,
-  faUser,
-  faUserGroup,
   faStar,
   faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  faClock,
-  faFile,
-  faSquare,
-} from "@fortawesome/free-regular-svg-icons";
+import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { handleUpdateImportant, handleUpdateUnRead, handleUpdateFollowed } from "../reducers/allMails";
+import {
+  handleUpdateImportant,
+  handleUpdateUnRead,
+  handleUpdateFollowed,
+} from "../reducers/allMails";
 
 function FullMail() {
   const dispatch = useDispatch();
 
   const fullMailToDisplay = useSelector((state) => state.mailDisplayer.value);
-  console.log("useselector", fullMailToDisplay);
+
   const [isImportant, setIsImportant] = useState(fullMailToDisplay.important);
   const [isFollowed, setIsFollowed] = useState(fullMailToDisplay.followed);
 
@@ -59,7 +42,7 @@ function FullMail() {
   };
 
   const handleFollowed = (emailId) => {
-    setIsFollowed(!isFollowed)
+    setIsFollowed(!isFollowed);
     const payload = {
       emailId: emailId,
       followedStatus: !isFollowed,
@@ -74,7 +57,7 @@ function FullMail() {
     };
     dispatch(handleUpdateUnRead(payload));
   };
-  handleUnRead(fullMailToDisplay._id)
+  handleUnRead(fullMailToDisplay._id);
   return (
     <div className={styles.mainMessageContainer}>
       <div className={styles.objectContainer}>
@@ -115,8 +98,14 @@ function FullMail() {
                   {deliveryDateFormatted}
                 </div>
                 <div className={styles.controlIconsRow}>
-                  <div className={styles.controlIconContainer}
-                   onClick={() => handleFollowed(fullMailToDisplay._id, !fullMailToDisplay.followed)}
+                  <div
+                    className={styles.controlIconContainer}
+                    onClick={() =>
+                      handleFollowed(
+                        fullMailToDisplay._id,
+                        !fullMailToDisplay.followed
+                      )
+                    }
                   >
                     <FontAwesomeIcon
                       className={styles.controlIcon}

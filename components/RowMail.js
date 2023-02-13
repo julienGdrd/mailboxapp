@@ -1,40 +1,33 @@
 import styles from "../styles/Rowmail.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faAngleRight,
-  faBars,
-  faCaretDown,
-  faCircle,
-  faCircleChevronDown,
-  faCircleInfo,
-  faEllipsisVertical,
-  faGear,
-  faInbox,
-  faMagnifyingGlass,
   faPaperclip,
-  faPen,
-  faPlus,
-  faRotateRight,
-  faSliders,
   faBookmark,
-  faTag,
-  faUser,
-  faUserGroup,
   faStar,
+  faBoxArchive,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faClock,
-  faFile,
+  faEnvelope,
+  faEnvelopeOpen,
   faSquare,
+  faTrashCan,
   // faStar,
 } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addMailToDisplay } from "../reducers/mailDisplayer";
-import { handleUpdateImportant, handleUpdateFollowed } from "../reducers/allMails";
+import {
+  handleUpdateImportant,
+  handleUpdateFollowed,
+  handleUpdateUnRead,
+  handleUpdateOnHold,
+} from "../reducers/allMails";
+import { useState } from "react";
 
 function RowMail(props) {
   const dispatch = useDispatch();
+
   // format date
   let deliveryDate = new Date(props.deliveryDate);
   let deliveryDateFormatted = deliveryDate.toLocaleDateString("fr-FR", {
@@ -64,27 +57,46 @@ function RowMail(props) {
     dispatch(handleUpdateFollowed(payload));
   };
 
- 
+  const handleUnRead = (emailId, unReadStatus) => {
+    const payload = {
+      emailId: emailId,
+      unReadStatus: unReadStatus,
+    };
+    dispatch(handleUpdateUnRead(payload));
+  };
+
+  const handleOnHold = (emailId, onHoldStatus) => {
+    const payload = {
+      emailId: emailId,
+      onHoldStatus: onHoldStatus,
+    };
+    dispatch(handleUpdateOnHold(payload));
+  };
+
   return (
     <div>
       <div
         className={styles.mailRow}
-        style={props.unRead ? { fontWeight: "bold" } : { fontWeight: 400 }}
+        style={
+          props.unRead
+            ? { fontWeight: "bold" }
+            : { fontWeight: 400, backgroundColor: "#e7efff" }
+        }
         onClick={() => openMail(props)}
       >
         <div className={styles.leftColumns}>
           {/* icons---------------------- */}
           <div className={styles.rowIcons}>
             <div className={styles.mailIcon}>
-              <FontAwesomeIcon icon={faSquare}
-              
-              />
+              <FontAwesomeIcon icon={faSquare} />
             </div>
-            <div className={styles.mailIcon}
+            <div
+              className={styles.mailIcon}
               onClick={() => handleFollowed(props._id, !props.followed)}
             >
-              <FontAwesomeIcon icon={faStar}
-              style={props.followed ? { color: "#E8AB02" } : {}}
+              <FontAwesomeIcon
+                icon={faStar}
+                style={props.followed ? { color: "#E8AB02" } : {}}
               />
             </div>
             <div
@@ -122,6 +134,30 @@ function RowMail(props) {
             style={props.unRead ? { color: "black" } : {}}
           >
             {deliveryDateFormatted}
+          </div>
+        </div>
+        <div className={styles.overIconsContainer}>
+          <div className={styles.overIconItem}>
+            <FontAwesomeIcon icon={faBoxArchive} />
+          </div>
+          <div className={styles.overIconItem}>
+            <FontAwesomeIcon icon={faTrashCan} />
+          </div>
+          <div
+            className={styles.overIconItem}
+            onClick={() => handleUnRead(props._id, !props.unRead)}
+          >
+            {props.unRead ? (
+              <FontAwesomeIcon icon={faEnvelopeOpen} />
+            ) : (
+              <FontAwesomeIcon icon={faEnvelope} />
+            )}
+          </div>
+          <div
+            className={styles.overIconItem}
+            onClick={() => handleOnHold(props._id, !props.onHold)}
+          >
+            <FontAwesomeIcon icon={faClock} />
           </div>
         </div>
       </div>

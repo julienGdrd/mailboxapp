@@ -2,90 +2,72 @@ import styles from "../styles/RightPanel.module.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faAngleRight,
-  faBars,
   faCaretDown,
-  faCircle,
-  faCircleChevronDown,
-  faCircleInfo,
   faEllipsisVertical,
-  faGear,
   faInbox,
-  faMagnifyingGlass,
-  faPaperclip,
-  faPen,
-  faPlus,
   faRotateRight,
-  faSliders,
   faTag,
-  faUser,
   faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  faBookmark,
-  faClock,
-  faFile,
-  faSquare,
-  faStar,
-} from "@fortawesome/free-regular-svg-icons";
+import { faSquare } from "@fortawesome/free-regular-svg-icons";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { setAllMailsList } from "../reducers/allMails";
-
-import Link from "next/link";
+import { setActiveTab } from "../reducers/leftTabs";
 
 import RowMail from "./RowMail";
 
 export default function MainBox() {
-
   const dispatch = useDispatch();
+  dispatch(setActiveTab("MainBox"));
+
   const allMails = useSelector((state) => state.allMails.value);
 
   useEffect(() => {
     // fetch only on first render
-    if(allMails.length<1){
-      fetch('http://localhost:3000/mails')
-      .then(response => response.json())
-      .then(data => {
-        dispatch(setAllMailsList(data.mailList))
-      })
-    }else{
-      console.log('data already fetched')
+    if (allMails.length < 1) {
+      fetch("http://localhost:3000/mails")
+        .then((response) => response.json())
+        .then((data) => {
+          dispatch(setAllMailsList(data.mailList));
+        });
+    } else {
+      console.log("data already fetched");
     }
-   }, []);
-
+  }, []);
 
   const [tab, setTab] = useState("principal");
   let principalList = [];
   let promotionList = [];
   let reseauxList = [];
 
-  let principalUnReadCounter=0;
-  let promotionUnReadCounter=0;
-  let reseauxUnReadCounter=0;
+  let principalUnReadCounter = 0;
+  let promotionUnReadCounter = 0;
+  let reseauxUnReadCounter = 0;
 
   for (let mail of allMails) {
     console.log(mail.categorie === "principal");
     if (mail.categorie === "principal") {
       principalList.push(mail);
-      if(mail.unRead){
-        principalUnReadCounter ++;
+      if (mail.unRead) {
+        principalUnReadCounter++;
       }
     } else if (mail.categorie === "promotion") {
       promotionList.push(mail);
-      if(mail.unRead){
-        promotionUnReadCounter ++;
+      if (mail.unRead) {
+        promotionUnReadCounter++;
       }
     } else {
       reseauxList.push(mail);
-      if(mail.unRead){
-        reseauxUnReadCounter ++;
+      if (mail.unRead) {
+        reseauxUnReadCounter++;
       }
     }
   }
 
   let tableMail;
+
   if (tab === "principal") {
     tableMail = principalList.map((mail, i) => {
       return <RowMail key={i} {...mail} />;
@@ -152,7 +134,9 @@ export default function MainBox() {
                 <FontAwesomeIcon icon={faInbox} />
               </div>
               <span>Principale</span>
-              <span className={styles.unReadCounter}>{principalUnReadCounter>0 ? principalUnReadCounter : ''}</span>
+              <span className={styles.unReadCounter}>
+                {principalUnReadCounter > 0 ? principalUnReadCounter : ""}
+              </span>
             </div>
             <div
               className={styles.tabItem}
@@ -167,7 +151,9 @@ export default function MainBox() {
                 <FontAwesomeIcon icon={faTag} />
               </div>
               <span>Promotions</span>
-              <span className={styles.unReadCounter}>{promotionUnReadCounter>0 ? promotionUnReadCounter : ''}</span>
+              <span className={styles.unReadCounter}>
+                {promotionUnReadCounter > 0 ? promotionUnReadCounter : ""}
+              </span>
             </div>
             <div
               className={styles.tabItem}
@@ -182,14 +168,14 @@ export default function MainBox() {
                 <FontAwesomeIcon icon={faUserGroup} />
               </div>
               <span>Réseaux sociaux</span>
-              <span className={styles.unReadCounter}>{reseauxUnReadCounter>0 ? reseauxUnReadCounter : ''}</span>
-
+              <span className={styles.unReadCounter}>
+                {reseauxUnReadCounter > 0 ? reseauxUnReadCounter : ""}
+              </span>
             </div>
           </div>
 
           {/* mails container ---------------------- */}
-          <div className={styles.mailsContainer}>{tableMail}
-          </div>
+          <div className={styles.mailsContainer}>{tableMail}</div>
         </div>
       </div>
     </div>

@@ -4,20 +4,17 @@ import Head from "next/head";
 import MainHeader from "../components/MainHeader";
 import LeftPanel from "../components/LeftPanel";
 
-
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 
 import mailDisplayer from "../reducers/mailDisplayer";
 import allMails from "../reducers/allMails";
+import activeTabs from "../reducers/leftTabs";
 
 const store = configureStore({
-  reducer: { mailDisplayer, allMails },
+  reducer: { mailDisplayer, allMails, activeTabs },
 });
 function App({ Component, pageProps }) {
-
-  
-  
   return (
     <>
       <Provider store={store}>
@@ -29,7 +26,6 @@ function App({ Component, pageProps }) {
           <LeftPanel />
           <Component {...pageProps} />
         </div>
-        
       </Provider>
     </>
   );

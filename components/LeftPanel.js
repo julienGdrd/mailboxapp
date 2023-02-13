@@ -3,41 +3,31 @@ import styles from "../styles/LeftPanel.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleRight,
-  faBars,
-  faCaretDown,
-  faCircle,
-  faCircleChevronDown,
-  faCircleInfo,
   faEllipsisVertical,
-  faGear,
   faInbox,
-  faMagnifyingGlass,
-  faPaperclip,
   faPen,
   faPlus,
-  faRotateRight,
-  faSliders,
-  faTag,
-  faUser,
-  faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faBookmark,
   faClock,
   faFile,
-  faSquare,
   faStar,
 } from "@fortawesome/free-regular-svg-icons";
 
-import { resetMailToDisplay } from "../reducers/mailDisplayer";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useSelector } from "react-redux";
+
 import Link from "next/link";
+
 export default function LeftPanel() {
+  const activeTab = useSelector((state) => state.activeTabs.value);
   const allMails = useSelector((state) => state.allMails.value);
+
   let importantLength = 0;
   let unReadLength = 0;
   let followedLength = 0;
+  let onHoldLength = 0;
+
   for (let email of allMails) {
     if (email.important) {
       importantLength++;
@@ -45,12 +35,14 @@ export default function LeftPanel() {
     if (email.unRead) {
       unReadLength++;
     }
-    if (email.followed){
+    if (email.followed) {
       followedLength++;
     }
+    if (email.onHold) {
+      onHoldLength++;
+    }
   }
-  console.log(importantLength);
-  const dispatch = useDispatch();
+
   return (
     <div>
       <div className={styles.leftPanel}>
@@ -68,7 +60,12 @@ export default function LeftPanel() {
         <div className={styles.sideNavigator}>
           <div className={styles.primaryLeftSelectorsContainer}>
             <Link href="/">
-              <div className={styles.leftTabs}>
+              <div
+                className={styles.leftTabs}
+                style={
+                  activeTab === "MainBox" ? { backgroundColor: "#d3e3fd" } : {}
+                }
+              >
                 <div className={styles.tabLabelIcon}>
                   <div className={styles.leftTabsIconContainer}>
                     <FontAwesomeIcon
@@ -85,7 +82,14 @@ export default function LeftPanel() {
             </Link>
 
             <Link href="/followedBox">
-              <div className={styles.leftTabs}>
+              <div
+                className={styles.leftTabs}
+                style={
+                  activeTab === "FollowedBox"
+                    ? { backgroundColor: "#d3e3fd" }
+                    : {}
+                }
+              >
                 <div className={styles.tabLabelIcon}>
                   <div className={styles.leftTabsIconContainer}>
                     <FontAwesomeIcon
@@ -101,20 +105,39 @@ export default function LeftPanel() {
               </div>
             </Link>
 
-            <div className={styles.leftTabs}>
-              <div className={styles.tabLabelIcon}>
-                <div className={styles.leftTabsIconContainer}>
-                  <FontAwesomeIcon
-                    icon={faClock}
-                    className={styles.iconLeftTab}
-                  />
+            <Link href="/onHoldBox">
+              <div
+                className={styles.leftTabs}
+                style={
+                  activeTab === "OnHoldBox"
+                    ? { backgroundColor: "#d3e3fd" }
+                    : {}
+                }
+              >
+                <div className={styles.tabLabelIcon}>
+                  <div className={styles.leftTabsIconContainer}>
+                    <FontAwesomeIcon
+                      icon={faClock}
+                      className={styles.iconLeftTab}
+                    />
+                  </div>
+                  En attente
                 </div>
-                En attente
+                <span className={styles.counterLeft}>
+                  {onHoldLength > 0 ? onHoldLength : ""}
+                </span>
               </div>
-            </div>
+            </Link>
 
             <Link href="/importantBox">
-              <div className={styles.leftTabs}>
+              <div
+                className={styles.leftTabs}
+                style={
+                  activeTab === "ImportantBox"
+                    ? { backgroundColor: "#d3e3fd" }
+                    : {}
+                }
+              >
                 <div className={styles.tabLabelIcon}>
                   <div className={styles.leftTabsIconContainer}>
                     <FontAwesomeIcon

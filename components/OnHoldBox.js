@@ -9,27 +9,25 @@ import {
 import { faSquare } from "@fortawesome/free-regular-svg-icons";
 
 import { useSelector, useDispatch } from "react-redux";
-
 import { setActiveTab } from "../reducers/leftTabs";
 
 import RowMail from "./RowMail";
 
-export default function FollowedBox() {
+export default function OnHoldBox() {
   const dispatch = useDispatch();
-  dispatch(setActiveTab("FollowedBox"));
-
+  dispatch(setActiveTab("OnHoldBox"));
   const allMails = useSelector((state) => state.allMails.value);
+  console.log("allMails", allMails);
 
   let tableMail;
-  let followedMailList = [];
+  let onHoldMailList = [];
 
   for (let mail of allMails) {
-    if (mail.followed) {
-      followedMailList.push(mail);
+    if (mail.onHold) {
+      onHoldMailList.push(mail);
     }
   }
-
-  tableMail = followedMailList.map((mail, i) => {
+  tableMail = onHoldMailList.map((mail, i) => {
     return <RowMail key={i} {...mail} />;
   });
 
