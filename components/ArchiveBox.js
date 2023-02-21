@@ -8,23 +8,22 @@ import { addCurrentList } from "../reducers/currentMailList";
 import RowMail from "./RowMail";
 import InBoxHeader from "./InboxHeader";
 
-export default function ImportantBox() {
+export default function ArchiveBox() {
   const dispatch = useDispatch();
-  dispatch(setActiveTab("ImportantBox"));
+  dispatch(setActiveTab("ArchiveBox"));
 
   const allMails = useSelector((state) => state.allMails.value);
 
   let tableMail;
-  let importantMailList = [];
+  let archiveMailList = [];
 
   for (let mail of allMails) {
-    if (mail.important) {
-      importantMailList.push(mail);
+    if (mail.archived) {
+      archiveMailList.push(mail);
     }
   }
-  dispatch(addCurrentList(importantMailList));
-
-  tableMail = importantMailList.map((mail, i) => {
+  dispatch(addCurrentList(archiveMailList));
+  tableMail = archiveMailList.map((mail, i) => {
     return <RowMail key={i} {...mail} />;
   });
 

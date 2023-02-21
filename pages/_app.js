@@ -10,9 +10,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import mailDisplayer from "../reducers/mailDisplayer";
 import allMails from "../reducers/allMails";
 import activeTabs from "../reducers/leftTabs";
+import selectedMails from "../reducers/selectedMails";
+import currentMailList from "../reducers/currentMailList";
 
 const store = configureStore({
-  reducer: { mailDisplayer, allMails, activeTabs },
+  reducer: { mailDisplayer, allMails, activeTabs, selectedMails, currentMailList },
 });
 function App({ Component, pageProps }) {
   return (

@@ -8,23 +8,16 @@ import { addCurrentList } from "../reducers/currentMailList";
 import RowMail from "./RowMail";
 import InBoxHeader from "./InboxHeader";
 
-export default function ImportantBox() {
+export default function AllMessagesBox() {
   const dispatch = useDispatch();
-  dispatch(setActiveTab("ImportantBox"));
+  dispatch(setActiveTab("AllMessagesBox"));
 
   const allMails = useSelector((state) => state.allMails.value);
-
+  dispatch(addCurrentList(allMails));
+  
   let tableMail;
-  let importantMailList = [];
 
-  for (let mail of allMails) {
-    if (mail.important) {
-      importantMailList.push(mail);
-    }
-  }
-  dispatch(addCurrentList(importantMailList));
-
-  tableMail = importantMailList.map((mail, i) => {
+  tableMail = allMails.map((mail, i) => {
     return <RowMail key={i} {...mail} />;
   });
 

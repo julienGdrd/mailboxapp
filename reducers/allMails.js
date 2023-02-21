@@ -44,6 +44,17 @@ export const allMailsSlice = createSlice({
         return email;
       });
     },
+    handleUpdateArchived: (state, action) => {
+      state.value = state.value.map((email) => {
+        if (email._id === action.payload.emailId) {
+          return { ...email, archived: action.payload.archivedStatus };
+        }
+        return email;
+      });
+    },
+    deleteMail: (state, action) => {
+      state.value = state.value.filter((email) => email._id !== action.payload);
+    },
   },
 });
 
@@ -53,5 +64,7 @@ export const {
   handleUpdateUnRead,
   handleUpdateFollowed,
   handleUpdateOnHold,
+  deleteMail,
+  handleUpdateArchived,
 } = allMailsSlice.actions;
 export default allMailsSlice.reducer;

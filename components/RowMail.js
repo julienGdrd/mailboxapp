@@ -5,6 +5,7 @@ import {
   faBookmark,
   faStar,
   faBoxArchive,
+  faSquareUpRight,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faClock,
@@ -12,29 +13,45 @@ import {
   faEnvelopeOpen,
   faSquare,
   faTrashCan,
+  faSquareCheck,
   // faStar,
 } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { addMailToDisplay } from "../reducers/mailDisplayer";
+import { addSelectedMail, removeSelectedMail } from "../reducers/selectedMails";
 import {
   handleUpdateImportant,
   handleUpdateFollowed,
   handleUpdateUnRead,
   handleUpdateOnHold,
+  handleUpdateArchived,
+  deleteMail,
 } from "../reducers/allMails";
-import { useState } from "react";
 
 function RowMail(props) {
+
   const dispatch = useDispatch();
 
-  // format date
-  let deliveryDate = new Date(props.deliveryDate);
-  let deliveryDateFormatted = deliveryDate.toLocaleDateString("fr-FR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  const selected = useSelector((state) => state.selectedMails.value);
+
+  let boxIconName = faSquare;
+
+    for (let mail of selected) {
+      if (mail._id === props._id) {
+        boxIconName = faSquareCheck;
+      }
+    }
+
+  const handleSelectedMail = (props) => {
+    if (boxIconName === faSquare) {
+      console.log("addselected", props);
+      dispatch(addSelectedMail(props));
+    } else {
+      dispatch(removeSelectedMail(props));
+      console.log("removeSelected", props);
+    }
+  };
 
   const openMail = (props) => {
     console.log("openMail reached", props);
@@ -72,6 +89,25 @@ function RowMail(props) {
     };
     dispatch(handleUpdateOnHold(payload));
   };
+  const handleArchived = (emailId, archivedStatus) => {
+    const payload = {
+      emailId: emailId,
+      archivedStatus: archivedStatus,
+    };
+    dispatch(handleUpdateArchived(payload));
+  };
+
+  const deleteEmail = (emailId) => {
+    dispatch(deleteMail(emailId));
+  };
+
+  // format date
+  let deliveryDate = new Date(props.deliveryDate);
+  let deliveryDateFormatted = deliveryDate.toLocaleDateString("fr-FR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
 
   return (
     <div>
@@ -87,8 +123,13 @@ function RowMail(props) {
         <div className={styles.leftColumns}>
           {/* icons---------------------- */}
           <div className={styles.rowIcons}>
-            <div className={styles.mailIcon}>
-              <FontAwesomeIcon icon={faSquare} />
+            <div
+              className={styles.mailIcon}
+              onClick={() => handleSelectedMail(props)}
+            >
+              <FontAwesomeIcon
+                icon={boxIconName}
+              />
             </div>
             <div
               className={styles.mailIcon}
@@ -137,18 +178,28 @@ function RowMail(props) {
           </div>
         </div>
         <div className={styles.overIconsContainer}>
-          <div className={styles.overIconItem}>
-            <FontAwesomeIcon icon={faBoxArchive} />
+          <div
+            className={styles.overIconItem}
+            onClick={() => handleArchived(props._id, !props.archived)}
+          >
+            {props.archived ? (
+              <FontAwesomeIcon icon={faSquareUpRight} />
+            ) : (
+              <FontAwesomeIcon icon={faBoxArchive} />
+            )}
           </div>
           <div className={styles.overIconItem}>
-            <FontAwesomeIcon icon={faTrashCan} />
+            <FontAwesomeIcon
+              icon={faTrashCan}
+              onClick={() => deleteEmail(props._id)}
+            />
           </div>
           <div
             className={styles.overIconItem}
             onClick={() => handleUnRead(props._id, !props.unRead)}
           >
             {props.unRead ? (
-              <FontAwesomeIcon icon={faEnvelopeOpen} />
+              <FontAwesomeIcon icon={faEnvelopeOpen} title="Marquer comme lu" />
             ) : (
               <FontAwesomeIcon icon={faEnvelope} />
             )}

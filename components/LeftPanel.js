@@ -3,10 +3,15 @@ import styles from "../styles/LeftPanel.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleRight,
+  faAngleDown,
+  faBoxArchive,
   faEllipsisVertical,
+  faEnvelope,
   faInbox,
   faPen,
   faPlus,
+  faTriangleExclamation,
+  faAngleUp,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faBookmark,
@@ -18,21 +23,30 @@ import {
 import { useSelector } from "react-redux";
 
 import Link from "next/link";
+import { useState } from "react";
 
 export default function LeftPanel() {
   const activeTab = useSelector((state) => state.activeTabs.value);
   const allMails = useSelector((state) => state.allMails.value);
 
+  const [moreTabs, setMoreTabs] = useState(false);
+  const activeTabStyle = {
+    backgroundColor: "#d3e3fd",
+    color: "black",
+    fontWeight: "bold",
+  };
+
   let importantLength = 0;
   let unReadLength = 0;
   let followedLength = 0;
   let onHoldLength = 0;
+  let archivedLength = 0;
 
   for (let email of allMails) {
     if (email.important) {
       importantLength++;
     }
-    if (email.unRead) {
+    if (email.unRead && !email.archived) {
       unReadLength++;
     }
     if (email.followed) {
@@ -40,6 +54,9 @@ export default function LeftPanel() {
     }
     if (email.onHold) {
       onHoldLength++;
+    }
+    if (email.archived) {
+      archivedLength++;
     }
   }
 
@@ -62,9 +79,7 @@ export default function LeftPanel() {
             <Link href="/">
               <div
                 className={styles.leftTabs}
-                style={
-                  activeTab === "MainBox" ? { backgroundColor: "#d3e3fd" } : {}
-                }
+                style={activeTab === "MainBox" ? activeTabStyle : {}}
               >
                 <div className={styles.tabLabelIcon}>
                   <div className={styles.leftTabsIconContainer}>
@@ -73,7 +88,15 @@ export default function LeftPanel() {
                       className={styles.iconLeftTab}
                     />
                   </div>
-                  Boîte de réception
+                  <span
+                    style={
+                      unReadLength > 0
+                        ? { color: "black", fontWeight: "bold" }
+                        : {}
+                    }
+                  >
+                    Boîte de réception
+                  </span>
                 </div>
                 <span className={styles.counterLeft}>
                   {unReadLength > 0 ? unReadLength : ""}
@@ -84,11 +107,7 @@ export default function LeftPanel() {
             <Link href="/followedBox">
               <div
                 className={styles.leftTabs}
-                style={
-                  activeTab === "FollowedBox"
-                    ? { backgroundColor: "#d3e3fd" }
-                    : {}
-                }
+                style={activeTab === "FollowedBox" ? activeTabStyle : {}}
               >
                 <div className={styles.tabLabelIcon}>
                   <div className={styles.leftTabsIconContainer}>
@@ -108,11 +127,7 @@ export default function LeftPanel() {
             <Link href="/onHoldBox">
               <div
                 className={styles.leftTabs}
-                style={
-                  activeTab === "OnHoldBox"
-                    ? { backgroundColor: "#d3e3fd" }
-                    : {}
-                }
+                style={activeTab === "OnHoldBox" ? activeTabStyle : {}}
               >
                 <div className={styles.tabLabelIcon}>
                   <div className={styles.leftTabsIconContainer}>
@@ -132,11 +147,7 @@ export default function LeftPanel() {
             <Link href="/importantBox">
               <div
                 className={styles.leftTabs}
-                style={
-                  activeTab === "ImportantBox"
-                    ? { backgroundColor: "#d3e3fd" }
-                    : {}
-                }
+                style={activeTab === "ImportantBox" ? activeTabStyle : {}}
               >
                 <div className={styles.tabLabelIcon}>
                   <div className={styles.leftTabsIconContainer}>
@@ -176,16 +187,68 @@ export default function LeftPanel() {
               </div>
             </div>
 
-            <div className={styles.leftTabs}>
+            <div
+              className={styles.leftTabs}
+              onClick={() => setMoreTabs(!moreTabs)}
+            >
               <div className={styles.tabLabelIcon}>
                 <div className={styles.leftTabsIconContainer}>
                   <FontAwesomeIcon
-                    icon={faAngleRight}
+                    icon={moreTabs ? faAngleUp : faAngleDown}
                     className={styles.iconLeftTab}
                   />
                 </div>
-                Plus
+                {moreTabs ? "Moins" : "Plus"}
               </div>
+            </div>
+
+            <div style={moreTabs ? { display: "block" } : { display: "none" }}>
+              <Link href="/archiveBox">
+                <div
+                  className={styles.leftTabs}
+                  style={activeTab === "ArchiveBox" ? activeTabStyle : {}}
+                >
+                  <div className={styles.tabLabelIcon}>
+                    <div className={styles.leftTabsIconContainer}>
+                      <FontAwesomeIcon
+                        icon={faBoxArchive}
+                        className={styles.iconLeftTab}
+                      />
+                    </div>
+                    Messages archivés
+                  </div>
+                  <span className={styles.counterLeft}>
+                    {archivedLength > 0 ? archivedLength : ""}
+                  </span>
+                </div>
+              </Link>
+              <div className={styles.leftTabs}>
+                <div className={styles.tabLabelIcon}>
+                  <div className={styles.leftTabsIconContainer}>
+                    <FontAwesomeIcon
+                      icon={faTriangleExclamation}
+                      className={styles.iconLeftTab}
+                    />
+                  </div>
+                  Spam
+                </div>
+              </div>
+              <Link href="/allMessagesBox">
+                <div
+                  className={styles.leftTabs}
+                  style={activeTab === "AllMessagesBox" ? activeTabStyle : {}}
+                >
+                  <div className={styles.tabLabelIcon}>
+                    <div className={styles.leftTabsIconContainer}>
+                      <FontAwesomeIcon
+                        icon={faEnvelope}
+                        className={styles.iconLeftTab}
+                      />
+                    </div>
+                    Tous les messages
+                  </div>
+                </div>
+              </Link>
             </div>
           </div>
 
