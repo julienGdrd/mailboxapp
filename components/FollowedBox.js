@@ -5,13 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { setActiveTab } from "../reducers/leftTabs";
 import { addCurrentList } from "../reducers/currentMailList";
 
-
 import RowMail from "./RowMail";
 import InBoxHeader from "./InboxHeader";
+import { useEffect } from "react";
 
 export default function FollowedBox() {
   const dispatch = useDispatch();
-  dispatch(setActiveTab("FollowedBox"));
 
   const allMails = useSelector((state) => state.allMails.value);
 
@@ -23,8 +22,11 @@ export default function FollowedBox() {
       followedMailList.push(mail);
     }
   }
-  dispatch(addCurrentList(followedMailList));
 
+  useEffect(() => {
+    dispatch(setActiveTab("FollowedBox"));
+    dispatch(addCurrentList(followedMailList));
+  }, []);
 
   tableMail = followedMailList.map((mail, i) => {
     return <RowMail key={i} {...mail} />;
@@ -32,7 +34,7 @@ export default function FollowedBox() {
 
   return (
     <div className={styles.rightPanel}>
-      <InBoxHeader/>
+      <InBoxHeader />
       <div className={styles.mailsPanel}>
         <div className={styles.mailsContainer}>{tableMail}</div>
       </div>

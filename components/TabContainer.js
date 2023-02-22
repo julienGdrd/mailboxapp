@@ -28,7 +28,6 @@ export default function TabContainer(props) {
   let reseauxUnReadCounter = 0;
 
   for (let mail of allMails) {
-    console.log(mail.categorie === "principal");
     if (!mail.archived) {
       if (mail.categorie === "principal") {
         if (mail.unRead) {

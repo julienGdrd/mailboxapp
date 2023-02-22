@@ -28,20 +28,18 @@ export default function PromotionBox() {
   
 
   let promotionList = [];
-  let promotionUnReadCounter = 0;
 
   for (let mail of allMails) {
     if (!mail.archived) {
       if (mail.categorie === "promotion") {
         promotionList.push(mail);
-        if (mail.unRead) {
-          promotionUnReadCounter++;
-        }
       }
     }
   }
   
-  dispatch(addCurrentList(promotionList));
+  useEffect(()=> {
+    dispatch(addCurrentList(promotionList));
+  }, [])
 
   let tableMail = promotionList.map((mail, i) => {
     return <RowMail key={i} {...mail} />;

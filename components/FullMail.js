@@ -8,7 +8,7 @@ import {
   faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   handleUpdateImportant,
@@ -57,7 +57,10 @@ function FullMail() {
     };
     dispatch(handleUpdateUnRead(payload));
   };
-  handleUnRead(fullMailToDisplay._id);
+
+  useEffect(() =>{
+    handleUnRead(fullMailToDisplay._id);
+  }, [])
   return (
     <div className={styles.mainMessageContainer}>
       <div className={styles.objectContainer}>

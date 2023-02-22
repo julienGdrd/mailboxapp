@@ -21,15 +21,15 @@ import TabContainer from "./TabContainer";
 import PrincipalBox from "./PrincipalBox";
 import PromotionBox from "./PromotionBox";
 import ReseauxBox from "./ReseauxBox";
-import RowMail from "./RowMail";
 
 export default function MainBox() {
   const dispatch = useDispatch();
-  dispatch(setActiveTab("MainBox"));
+  
 
   const allMails = useSelector((state) => state.allMails.value);
 
   useEffect(() => {
+    dispatch(setActiveTab("MainBox"));
     // fetch only on first render
     if (allMails.length < 1) {
       fetch("http://localhost:3000/mails")

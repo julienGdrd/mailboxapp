@@ -3,17 +3,28 @@ import styles from "../styles/RightPanel.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
+  faArchive,
   faCaretDown,
   faEllipsisVertical,
   faInbox,
   faRotateRight,
   faTag,
   faUserGroup,
+  faTriangleExclamation,
+  faListCheck,
+  faArrowUpFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import { faSquare, faSquareCheck } from "@fortawesome/free-regular-svg-icons";
+import {
+  faCircleCheck,
+  faClock,
+  faEnvelope,
+  faSquare,
+  faSquareCheck,
+  faTrashCan,
+} from "@fortawesome/free-regular-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSelectAll } from "../reducers/selectedMails";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function InBoxHeader() {
   const dispatch = useDispatch();
@@ -23,6 +34,7 @@ export default function InBoxHeader() {
   const currentMailList = useSelector((state) => state.currentMailList.value);
 
   const [allSelected, setAllSelected] = useState(false);
+
 
   const handleSelectAll = () => {
     if (allSelected === false) {
@@ -51,6 +63,65 @@ export default function InBoxHeader() {
               icon={faCaretDown}
               className={styles.iconsLeftControl}
             />
+          </div>
+        </div>
+        <div className={styles.optionalIconsContainer}
+        style={selected.length !==0 ? {display: 'flex'} : {}}
+        >
+          <div className={styles.optionalGroupIcon}>
+            <div className={styles.optionalIcons}>
+              <FontAwesomeIcon
+                icon={faArchive}
+                className={styles.iconsLeftControl}
+              />
+            </div>
+            <div className={styles.optionalIcons}>
+              <FontAwesomeIcon
+                icon={faTriangleExclamation}
+                className={styles.iconsLeftControl}
+              />
+            </div>
+            <div className={styles.optionalIcons}>
+              <FontAwesomeIcon
+                icon={faTrashCan}
+                className={styles.iconsLeftControl}
+              />
+            </div>
+          </div>
+          <div className={styles.optionalGroupIcon}>
+            <div className={styles.optionalIcons}>
+              <FontAwesomeIcon
+                icon={faEnvelope}
+                className={styles.iconsLeftControl}
+              />
+            </div>
+            <div className={styles.optionalIcons}>
+              <FontAwesomeIcon
+                icon={faClock}
+                className={styles.iconsLeftControl}
+              />
+            </div>
+            <div className={styles.optionalIcons}>
+              <FontAwesomeIcon
+                icon={faCircleCheck}
+                className={styles.iconsLeftControl}
+              />
+            </div>
+          </div>
+          <div className={styles.optionalGroupIcon}>
+            <div className={styles.optionalIcons}>
+              <FontAwesomeIcon
+                icon={faArrowUpFromBracket}
+                className={styles.iconsLeftControl}
+                style={{transform: "rotate(90deg)"}}
+              />
+            </div>
+            <div className={styles.optionalIcons}>
+              <FontAwesomeIcon
+                icon={faClock}
+                className={styles.iconsLeftControl}
+              />
+            </div>
           </div>
         </div>
         <div className={styles.iconsRight}>

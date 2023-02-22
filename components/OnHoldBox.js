@@ -6,12 +6,13 @@ import { addCurrentList } from "../reducers/currentMailList";
 
 import RowMail from "./RowMail";
 import InBoxHeader from "./InboxHeader";
+import { useEffect } from "react";
 
 export default function OnHoldBox() {
   const dispatch = useDispatch();
-  dispatch(setActiveTab("OnHoldBox"));
+
   const allMails = useSelector((state) => state.allMails.value);
-  console.log("allMails", allMails);
+  // console.log("allMails", allMails);
 
   let tableMail;
   let onHoldMailList = [];
@@ -21,7 +22,11 @@ export default function OnHoldBox() {
       onHoldMailList.push(mail);
     }
   }
-  dispatch(addCurrentList(onHoldMailList));
+
+  useEffect(() => {
+    dispatch(setActiveTab("OnHoldBox"));
+    dispatch(addCurrentList(onHoldMailList));
+  }, []);
 
   tableMail = onHoldMailList.map((mail, i) => {
     return <RowMail key={i} {...mail} />;

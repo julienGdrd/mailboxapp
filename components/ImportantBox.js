@@ -7,10 +7,11 @@ import { addCurrentList } from "../reducers/currentMailList";
 
 import RowMail from "./RowMail";
 import InBoxHeader from "./InboxHeader";
+import { useEffect } from "react";
 
 export default function ImportantBox() {
   const dispatch = useDispatch();
-  dispatch(setActiveTab("ImportantBox"));
+
 
   const allMails = useSelector((state) => state.allMails.value);
 
@@ -22,7 +23,11 @@ export default function ImportantBox() {
       importantMailList.push(mail);
     }
   }
-  dispatch(addCurrentList(importantMailList));
+
+  useEffect(() => {
+    dispatch(setActiveTab("ImportantBox"));
+    dispatch(addCurrentList(importantMailList));
+  }, [])
 
   tableMail = importantMailList.map((mail, i) => {
     return <RowMail key={i} {...mail} />;

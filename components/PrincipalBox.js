@@ -33,8 +33,10 @@ export default function PrincipalBox() {
       }
     }
   }
-  
-  dispatch(addCurrentList(principalList));
+
+  useEffect(() => {
+    dispatch(addCurrentList(principalList));
+  }, [allMails]);
 
   let tableMail = principalList.map((mail, i) => {
     return <RowMail key={i} {...mail} />;

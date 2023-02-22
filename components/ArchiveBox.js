@@ -7,10 +7,11 @@ import { addCurrentList } from "../reducers/currentMailList";
 
 import RowMail from "./RowMail";
 import InBoxHeader from "./InboxHeader";
+import { useEffect } from "react";
 
 export default function ArchiveBox() {
   const dispatch = useDispatch();
-  dispatch(setActiveTab("ArchiveBox"));
+
 
   const allMails = useSelector((state) => state.allMails.value);
 
@@ -22,7 +23,12 @@ export default function ArchiveBox() {
       archiveMailList.push(mail);
     }
   }
-  dispatch(addCurrentList(archiveMailList));
+
+  useEffect(() => {
+    dispatch(setActiveTab("ArchiveBox"));
+    dispatch(addCurrentList(archiveMailList));
+  }, []);
+
   tableMail = archiveMailList.map((mail, i) => {
     return <RowMail key={i} {...mail} />;
   });

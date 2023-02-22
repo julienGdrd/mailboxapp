@@ -17,7 +17,6 @@ import { setAllMailsList } from "../reducers/allMails";
 import { setActiveTab } from "../reducers/leftTabs";
 import { addCurrentList } from "../reducers/currentMailList";
 
-
 import RowMail from "./RowMail";
 
 export default function ReseauxBox() {
@@ -26,20 +25,18 @@ export default function ReseauxBox() {
   const allMails = useSelector((state) => state.allMails.value);
 
   let reseauxList = [];
-  let reseauxUnReadCounter = 0
 
   for (let mail of allMails) {
     if (!mail.archived) {
       if (mail.categorie === "reseaux") {
         reseauxList.push(mail);
-        if (mail.unRead) {
-          reseauxUnReadCounter++;
-        }
       }
     }
   }
 
-  dispatch(addCurrentList(reseauxList));
+  useEffect(() => {
+    dispatch(addCurrentList(reseauxList));
+  }, []);
 
   let tableMail = reseauxList.map((mail, i) => {
     return <RowMail key={i} {...mail} />;
