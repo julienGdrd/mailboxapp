@@ -20,12 +20,15 @@ import {
   faStar,
 } from "@fortawesome/free-regular-svg-icons";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Link from "next/link";
 import { useState } from "react";
+import { updateSelectAll } from "../reducers/selectedMails";
 
 export default function LeftPanel() {
+  const dispatch = useDispatch();
+
   const activeTab = useSelector((state) => state.activeTabs.value);
   const allMails = useSelector((state) => state.allMails.value);
 
@@ -80,6 +83,7 @@ export default function LeftPanel() {
               <div
                 className={styles.leftTabs}
                 style={activeTab === "MainBox" ? activeTabStyle : {}}
+                onClick={() => dispatch(updateSelectAll([]))}
               >
                 <div className={styles.tabLabelIcon}>
                   <div className={styles.leftTabsIconContainer}>
@@ -108,7 +112,8 @@ export default function LeftPanel() {
               <div
                 className={styles.leftTabs}
                 style={activeTab === "FollowedBox" ? activeTabStyle : {}}
-              >
+                onClick={() => dispatch(updateSelectAll([]))}
+             >
                 <div className={styles.tabLabelIcon}>
                   <div className={styles.leftTabsIconContainer}>
                     <FontAwesomeIcon
@@ -128,7 +133,8 @@ export default function LeftPanel() {
               <div
                 className={styles.leftTabs}
                 style={activeTab === "OnHoldBox" ? activeTabStyle : {}}
-              >
+                onClick={() => dispatch(updateSelectAll([]))}
+             >
                 <div className={styles.tabLabelIcon}>
                   <div className={styles.leftTabsIconContainer}>
                     <FontAwesomeIcon
@@ -148,7 +154,8 @@ export default function LeftPanel() {
               <div
                 className={styles.leftTabs}
                 style={activeTab === "ImportantBox" ? activeTabStyle : {}}
-              >
+                onClick={() => dispatch(updateSelectAll([]))}
+             >
                 <div className={styles.tabLabelIcon}>
                   <div className={styles.leftTabsIconContainer}>
                     <FontAwesomeIcon
@@ -207,7 +214,8 @@ export default function LeftPanel() {
                 <div
                   className={styles.leftTabs}
                   style={activeTab === "ArchiveBox" ? activeTabStyle : {}}
-                >
+                  onClick={() => dispatch(updateSelectAll([]))}
+               >
                   <div className={styles.tabLabelIcon}>
                     <div className={styles.leftTabsIconContainer}>
                       <FontAwesomeIcon
@@ -237,7 +245,8 @@ export default function LeftPanel() {
                 <div
                   className={styles.leftTabs}
                   style={activeTab === "AllMessagesBox" ? activeTabStyle : {}}
-                >
+                  onClick={() => dispatch(updateSelectAll([]))}
+               >
                   <div className={styles.tabLabelIcon}>
                     <div className={styles.leftTabsIconContainer}>
                       <FontAwesomeIcon

@@ -27,7 +27,7 @@ export default function ReseauxBox() {
   let reseauxList = [];
 
   for (let mail of allMails) {
-    if (!mail.archived) {
+    if (!mail.archived && !mail.onHold) {
       if (mail.categorie === "reseaux") {
         reseauxList.push(mail);
       }

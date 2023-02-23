@@ -15,14 +15,12 @@ import {
   handleUpdateUnRead,
   handleUpdateFollowed,
 } from "../reducers/allMails";
+import { addMailToDisplay } from "../reducers/mailDisplayer";
 
 function FullMail() {
   const dispatch = useDispatch();
 
   const fullMailToDisplay = useSelector((state) => state.mailDisplayer.value);
-
-  const [isImportant, setIsImportant] = useState(fullMailToDisplay.important);
-  const [isFollowed, setIsFollowed] = useState(fullMailToDisplay.followed);
 
   // format date
   let deliveryDate = new Date(fullMailToDisplay.deliveryDate);
@@ -32,49 +30,39 @@ function FullMail() {
     year: "numeric",
   });
 
-  const handleImportant = (emailId) => {
-    setIsImportant(!isImportant);
-    const payload = {
-      emailId: emailId,
-      importantStatus: !isImportant,
-    };
-    dispatch(handleUpdateImportant(payload));
+  const handleImportant = (email) => {
+    dispatch(handleUpdateImportant([email]));
+    dispatch(
+      addMailToDisplay({ ...email, important: !fullMailToDisplay.important })
+    );
   };
 
-  const handleFollowed = (emailId) => {
-    setIsFollowed(!isFollowed);
-    const payload = {
-      emailId: emailId,
-      followedStatus: !isFollowed,
-    };
-    dispatch(handleUpdateFollowed(payload));
+  const handleFollowed = (email) => {
+    dispatch(handleUpdateFollowed([email]));
+    dispatch(
+      addMailToDisplay({ ...email, followed: !fullMailToDisplay.followed })
+    );
   };
 
-  const handleUnRead = (emailId) => {
-    const payload = {
-      emailId: emailId,
-      unReadStatus: false,
-    };
-    dispatch(handleUpdateUnRead(payload));
+  const handleUnRead = (email) => {
+    dispatch(handleUpdateUnRead([email]));
   };
 
-  useEffect(() =>{
-    handleUnRead(fullMailToDisplay._id);
-  }, [])
+  useEffect(() => {
+    handleUnRead(fullMailToDisplay);
+  }, []);
   return (
     <div className={styles.mainMessageContainer}>
       <div className={styles.objectContainer}>
         {fullMailToDisplay.object}
         <div
           className={styles.objectIconContainer}
-          onClick={() =>
-            handleImportant(fullMailToDisplay._id, !fullMailToDisplay.important)
-          }
+          onClick={() => handleImportant(fullMailToDisplay)}
         >
           <FontAwesomeIcon
             className={styles.objectIcon}
             icon={faBookmark}
-            style={isImportant ? { color: "#E8AB02" } : {}}
+            style={fullMailToDisplay.important ? { color: "#E8AB02" } : {}}
           />
         </div>
       </div>
@@ -103,17 +91,14 @@ function FullMail() {
                 <div className={styles.controlIconsRow}>
                   <div
                     className={styles.controlIconContainer}
-                    onClick={() =>
-                      handleFollowed(
-                        fullMailToDisplay._id,
-                        !fullMailToDisplay.followed
-                      )
-                    }
+                    onClick={() => handleFollowed(fullMailToDisplay)}
                   >
                     <FontAwesomeIcon
                       className={styles.controlIcon}
                       icon={faStar}
-                      style={isFollowed ? { color: "#E8AB02" } : {}}
+                      style={
+                        fullMailToDisplay.followed ? { color: "#E8AB02" } : {}
+                      }
                     />
                   </div>
                   <div className={styles.controlIconContainer}>

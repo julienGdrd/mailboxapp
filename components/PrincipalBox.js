@@ -27,7 +27,7 @@ export default function PrincipalBox() {
   let principalList = [];
 
   for (let mail of allMails) {
-    if (!mail.archived) {
+    if (!mail.archived && !mail.onHold) {
       if (mail.categorie === "principal") {
         principalList.push(mail);
       }

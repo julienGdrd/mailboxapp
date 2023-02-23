@@ -14,46 +14,62 @@ export const allMailsSlice = createSlice({
     },
     handleUpdateImportant: (state, action) => {
       state.value = state.value.map((email) => {
-        if (email._id === action.payload.emailId) {
-          return { ...email, important: action.payload.importantStatus };
+        const emailIndex = action.payload.findIndex(
+          (payloadEmail) => payloadEmail._id === email._id
+        );
+        if (emailIndex !== -1) {
+          return { ...email, important: !action.payload[emailIndex].important };
         }
         return email;
       });
     },
     handleUpdateUnRead: (state, action) => {
       state.value = state.value.map((email) => {
-        if (email._id === action.payload.emailId) {
-          return { ...email, unRead: action.payload.unReadStatus };
+        const emailIndex = action.payload.findIndex(
+          (payloadEmail) => payloadEmail._id === email._id
+        );
+        if (emailIndex !== -1) {
+          return { ...email, unRead: !action.payload[emailIndex].unRead };
         }
         return email;
       });
     },
     handleUpdateFollowed: (state, action) => {
       state.value = state.value.map((email) => {
-        if (email._id === action.payload.emailId) {
-          return { ...email, followed: action.payload.followedStatus };
+        const emailIndex = action.payload.findIndex(
+          (payloadEmail) => payloadEmail._id === email._id
+        );
+        if (emailIndex !== -1) {
+          return { ...email, followed: !action.payload[emailIndex].followed };
         }
         return email;
       });
     },
     handleUpdateOnHold: (state, action) => {
       state.value = state.value.map((email) => {
-        if (email._id === action.payload.emailId) {
-          return { ...email, onHold: action.payload.onHoldStatus };
+        const emailIndex = action.payload.findIndex(
+          (payloadEmail) => payloadEmail._id === email._id
+        );
+        if (emailIndex !== -1) {
+          return { ...email, onHold: !action.payload[emailIndex].onHold };
         }
         return email;
       });
     },
     handleUpdateArchived: (state, action) => {
       state.value = state.value.map((email) => {
-        if (email._id === action.payload.emailId) {
-          return { ...email, archived: action.payload.archivedStatus };
+        const emailIndex = action.payload.findIndex(
+          (payloadEmail) => payloadEmail._id === email._id
+        );
+        if (emailIndex !== -1) {
+          return { ...email, archived: !action.payload[emailIndex].archived };
         }
         return email;
       });
     },
     deleteMail: (state, action) => {
-      state.value = state.value.filter((email) => email._id !== action.payload);
+      const idsToDelete = action.payload.map((email) => email._id);
+      state.value = state.value.filter((email) => !idsToDelete.includes(email._id));
     },
   },
 });

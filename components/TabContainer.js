@@ -28,19 +28,13 @@ export default function TabContainer(props) {
   let reseauxUnReadCounter = 0;
 
   for (let mail of allMails) {
-    if (!mail.archived) {
+    if (!mail.archived && mail.unRead && !mail.onHold) {
       if (mail.categorie === "principal") {
-        if (mail.unRead) {
           principalUnReadCounter++;
-        }
       } else if (mail.categorie === "promotion") {
-        if (mail.unRead) {
           promotionUnReadCounter++;
-        }
       } else {
-        if (mail.unRead) {
           reseauxUnReadCounter++;
-        }
       }
     }
   }

@@ -17,7 +17,6 @@ import { setAllMailsList } from "../reducers/allMails";
 import { setActiveTab } from "../reducers/leftTabs";
 import { addCurrentList } from "../reducers/currentMailList";
 
-
 import RowMail from "./RowMail";
 
 export default function PromotionBox() {
@@ -25,21 +24,19 @@ export default function PromotionBox() {
 
   const allMails = useSelector((state) => state.allMails.value);
 
-  
-
   let promotionList = [];
 
   for (let mail of allMails) {
-    if (!mail.archived) {
+    if (!mail.archived && !mail.onHold) {
       if (mail.categorie === "promotion") {
         promotionList.push(mail);
       }
     }
   }
-  
-  useEffect(()=> {
+
+  useEffect(() => {
     dispatch(addCurrentList(promotionList));
-  }, [])
+  }, []);
 
   let tableMail = promotionList.map((mail, i) => {
     return <RowMail key={i} {...mail} />;

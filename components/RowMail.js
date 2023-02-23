@@ -30,18 +30,17 @@ import {
 } from "../reducers/allMails";
 
 function RowMail(props) {
-
   const dispatch = useDispatch();
 
   const selected = useSelector((state) => state.selectedMails.value);
 
   let boxIconName = faSquare;
 
-    for (let mail of selected) {
-      if (mail._id === props._id) {
-        boxIconName = faSquareCheck;
-      }
+  for (let mail of selected) {
+    if (mail._id === props._id) {
+      boxIconName = faSquareCheck;
     }
+  }
 
   const handleSelectedMail = (props) => {
     if (boxIconName === faSquare) {
@@ -58,47 +57,28 @@ function RowMail(props) {
     dispatch(addMailToDisplay(props));
   };
 
-  const handleImportant = (emailId, important) => {
-    const payload = {
-      emailId: emailId,
-      importantStatus: important,
-    };
-    dispatch(handleUpdateImportant(payload));
+  const handleImportant = (email) => {
+    dispatch(handleUpdateImportant([email]));
   };
 
-  const handleFollowed = (emailId, followed) => {
-    const payload = {
-      emailId: emailId,
-      followedStatus: followed,
-    };
-    dispatch(handleUpdateFollowed(payload));
+  const handleFollowed = (email) => {
+    dispatch(handleUpdateFollowed([email]));
   };
 
-  const handleUnRead = (emailId, unReadStatus) => {
-    const payload = {
-      emailId: emailId,
-      unReadStatus: unReadStatus,
-    };
-    dispatch(handleUpdateUnRead(payload));
+  const handleUnRead = (email) => {
+    dispatch(handleUpdateUnRead([email]));
   };
 
-  const handleOnHold = (emailId, onHoldStatus) => {
-    const payload = {
-      emailId: emailId,
-      onHoldStatus: onHoldStatus,
-    };
-    dispatch(handleUpdateOnHold(payload));
-  };
-  const handleArchived = (emailId, archivedStatus) => {
-    const payload = {
-      emailId: emailId,
-      archivedStatus: archivedStatus,
-    };
-    dispatch(handleUpdateArchived(payload));
+  const handleOnHold = (email) => {
+    dispatch(handleUpdateOnHold([email]));
   };
 
-  const deleteEmail = (emailId) => {
-    dispatch(deleteMail(emailId));
+  const handleArchived = (email) => {
+    dispatch(handleUpdateArchived([email]));
+  };
+
+  const deleteEmail = (email) => {
+    dispatch(deleteMail([email]));
   };
 
   // format date
@@ -127,13 +107,11 @@ function RowMail(props) {
               className={styles.mailIcon}
               onClick={() => handleSelectedMail(props)}
             >
-              <FontAwesomeIcon
-                icon={boxIconName}
-              />
+              <FontAwesomeIcon icon={boxIconName} />
             </div>
             <div
               className={styles.mailIcon}
-              onClick={() => handleFollowed(props._id, !props.followed)}
+              onClick={() => handleFollowed(props)}
             >
               <FontAwesomeIcon
                 icon={faStar}
@@ -142,7 +120,7 @@ function RowMail(props) {
             </div>
             <div
               className={styles.mailIcon}
-              onClick={() => handleImportant(props._id, !props.important)}
+              onClick={() => handleImportant(props)}
             >
               <FontAwesomeIcon
                 icon={faBookmark}
@@ -180,7 +158,7 @@ function RowMail(props) {
         <div className={styles.overIconsContainer}>
           <div
             className={styles.overIconItem}
-            onClick={() => handleArchived(props._id, !props.archived)}
+            onClick={() => handleArchived(props)}
           >
             {props.archived ? (
               <FontAwesomeIcon icon={faSquareUpRight} />
@@ -191,22 +169,22 @@ function RowMail(props) {
           <div className={styles.overIconItem}>
             <FontAwesomeIcon
               icon={faTrashCan}
-              onClick={() => deleteEmail(props._id)}
+              onClick={() => deleteEmail(props)}
             />
           </div>
           <div
             className={styles.overIconItem}
-            onClick={() => handleUnRead(props._id, !props.unRead)}
+            onClick={() => handleUnRead(props)}
           >
             {props.unRead ? (
               <FontAwesomeIcon icon={faEnvelopeOpen} title="Marquer comme lu" />
             ) : (
-              <FontAwesomeIcon icon={faEnvelope} />
+              <FontAwesomeIcon icon={faEnvelope} title="Marquer comme non lu" />
             )}
           </div>
           <div
             className={styles.overIconItem}
-            onClick={() => handleOnHold(props._id, !props.onHold)}
+            onClick={() => handleOnHold(props)}
           >
             <FontAwesomeIcon icon={faClock} />
           </div>

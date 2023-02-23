@@ -85,7 +85,7 @@
     font-size: .875rem;
     font-weight: 500;
     line-height: 16px;
-    width: 15%;
+    min-width: 200px;
     height: 56px;
     color: rgb(92, 92, 92);
     display: flex;

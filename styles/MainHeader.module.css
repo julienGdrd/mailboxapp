@@ -7,6 +7,7 @@
 
 .headerLeft {
   width: 14%;
+  min-width: 260px;
   display: flex;
   align-items: center;
 }
