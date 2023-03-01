@@ -20,14 +20,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { addMailToDisplay } from "../reducers/mailDisplayer";
 import { addSelectedMail, removeSelectedMail } from "../reducers/selectedMails";
-import {
-  handleUpdateImportant,
-  handleUpdateFollowed,
-  handleUpdateUnRead,
-  handleUpdateOnHold,
-  handleUpdateArchived,
-  deleteMail,
-} from "../reducers/allMails";
+import { deleteMail, updateBooleenValueByKey } from "../reducers/allMails";
 
 function RowMail(props) {
   const dispatch = useDispatch();
@@ -58,23 +51,36 @@ function RowMail(props) {
   };
 
   const handleImportant = (email) => {
-    dispatch(handleUpdateImportant([email]));
+    dispatch(
+      updateBooleenValueByKey({
+        selectedArr: [email],
+        keyToUpdate: "important",
+      })
+    );
   };
 
   const handleFollowed = (email) => {
-    dispatch(handleUpdateFollowed([email]));
+    dispatch(
+      updateBooleenValueByKey({ selectedArr: [email], keyToUpdate: "followed" })
+    );
   };
 
   const handleUnRead = (email) => {
-    dispatch(handleUpdateUnRead([email]));
+    dispatch(
+      updateBooleenValueByKey({ selectedArr: [email], keyToUpdate: "unRead" })
+    );
   };
 
   const handleOnHold = (email) => {
-    dispatch(handleUpdateOnHold([email]));
+    dispatch(
+      updateBooleenValueByKey({ selectedArr: [email], keyToUpdate: "onHold" })
+    );
   };
 
   const handleArchived = (email) => {
-    dispatch(handleUpdateArchived([email]));
+    dispatch(
+      updateBooleenValueByKey({ selectedArr: [email], keyToUpdate: "archived" })
+    );
   };
 
   const deleteEmail = (email) => {

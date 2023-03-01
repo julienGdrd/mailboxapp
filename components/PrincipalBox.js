@@ -18,16 +18,18 @@ import { setActiveTab } from "../reducers/leftTabs";
 import { addCurrentList } from "../reducers/currentMailList";
 
 import RowMail from "./RowMail";
+import InBoxHeader from "./InboxHeader";
 
 export default function PrincipalBox() {
   const dispatch = useDispatch();
 
   const allMails = useSelector((state) => state.allMails.value);
+  const activeTab = useSelector((state) => state.activeTabs.value);
 
   let principalList = [];
 
   for (let mail of allMails) {
-    if (!mail.archived && !mail.onHold) {
+    if (!mail.archived && !mail.onHold && !mail.spam && !mail.perso && !mail.pro) {
       if (mail.categorie === "principal") {
         principalList.push(mail);
       }
@@ -44,6 +46,7 @@ export default function PrincipalBox() {
 
   return (
     <div className={styles.rightPanel}>
+      {activeTab==='PrincipalBoxCat' && <InBoxHeader/>}
       <div className={styles.mailsPanel}>
         <div className={styles.mailsContainer}>{tableMail}</div>
       </div>

@@ -10,11 +10,7 @@ import {
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  handleUpdateImportant,
-  handleUpdateUnRead,
-  handleUpdateFollowed,
-} from "../reducers/allMails";
+import { updateBooleenValueByKey } from "../reducers/allMails";
 import { addMailToDisplay } from "../reducers/mailDisplayer";
 
 function FullMail() {
@@ -31,21 +27,37 @@ function FullMail() {
   });
 
   const handleImportant = (email) => {
-    dispatch(handleUpdateImportant([email]));
+    dispatch(
+      updateBooleenValueByKey({
+        selectedArr: [email],
+        keyToUpdate: "important",
+      })
+    );
     dispatch(
       addMailToDisplay({ ...email, important: !fullMailToDisplay.important })
     );
   };
 
   const handleFollowed = (email) => {
-    dispatch(handleUpdateFollowed([email]));
+    dispatch(
+      updateBooleenValueByKey({
+        selectedArr: [email],
+        keyToUpdate: "followed",
+      })
+    );
     dispatch(
       addMailToDisplay({ ...email, followed: !fullMailToDisplay.followed })
     );
   };
 
   const handleUnRead = (email) => {
-    dispatch(handleUpdateUnRead([email]));
+    dispatch(
+      updateBooleenValueByKey({
+        selectedArr: [email],
+        keyToUpdate: "unRead",
+        forcedValue: false,
+      })
+    );
   };
 
   useEffect(() => {

@@ -60,7 +60,7 @@
     font-size: 17px;
     /* margin: 0 20px; */
   }
-  .counterLeft{
+  .counterLeft, .labelCounter{
     color: black;
     margin-right: 15px;
     font-size: 14px;
@@ -75,7 +75,7 @@
     font-size: 17px;
     font-weight: 500;
     letter-spacing: 0.5px;
-    width: 90%;
+    width: 85%;
     padding-left: 10%;
     display: flex;
     align-items: center;
@@ -99,6 +99,9 @@
   
   .leftTabs:hover>.secondTabOptionIcon {
     display: flex;
+  }
+  .leftTabs:hover>.labelCounter{
+    display: none;
   }
   
   .secondTabOptionIcon:hover {

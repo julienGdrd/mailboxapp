@@ -9,78 +9,55 @@ export const allMailsSlice = createSlice({
   initialState,
   reducers: {
     setAllMailsList: (state, action) => {
-      state.value = action.payload;
+      const sortedEmails = action.payload.sort(
+        (a, b) => new Date(b.deliveryDate) - new Date(a.deliveryDate)
+      );
+      state.value = sortedEmails;
       console.log("reducer allMails", action.payload);
     },
-    handleUpdateImportant: (state, action) => {
-      state.value = state.value.map((email) => {
-        const emailIndex = action.payload.findIndex(
-          (payloadEmail) => payloadEmail._id === email._id
-        );
-        if (emailIndex !== -1) {
-          return { ...email, important: !action.payload[emailIndex].important };
-        }
-        return email;
-      });
-    },
-    handleUpdateUnRead: (state, action) => {
-      state.value = state.value.map((email) => {
-        const emailIndex = action.payload.findIndex(
-          (payloadEmail) => payloadEmail._id === email._id
-        );
-        if (emailIndex !== -1) {
-          return { ...email, unRead: !action.payload[emailIndex].unRead };
-        }
-        return email;
-      });
-    },
-    handleUpdateFollowed: (state, action) => {
-      state.value = state.value.map((email) => {
-        const emailIndex = action.payload.findIndex(
-          (payloadEmail) => payloadEmail._id === email._id
-        );
-        if (emailIndex !== -1) {
-          return { ...email, followed: !action.payload[emailIndex].followed };
-        }
-        return email;
-      });
-    },
-    handleUpdateOnHold: (state, action) => {
-      state.value = state.value.map((email) => {
-        const emailIndex = action.payload.findIndex(
-          (payloadEmail) => payloadEmail._id === email._id
-        );
-        if (emailIndex !== -1) {
-          return { ...email, onHold: !action.payload[emailIndex].onHold };
-        }
-        return email;
-      });
-    },
-    handleUpdateArchived: (state, action) => {
-      state.value = state.value.map((email) => {
-        const emailIndex = action.payload.findIndex(
-          (payloadEmail) => payloadEmail._id === email._id
-        );
-        if (emailIndex !== -1) {
-          return { ...email, archived: !action.payload[emailIndex].archived };
-        }
-        return email;
-      });
+    updateBooleenValueByKey: (state, action) => {
+      if (Object.keys(action.payload).length === 3) {
+        // Force booleen by key
+        state.value = state.value.map((email) => {
+          const emailIndex = action.payload.selectedArr.findIndex(
+            (payloadEmail) => payloadEmail._id === email._id
+          );
+          if (emailIndex !== -1) {
+            const updatedEmail = { ...email };
+            updatedEmail[action.payload.keyToUpdate] =
+              action.payload.forcedValue;
+            return updatedEmail;
+          }
+          return email;
+        });
+      } else if (Object.keys(action.payload).length === 2) {
+        // Toggle booleen by key
+        state.value = state.value.map((email) => {
+          const emailIndex = action.payload.selectedArr.findIndex(
+            (payloadEmail) => payloadEmail._id === email._id
+          );
+          if (emailIndex !== -1) {
+            const updatedEmail = { ...email };
+            updatedEmail[action.payload.keyToUpdate] =
+              !action.payload.selectedArr[emailIndex][
+                action.payload.keyToUpdate
+              ];
+            return updatedEmail;
+          }
+          return email;
+        });
+      }
+      console.log("number of keys :", Object.keys(action.payload).length);
     },
     deleteMail: (state, action) => {
       const idsToDelete = action.payload.map((email) => email._id);
-      state.value = state.value.filter((email) => !idsToDelete.includes(email._id));
+      state.value = state.value.filter(
+        (email) => !idsToDelete.includes(email._id)
+      );
     },
   },
 });
 
-export const {
-  setAllMailsList,
-  handleUpdateImportant,
-  handleUpdateUnRead,
-  handleUpdateFollowed,
-  handleUpdateOnHold,
-  deleteMail,
-  handleUpdateArchived,
-} = allMailsSlice.actions;
+export const { setAllMailsList, deleteMail, updateBooleenValueByKey } =
+  allMailsSlice.actions;
 export default allMailsSlice.reducer;

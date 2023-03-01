@@ -6,12 +6,8 @@ import {
   faArchive,
   faCaretDown,
   faEllipsisVertical,
-  faInbox,
   faRotateRight,
-  faTag,
-  faUserGroup,
   faTriangleExclamation,
-  faListCheck,
   faArrowUpFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -25,14 +21,12 @@ import {
   faTrashCan,
 } from "@fortawesome/free-regular-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { addSelectedMail, updateSelectAll } from "../reducers/selectedMails";
-import {
-  handleUpdateArchived,
-  handleUpdateOnHold,
-  handleUpdateUnRead,
+import { updateSelectAll } from "../reducers/selectedMails";
+import allMails, {
   deleteMail,
+  updateBooleenValueByKey,
 } from "../reducers/allMails";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function InBoxHeader() {
   const dispatch = useDispatch();
@@ -40,23 +34,46 @@ export default function InBoxHeader() {
   const selected = useSelector((state) => state.selectedMails.value);
 
   const currentMailList = useSelector((state) => state.currentMailList.value);
+  const [showModalPlus, setShowModalPlus] = useState(false);
+  const modalPlus = useRef(null);
+  const modalMoveTo = useRef(null);
+  const [showModalMoveTo, setShowModalMoveTo] = useState(false);
+
+  const handleClickOutside = (event) => {
+    if (modalPlus.current && !modalPlus.current.contains(event.target)) {
+      setShowModalPlus(false);
+    }
+    if (modalMoveTo.current && !modalMoveTo.current.contains(event.target)) {
+      setShowModalMoveTo(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   let selectIcon = faSquare;
 
   if (selected.length > 0 && selected.length != currentMailList.length) {
     selectIcon = faSquareMinus;
-  } else if ((selected.length === currentMailList.length) != 0) {
+  } else if (
+    selected.length === currentMailList.length &&
+    currentMailList.length !== 0
+  ) {
     console.log("longeure égale");
     selectIcon = faSquareCheck;
   } else if (selected.length === 0 || currentMailList.length === 0) {
     selectIcon = faSquare;
   }
-  useEffect(() => {
-    if (currentMailList === 0) {
-      console.log("useEffect reset selected");
-      dispatch(updateSelectAll([]));
+
+  let selectedContainUnread = [];
+  for (let mail of selected) {
+    if (mail.unRead) {
+      selectedContainUnread.push(mail);
     }
-  }, [currentMailList]);
+  }
 
   const handleSelectAll = () => {
     if (selected.length === 0) {
@@ -67,33 +84,80 @@ export default function InBoxHeader() {
     }
   };
 
-  const deleteEmail = () => {
-    dispatch(deleteMail(selected));
+  const handleUnRead = () => {
+    selectedContainUnread.length === 0
+      ? dispatch(
+          updateBooleenValueByKey({
+            selectedArr: selected,
+            keyToUpdate: "unRead",
+          })
+        )
+      : dispatch(
+          updateBooleenValueByKey({
+            selectedArr: selectedContainUnread,
+            keyToUpdate: "unRead",
+          })
+        );
+
+    dispatch(updateSelectAll([]));
   };
 
   const handleArchived = () => {
-    dispatch(handleUpdateArchived(selected));
+    dispatch(
+      updateBooleenValueByKey({
+        selectedArr: selected,
+        keyToUpdate: "archived",
+      })
+    );
     dispatch(updateSelectAll([]));
   };
 
   const handleOnHold = () => {
-    dispatch(handleUpdateOnHold(selected));
+    dispatch(
+      updateBooleenValueByKey({ selectedArr: selected, keyToUpdate: "onHold" })
+    );
     dispatch(updateSelectAll([]));
   };
 
-  let selectedContainUnread = [];
-  for (let mail of selected) {
-    if (mail.unRead) {
-      selectedContainUnread.push(mail);
+  const handleSpam = () => {
+    dispatch(
+      updateBooleenValueByKey({ selectedArr: selected, keyToUpdate: "spam" })
+    );
+  };
+
+  const handlePerso = () => {
+    dispatch(
+      updateBooleenValueByKey({ selectedArr: selected, keyToUpdate: "perso" })
+    );
+  };
+
+  const handlePro = () => {
+    dispatch(
+      updateBooleenValueByKey({ selectedArr: selected, keyToUpdate: "pro" })
+    );
+  };
+  const handleupdateBooleenValueByKey = (selectedMails, key, value) => {
+    dispatch(
+      updateBooleenValueByKey({
+        selectedArr: selectedMails,
+        keyToUpdate: key,
+        forcedValue: value,
+      })
+    );
+  };
+
+  const deleteEmail = () => {
+    dispatch(deleteMail(selected));
+    dispatch(updateSelectAll([]));
+  };
+
+  useEffect(() => {
+    if (currentMailList === 0) {
+      console.log("useEffect reset selected");
+      dispatch(updateSelectAll([]));
+      selectIcon = faSquare;
     }
-  }
-  const handleUnRead = () => {
-    selectedContainUnread.length === 0
-      ? dispatch(handleUpdateUnRead(selected))
-      : dispatch(handleUpdateUnRead(selectedContainUnread));
-
-    dispatch(updateSelectAll([]));
-  };
+  }, [currentMailList]);
 
   console.log(
     "selected:",
@@ -131,7 +195,11 @@ export default function InBoxHeader() {
                 onClick={() => handleArchived()}
               />
             </div>
-            <div className={styles.optionalIcons} title="Signaler comme spam">
+            <div
+              className={styles.optionalIcons}
+              title="Signaler comme spam"
+              onClick={() => handleSpam()}
+            >
               <FontAwesomeIcon
                 icon={faTriangleExclamation}
                 className={styles.iconsLeftControl}
@@ -187,13 +255,38 @@ export default function InBoxHeader() {
               />
             </div> */}
           </div>
-          <div className={styles.optionalGroupIcon}>
-            <div className={styles.optionalIcons} title="Déplacer vers">
+          <div
+            className={styles.optionalGroupIcon}
+            ref={modalMoveTo}
+            onClick={() => setShowModalMoveTo(!showModalMoveTo)}
+          >
+            <div className={styles.optionalIcons}>
               <FontAwesomeIcon
+                title="Déplacer vers"
                 icon={faArrowUpFromBracket}
                 className={styles.iconsLeftControl}
                 style={{ transform: "rotate(90deg)" }}
               />
+              <div
+                className={styles.optionsModal}
+                style={showModalMoveTo ? { display: "block" } : {}}
+              >
+                <div className={styles.optionItem}>Principale</div>
+                <div className={styles.optionItem}>Promotions</div>
+                <div className={styles.optionItem}>Réseaux sociaux</div>
+                <div
+                  className={styles.optionItem}
+                  onClick={() => handlePerso()}
+                >
+                  Personnel
+                </div>
+                <div className={styles.optionItem} onClick={() => handlePro()}>
+                  Professionnel
+                </div>
+                <div className={styles.optionItem} onClick={() => handleSpam()}>
+                  Spam
+                </div>
+              </div>
             </div>
             {/* <div className={styles.optionalIcons}>
               <FontAwesomeIcon
@@ -212,11 +305,92 @@ export default function InBoxHeader() {
             className={styles.iconsLeftControl}
           />
         </div>
-        <div className={styles.iconsRight} title="Plus">
+        <div
+          ref={modalPlus}
+          className={styles.iconsRight}
+          onClick={() => setShowModalPlus(!showModalPlus)}
+        >
           <FontAwesomeIcon
+            title="Plus"
             icon={faEllipsisVertical}
             className={styles.iconsLeftControl}
           />
+          {selected.length > 0 ? (
+            <div
+              className={styles.optionsModal}
+              style={showModalPlus ? { display: "block" } : {}}
+            >
+              <div
+                className={styles.optionItem}
+                onClick={() =>
+                  handleupdateBooleenValueByKey(selected, "unRead", false)
+                }
+              >
+                Marquer comme lu
+              </div>
+              <div
+                className={styles.optionItem}
+                onClick={() =>
+                  handleupdateBooleenValueByKey(selected, "unRead", true)
+                }
+              >
+                Marquer comme non lu
+              </div>
+              <div
+                className={styles.optionItem}
+                onClick={() =>
+                  handleupdateBooleenValueByKey(selected, "important", true)
+                }
+              >
+                Marquer comme important
+              </div>
+              <div
+                className={styles.optionItem}
+                onClick={() =>
+                  handleupdateBooleenValueByKey(selected, "important", false)
+                }
+              >
+                Marquer comme non important
+              </div>
+              <div
+                className={styles.optionItem}
+                onClick={() =>
+                  handleupdateBooleenValueByKey(selected, "followed", true)
+                }
+              >
+                Activer le suivi
+              </div>
+              <div
+                className={styles.optionItem}
+                onClick={() =>
+                  handleupdateBooleenValueByKey(selected, "followed", false)
+                }
+              >
+                Désactiver le suivi
+              </div>
+            </div>
+          ) : (
+            <div
+              className={styles.optionsModal}
+              style={showModalPlus ? { display: "block" } : {}}
+            >
+              <div
+                className={styles.optionItem}
+                onClick={() =>
+                  handleupdateBooleenValueByKey(
+                    currentMailList,
+                    "unRead",
+                    false
+                  )
+                }
+              >
+                Tout marquer comme lu
+              </div>
+              <div className={styles.optionItemAlerte}>
+                Selectionnez des messages pour afficher plus d'actions
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
