@@ -29,10 +29,8 @@ export default function PromotionBox() {
   let promotionList = [];
 
   for (let mail of allMails) {
-    if (!mail.archived && !mail.onHold && !mail.spam) {
-      if (mail.categorie === "promotion") {
+    if (!mail.archived && mail.promotion) {
         promotionList.push(mail);
-      }
     }
   }
 

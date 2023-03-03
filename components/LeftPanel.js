@@ -56,16 +56,16 @@ export default function LeftPanel() {
   let reseauxLength = 0;
 
   for (let email of allMails) {
-    if (email.important) {
+    if (email.important && email.unRead) {
       importantLength++;
     }
     if (email.unRead && !email.archived && !email.spam && !email.onHold) {
       unReadLength++;
     }
-    if (email.followed) {
+    if (email.followed && email.unRead) {
       followedLength++;
     }
-    if (email.onHold) {
+    if (email.onHold && email.unRead) {
       onHoldLength++;
     }
     if (email.archived) {
@@ -74,28 +74,30 @@ export default function LeftPanel() {
     if (email.spam) {
       spamLength++;
     }
-    if (email.pro) {
+    if (email.unRead && email.pro && !email.archived) {
       proLength++;
     }
-    if (email.perso) {
+    if (email.unRead && email.perso && !email.archived) {
       persoLength++;
     }
-    if (email.categorie === "principal" && email.unRead && !email.onHold) {
+    if (email.principal && email.unRead && !email.onHold && !email.archived) {
       principalLength++;
     }
     if (
-      email.categorie === "promotion" &&
+      email.promotion &&
       email.unRead &&
       !email.onHold &&
-      !email.spam
+      !email.spam &&
+      !email.archived
     ) {
       promotionLength++;
     }
     if (
-      email.categorie === "reseaux" &&
+      email.reseaux &&
       email.unRead &&
       !email.onHold &&
-      !email.spam
+      !email.spam &&
+      !email.archived
     ) {
       reseauxLength++;
     }

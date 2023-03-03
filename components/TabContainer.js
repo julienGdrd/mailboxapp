@@ -16,8 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateSelectAll } from "../reducers/selectedMails";
 
 export default function TabContainer(props) {
-
-  const dispatch= useDispatch();
+  const dispatch = useDispatch();
 
   const allMails = useSelector((state) => state.allMails.value);
 
@@ -28,13 +27,20 @@ export default function TabContainer(props) {
   let reseauxUnReadCounter = 0;
 
   for (let mail of allMails) {
-    if (!mail.archived && mail.unRead && !mail.onHold && !mail.spam) {
-      if (mail.categorie === "principal") {
-          principalUnReadCounter++;
-      } else if (mail.categorie === "promotion") {
-          promotionUnReadCounter++;
+    if (
+      mail.unRead &&
+      !mail.archived &&
+      !mail.onHold &&
+      !mail.spam &&
+      !mail.pro &&
+      !mail.perso
+    ) {
+      if (mail.principal) {
+        principalUnReadCounter++;
+      } else if (mail.promotion) {
+        promotionUnReadCounter++;
       } else {
-          reseauxUnReadCounter++;
+        reseauxUnReadCounter++;
       }
     }
   }
@@ -44,7 +50,9 @@ export default function TabContainer(props) {
       <div
         className={styles.tabItem}
         onClick={() => {
-          setTab("principal"), props.selectTab("principal"), tab !== "principal" && dispatch(updateSelectAll([]))
+          setTab("principal"),
+            props.selectTab("principal"),
+            tab !== "principal" && dispatch(updateSelectAll([]));
         }}
         style={
           tab === "principal"
@@ -63,7 +71,9 @@ export default function TabContainer(props) {
       <div
         className={styles.tabItem}
         onClick={() => {
-          setTab("promotion"), props.selectTab("promotion"), tab !== "promotion" && dispatch(updateSelectAll([]))
+          setTab("promotion"),
+            props.selectTab("promotion"),
+            tab !== "promotion" && dispatch(updateSelectAll([]));
         }}
         style={
           tab === "promotion"
@@ -82,7 +92,9 @@ export default function TabContainer(props) {
       <div
         className={styles.tabItem}
         onClick={() => {
-          setTab("reseaux"), props.selectTab("reseaux"), tab !== "reseaux" && dispatch(updateSelectAll([]))
+          setTab("reseaux"),
+            props.selectTab("reseaux"),
+            tab !== "reseaux" && dispatch(updateSelectAll([]));
         }}
         style={
           tab === "reseaux"

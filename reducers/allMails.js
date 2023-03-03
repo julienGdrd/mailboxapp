@@ -16,8 +16,17 @@ export const allMailsSlice = createSlice({
       console.log("reducer allMails", action.payload);
     },
     updateBooleenValueByKey: (state, action) => {
+      const keysOnlyOneCanBeTrue = [
+        "pro",
+        "perso",
+        "onHold",
+        "spam",
+        "principal",
+        "promotion",
+        "reseaux",
+      ];
       if (Object.keys(action.payload).length === 3) {
-        // Force booleen by key
+        // FORCE booleen by key
         state.value = state.value.map((email) => {
           const emailIndex = action.payload.selectedArr.findIndex(
             (payloadEmail) => payloadEmail._id === email._id
@@ -26,12 +35,19 @@ export const allMailsSlice = createSlice({
             const updatedEmail = { ...email };
             updatedEmail[action.payload.keyToUpdate] =
               action.payload.forcedValue;
+            if (keysOnlyOneCanBeTrue.includes(action.payload.keyToUpdate)) {
+              keysOnlyOneCanBeTrue.forEach((key) => {
+                if (key !== action.payload.keyToUpdate) {
+                  updatedEmail[key] = false;
+                }
+              });
+            }
             return updatedEmail;
           }
           return email;
         });
       } else if (Object.keys(action.payload).length === 2) {
-        // Toggle booleen by key
+        // TOGGLE booleen by key
         state.value = state.value.map((email) => {
           const emailIndex = action.payload.selectedArr.findIndex(
             (payloadEmail) => payloadEmail._id === email._id
@@ -42,12 +58,18 @@ export const allMailsSlice = createSlice({
               !action.payload.selectedArr[emailIndex][
                 action.payload.keyToUpdate
               ];
+            if (keysOnlyOneCanBeTrue.includes(action.payload.keyToUpdate)) {
+              keysOnlyOneCanBeTrue.forEach((key) => {
+                if (key !== action.payload.keyToUpdate) {
+                  updatedEmail[key] = false;
+                }
+              });
+            }
             return updatedEmail;
           }
           return email;
         });
       }
-      console.log("number of keys :", Object.keys(action.payload).length);
     },
     deleteMail: (state, action) => {
       const idsToDelete = action.payload.map((email) => email._id);
