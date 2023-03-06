@@ -12,7 +12,6 @@ export default function OnHoldBox() {
   const dispatch = useDispatch();
 
   const allMails = useSelector((state) => state.allMails.value);
-  // console.log("allMails", allMails);
 
   let tableMail;
   let onHoldMailList = [];

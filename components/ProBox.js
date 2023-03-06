@@ -25,7 +25,7 @@ export default function ProBox() {
   }
 
   useEffect(() => {
-    dispatch(setActiveTab("ProBox"));
+    dispatch(setActiveTab("proBox"));
     dispatch(addCurrentList(proMailList));
   }, []);
 

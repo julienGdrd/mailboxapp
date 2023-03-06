@@ -2,7 +2,6 @@ import styles from "../styles/LeftPanel.module.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faAngleRight,
   faAngleDown,
   faBoxArchive,
   faEllipsisVertical,
@@ -34,7 +33,7 @@ export default function LeftPanel() {
 
   const activeTab = useSelector((state) => state.activeTabs.value);
   const allMails = useSelector((state) => state.allMails.value);
-
+  console.log("ativetabLeft", activeTab);
   const [moreTabs, setMoreTabs] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const activeTabStyle = {
@@ -62,7 +61,7 @@ export default function LeftPanel() {
     if (email.unRead && !email.archived && !email.spam && !email.onHold) {
       unReadLength++;
     }
-    if (email.followed && email.unRead) {
+    if (email.followed && email.unRead && !email.archived) {
       followedLength++;
     }
     if (email.onHold && email.unRead) {
@@ -351,7 +350,7 @@ export default function LeftPanel() {
               <Link href="/spamBox">
                 <div
                   className={styles.leftTabs}
-                  style={activeTab === "SpamBox" ? activeTabStyle : {}}
+                  style={activeTab === "spamBox" ? activeTabStyle : {}}
                   onClick={() => dispatch(updateSelectAll([]))}
                 >
                   <div className={styles.tabLabelIcon}>
@@ -400,7 +399,7 @@ export default function LeftPanel() {
             <Link href="/proBox">
               <div
                 className={styles.leftTabs}
-                style={activeTab === "ProBox" ? activeTabStyle : {}}
+                style={activeTab === "proBox" ? activeTabStyle : {}}
                 onClick={() => dispatch(updateSelectAll([]))}
               >
                 <div className={styles.tabLabelIcon}>
@@ -427,7 +426,7 @@ export default function LeftPanel() {
             <Link href="/persoBox">
               <div
                 className={styles.leftTabs}
-                style={activeTab === "PersoBox" ? activeTabStyle : {}}
+                style={activeTab === "persoBox" ? activeTabStyle : {}}
                 onClick={() => dispatch(updateSelectAll([]))}
               >
                 <div className={styles.tabLabelIcon}>

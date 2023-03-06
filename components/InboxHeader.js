@@ -1,7 +1,6 @@
 import styles from "../styles/RightPanel.module.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import {
   faArchive,
   faCaretDown,
@@ -11,7 +10,6 @@ import {
   faArrowUpFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import {
-  faCircleCheck,
   faClock,
   faEnvelope,
   faEnvelopeOpen,
@@ -21,13 +19,12 @@ import {
   faTrashCan,
 } from "@fortawesome/free-regular-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { addSelectedMail, updateSelectAll } from "../reducers/selectedMails";
+import { updateSelectAll } from "../reducers/selectedMails";
 import allMails, {
   deleteMail,
   updateBooleenValueByKey,
 } from "../reducers/allMails";
 import { useEffect, useState, useRef } from "react";
-import Link from "next/link";
 
 export default function InBoxHeader() {
   const dispatch = useDispatch();
@@ -82,13 +79,12 @@ export default function InBoxHeader() {
     }
   }
 
-
   // array setters for optionnal selection
   let currentMailListUnRead = [];
   let currentMailListRead = [];
   let currentMailListFollowed = [];
   let currentMailListUnFollowed = [];
-  
+
   for (let mail of currentMailList) {
     if (mail.unRead) {
       currentMailListUnRead.push(mail);
@@ -127,7 +123,6 @@ export default function InBoxHeader() {
             keyToUpdate: "unRead",
           })
         );
-
     dispatch(updateSelectAll([]));
   };
 
@@ -140,6 +135,7 @@ export default function InBoxHeader() {
     );
     dispatch(updateSelectAll([]));
   };
+
   const handlePrincipal = () => {
     dispatch(
       updateBooleenValueByKey({
@@ -150,6 +146,7 @@ export default function InBoxHeader() {
     );
     dispatch(updateSelectAll([]));
   };
+
   const handlePromo = () => {
     dispatch(
       updateBooleenValueByKey({
@@ -160,6 +157,7 @@ export default function InBoxHeader() {
     );
     dispatch(updateSelectAll([]));
   };
+
   const handleReseaux = () => {
     dispatch(
       updateBooleenValueByKey({
@@ -170,6 +168,7 @@ export default function InBoxHeader() {
     );
     dispatch(updateSelectAll([]));
   };
+
   const handleOnHold = () => {
     dispatch(
       updateBooleenValueByKey({

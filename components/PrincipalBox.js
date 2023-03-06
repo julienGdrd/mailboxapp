@@ -1,20 +1,7 @@
 import styles from "../styles/RightPanel.module.css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCaretDown,
-  faEllipsisVertical,
-  faInbox,
-  faRotateRight,
-  faTag,
-  faUserGroup,
-} from "@fortawesome/free-solid-svg-icons";
-import { faSquare } from "@fortawesome/free-regular-svg-icons";
-
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
-import { setAllMailsList } from "../reducers/allMails";
-import { setActiveTab } from "../reducers/leftTabs";
+import { useEffect } from "react";
 import { addCurrentList } from "../reducers/currentMailList";
 
 import RowMail from "./RowMail";

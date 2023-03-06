@@ -18,7 +18,7 @@ export default function FollowedBox() {
   let followedMailList = [];
 
   for (let mail of allMails) {
-    if (mail.followed) {
+    if (mail.followed && !mail.archived) {
       followedMailList.push(mail);
     }
   }

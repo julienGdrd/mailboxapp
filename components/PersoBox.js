@@ -24,7 +24,7 @@ export default function PersoBox() {
   }
 
   useEffect(() => {
-    dispatch(setActiveTab("PersoBox"));
+    dispatch(setActiveTab("persoBox"));
     dispatch(addCurrentList(persoMailList));
   }, []);
 

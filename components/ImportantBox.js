@@ -12,7 +12,6 @@ import { useEffect } from "react";
 export default function ImportantBox() {
   const dispatch = useDispatch();
 
-
   const allMails = useSelector((state) => state.allMails.value);
 
   let tableMail;
@@ -27,7 +26,7 @@ export default function ImportantBox() {
   useEffect(() => {
     dispatch(setActiveTab("ImportantBox"));
     dispatch(addCurrentList(importantMailList));
-  }, [])
+  }, []);
 
   tableMail = importantMailList.map((mail, i) => {
     return <RowMail key={i} {...mail} />;

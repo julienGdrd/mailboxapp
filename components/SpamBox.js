@@ -25,7 +25,7 @@ export default function SpamBox() {
   }
 
   useEffect(() => {
-    dispatch(setActiveTab("SpamBox"));
+    dispatch(setActiveTab("spamBox"));
     dispatch(addCurrentList(spamMailList));
   }, []);
 

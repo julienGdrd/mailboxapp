@@ -1,16 +1,5 @@
 import styles from "../styles/RightPanel.module.css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCaretDown,
-  faEllipsisVertical,
-  faInbox,
-  faRotateRight,
-  faTag,
-  faUserGroup,
-} from "@fortawesome/free-solid-svg-icons";
-import { faSquare } from "@fortawesome/free-regular-svg-icons";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { setAllMailsList } from "../reducers/allMails";
@@ -24,13 +13,12 @@ import ReseauxBox from "./ReseauxBox";
 
 export default function MainBox() {
   const dispatch = useDispatch();
-  
 
   const allMails = useSelector((state) => state.allMails.value);
 
   useEffect(() => {
     dispatch(setActiveTab("MainBox"));
-    // fetch only on first render
+    // fetch only on first render or if all messages deleted
     if (allMails.length < 1) {
       fetch("http://localhost:3000/mails")
         .then((response) => response.json())
@@ -45,17 +33,17 @@ export default function MainBox() {
   const [tab, setTab] = useState("principal");
 
   const selectTab = (name) => {
-    console.log('selectTab', name)
-    setTab(name)
-  }
+    console.log("selectTab", name);
+    setTab(name);
+  };
 
   let tableMail;
   if (tab === "principal") {
     tableMail = <PrincipalBox />;
-  }else if(tab === "promotion"){
-    tableMail = <PromotionBox/>;
-  }else{
-    tableMail = <ReseauxBox/>;
+  } else if (tab === "promotion") {
+    tableMail = <PromotionBox />;
+  } else {
+    tableMail = <ReseauxBox />;
   }
 
   return (
