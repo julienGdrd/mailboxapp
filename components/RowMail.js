@@ -6,6 +6,7 @@ import {
   faStar,
   faBoxArchive,
   faSquareUpRight,
+  faCalendarDays,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faClock,
@@ -19,15 +20,39 @@ import {
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { addMailToDisplay } from "../reducers/mailDisplayer";
-import { addSelectedMail, removeSelectedMail } from "../reducers/selectedMails";
+import {
+  addSelectedMail,
+  removeSelectedMail,
+  updateSelectAll,
+} from "../reducers/selectedMails";
 import { deleteMail, updateBooleenValueByKey } from "../reducers/allMails";
+import { useRef, useState, useEffect } from "react";
+import { useDetectClickOutside } from "react-detect-click-outside";
+import StaticDateTimePickerLandscape from "./DateTimePicker";
+import ModalOnHold from "./ModalOnHold";
+import { display } from "@mui/system";
 
 function RowMail(props) {
   const dispatch = useDispatch();
 
   const selected = useSelector((state) => state.selectedMails.value);
-
+  const [showModalOnHold, setShowModalOnHold] = useState(false);
+  const [showModalDateTime, setShowModalDateTime] = useState(false);
+  const modalOnHold = useRef(null);
   let boxIconName = faSquare;
+
+  const handleClickOutside = (event) => {
+    if (modalOnHold.current && !modalOnHold.current.contains(event.target)) {
+      setShowModalOnHold(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   for (let mail of selected) {
     if (mail._id === props._id) {
@@ -71,12 +96,6 @@ function RowMail(props) {
     );
   };
 
-  const handleOnHold = (email) => {
-    dispatch(
-      updateBooleenValueByKey({ selectedArr: [email], keyToUpdate: "onHold" })
-    );
-  };
-
   const handleArchived = (email) => {
     dispatch(
       updateBooleenValueByKey({ selectedArr: [email], keyToUpdate: "archived" })
@@ -88,12 +107,18 @@ function RowMail(props) {
   };
 
   // format date
-  let deliveryDate = new Date(props.deliveryDate);
+  let deliveryDate = props.onHoldDate
+    ? new Date(props.onHoldDate)
+    : new Date(props.deliveryDate);
   let deliveryDateFormatted = deliveryDate.toLocaleDateString("fr-FR", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
   });
+
+  const handleShowModalDateTime = () => {
+    setShowModalDateTime(!showModalDateTime);
+  };
 
   return (
     <div>
@@ -156,12 +181,21 @@ function RowMail(props) {
           {/* date--------------------- */}
           <div
             className={styles.mailDate}
-            style={props.unRead ? { color: "black" } : {}}
+            style={
+              props.onHold
+                ? { color: "#d56e0c" }
+                : props.unRead
+                ? { color: "black" }
+                : {}
+            }
           >
             {deliveryDateFormatted}
           </div>
         </div>
-        <div className={styles.overIconsContainer}>
+        <div
+          className={styles.overIconsContainer}
+          style={showModalOnHold ? { display: "flex" } : {}}
+        >
           <div
             className={styles.overIconItem}
             onClick={() => handleArchived(props)}
@@ -190,10 +224,28 @@ function RowMail(props) {
           </div>
           <div
             className={styles.overIconItem}
-            onClick={() => handleOnHold(props)}
+            onClick={() => {
+              setShowModalOnHold(!showModalOnHold),
+                dispatch(updateSelectAll([]));
+            }}
+            title="Mettre en attente"
+            ref={modalOnHold}
           >
             <FontAwesomeIcon icon={faClock} />
+            {showModalOnHold && (
+              <ModalOnHold
+                displayModalDateTime={handleShowModalDateTime}
+                emailData={props}
+              />
+            )}
           </div>
+
+          {showModalDateTime && (
+            <StaticDateTimePickerLandscape
+              hideModalDateTime={handleShowModalDateTime}
+              emailData={props}
+            />
+          )}
         </div>
       </div>
     </div>

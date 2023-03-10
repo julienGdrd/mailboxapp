@@ -20,11 +20,10 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSelectAll } from "../reducers/selectedMails";
-import allMails, {
-  deleteMail,
-  updateBooleenValueByKey,
-} from "../reducers/allMails";
+import { deleteMail, updateBooleenValueByKey } from "../reducers/allMails";
 import { useEffect, useState, useRef } from "react";
+import ModalOnHold from "./ModalOnHold";
+import StaticDateTimePickerLandscape from "./DateTimePicker";
 
 export default function InBoxHeader() {
   const dispatch = useDispatch();
@@ -38,6 +37,9 @@ export default function InBoxHeader() {
   const modalMoveTo = useRef(null);
   const [showModalSelectOptions, setShowModalSelectOptions] = useState(false);
   const modalSelect = useRef(null);
+  const [showModalOnHold, setShowModalOnHold] = useState(false);
+  const modalOnHold = useRef(null);
+  const [showModalDateTime, setShowModalDateTime] = useState(false);
 
   const handleClickOutside = (event) => {
     if (modalPlus.current && !modalPlus.current.contains(event.target)) {
@@ -48,6 +50,9 @@ export default function InBoxHeader() {
     }
     if (modalSelect.current && !modalSelect.current.contains(event.target)) {
       setShowModalSelectOptions(false);
+    }
+    if (modalOnHold.current && !modalOnHold.current.contains(event.target)) {
+      setShowModalOnHold(false);
     }
   };
 
@@ -169,17 +174,6 @@ export default function InBoxHeader() {
     dispatch(updateSelectAll([]));
   };
 
-  const handleOnHold = () => {
-    dispatch(
-      updateBooleenValueByKey({
-        selectedArr: selected,
-        keyToUpdate: "onHold",
-        forcedValue: true,
-      })
-    );
-    dispatch(updateSelectAll([]));
-  };
-
   const handleSpam = () => {
     dispatch(
       updateBooleenValueByKey({
@@ -224,6 +218,10 @@ export default function InBoxHeader() {
   const deleteEmail = () => {
     dispatch(deleteMail(selected));
     dispatch(updateSelectAll([]));
+  };
+
+  const handleShowModalDateTime = () => {
+    setShowModalDateTime(!showModalDateTime);
   };
 
   useEffect(() => {
@@ -366,20 +364,23 @@ export default function InBoxHeader() {
             </div>
             <div
               className={styles.optionalIcons}
-              onClick={() => handleOnHold()}
+              onClick={() => setShowModalOnHold(!showModalOnHold)}
               title="Mettre en attente"
+              ref={modalOnHold}
             >
               <FontAwesomeIcon
                 icon={faClock}
                 className={styles.iconsLeftControl}
               />
+              {showModalOnHold && (
+                <ModalOnHold displayModalDateTime={handleShowModalDateTime} />
+              )}
             </div>
-            {/* <div className={styles.optionalIcons}>
-              <FontAwesomeIcon
-                icon={faCircleCheck}
-                className={styles.iconsLeftControl}
+            {showModalDateTime && (
+              <StaticDateTimePickerLandscape
+                hideModalDateTime={handleShowModalDateTime}
               />
-            </div> */}
+            )}
           </div>
           <div
             className={styles.optionalGroupIcon}
@@ -429,26 +430,17 @@ export default function InBoxHeader() {
                 </div>
               </div>
             </div>
-            {/* <div className={styles.optionalIcons}>
-              <FontAwesomeIcon
-                icon={faClock}
-                className={styles.iconsLeftControl}
-              />
-            </div> */}
           </div>
         </div>
-        {/* <Link href="/"> */}
         <div
           className={styles.iconsRight}
           style={selected.length !== 0 ? { display: "none" } : {}}
-          // onClick={() => location.reload()}
         >
           <FontAwesomeIcon
             icon={faRotateRight}
             className={styles.iconsLeftControl}
           />
         </div>
-        {/* </Link> */}
         <div
           ref={modalPlus}
           className={styles.iconsRight}

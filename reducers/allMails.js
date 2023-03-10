@@ -25,7 +25,7 @@ export const allMailsSlice = createSlice({
         "promotion",
         "reseaux",
       ];
-      if (Object.keys(action.payload).length === 3) {
+      if (Object.keys(action.payload).length >= 3) {
         // FORCE booleen by key
         state.value = state.value.map((email) => {
           const emailIndex = action.payload.selectedArr.findIndex(
@@ -42,6 +42,11 @@ export const allMailsSlice = createSlice({
                 }
               });
             }
+            // onholdDate
+            if (action.payload.keyToUpdate === "onHold"){
+              updatedEmail["onHoldDate"] = action.payload.holdDate;
+            }
+            // onholdDate
             return updatedEmail;
           }
           return email;

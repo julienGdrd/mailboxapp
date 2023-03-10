@@ -1,0 +1,40 @@
+.onHoldModal {
+  display: block;
+  width: 300px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-align: left;
+  color: rgb(92, 92, 92);
+  background-color: white;
+  position: absolute;
+  top: 80%;
+  right: 0%;
+  z-index: 40;
+  border-radius: 5px;
+  box-shadow: 0px 8px 10px 1px rgb(0 0 0 / 14%),
+    0px 3px 14px 2px rgb(0 0 0 / 12%), 0px 5px 5px -3px rgb(0 0 0 / 20%);
+}
+.onHoldModal p {
+  padding: 10px 20px;
+  margin: 0;
+  cursor: default;
+}
+
+.optionItem {
+  text-align: left;
+}
+.optionItem:hover {
+  background-color: rgb(225, 225, 225);
+}
+.onHoldOption {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 20px;
+}
+
+.iconCalendar {
+  color: #5f6368;
+  font-size: 15px;
+  margin: 0 10px 0 0;
+}
