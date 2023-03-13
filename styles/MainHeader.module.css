@@ -56,12 +56,16 @@
   height: 100%;
   width: 90%;
   border: none;
+  font-family: "Roboto", sans-serif;
+  font-size: large;
+  padding-left: 10px;
+
 }
 
 .searchInput::-webkit-input-placeholder {
   font-family: "Roboto", sans-serif;
   font-size: large;
-  padding-left: 5px;
+  /* padding-left: 5px; */
 }
 
 .headerRight {

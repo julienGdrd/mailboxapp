@@ -248,6 +248,7 @@ export default function InBoxHeader() {
               className={styles.iconsLeftControl}
               style={selected.length !== 0 ? { color: "black" } : {}}
               title="Sélectionner"
+              
             />
           </div>
           <div

@@ -13,7 +13,44 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+
 export default function MainHeader() {
+  const allMails = useSelector((state) => state.allMails.value);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResultContacts, setSearchResultContacts] = useState([]);
+  const [searchResultEmail, setSearchResultEmail] = useState([]);
+  console.log("resultContact:", searchResultContacts, "query:", searchQuery);
+  
+ 
+  useEffect(() => {
+    const handleSearchQueryOnChange = () => {
+      const query = searchQuery.toLowerCase();
+      const resultsContacts = allMails.filter((mail) => {
+        return (
+          mail.autor.toLowerCase().includes(query) ||
+          mail.emailAdress.toLowerCase().includes(query)
+        );
+      });
+      const resultEmail = allMails.filter((mail) => {
+        return (
+          mail.content.toLowerCase().includes(query) ||
+          mail.object.toLowerCase().includes(query)
+        );
+      });
+      setSearchResultContacts(resultsContacts);
+      setSearchResultEmail(resultEmail);
+
+      console.log("resultF:", searchResultContacts, "queryF :", query);
+      console.log("searchQueryF:", searchQuery);
+    };
+    handleSearchQueryOnChange();
+  }, [searchQuery]);
+  
+console.log('resultEmail :', searchResultEmail)
+
   return (
     <div>
       <header className={styles.header}>
@@ -42,6 +79,9 @@ export default function MainHeader() {
               className={styles.searchInput}
               type="text"
               placeholder="Rechercher dans les messages"
+              value={searchQuery}
+              // onChange={(e) => {setSearchQuery(e.target.value); handleSearchQueryOnChange()}}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
             <div className={styles.iconsRight}>
               <FontAwesomeIcon icon={faSliders} className={styles.iconsItems} />
