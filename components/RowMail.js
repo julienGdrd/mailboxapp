@@ -174,10 +174,6 @@ function RowMail(props) {
 
         {/* enclosed icone */}
         <div className={styles.rightColumns}>
-          <div className={styles.enclosedIcon}>
-            <FontAwesomeIcon icon={faPaperclip} />
-          </div>
-
           {/* date--------------------- */}
           <div
             className={styles.mailDate}
@@ -189,7 +185,7 @@ function RowMail(props) {
                 : {}
             }
           >
-            {deliveryDateFormatted}
+            {!showModalOnHold && deliveryDateFormatted}
           </div>
         </div>
         <div

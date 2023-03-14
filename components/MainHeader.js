@@ -6,25 +6,30 @@ import {
   faBars,
   faCircleChevronDown,
   faCircleInfo,
+  faEnvelope,
   faGear,
   faMagnifyingGlass,
   faSliders,
   faUser,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 
 import { useSelector, useDispatch } from "react-redux";
+import { addMailToDisplay } from "../reducers/mailDisplayer";
+
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function MainHeader() {
+  const dispatch = useDispatch();
   const allMails = useSelector((state) => state.allMails.value);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResultContacts, setSearchResultContacts] = useState([]);
   const [searchResultEmail, setSearchResultEmail] = useState([]);
   console.log("resultContact:", searchResultContacts, "query:", searchQuery);
-  
- 
+
   useEffect(() => {
     const handleSearchQueryOnChange = () => {
       const query = searchQuery.toLowerCase();
@@ -48,8 +53,86 @@ export default function MainHeader() {
     };
     handleSearchQueryOnChange();
   }, [searchQuery]);
-  
-console.log('resultEmail :', searchResultEmail)
+
+  const openMail = (mail) => {
+    console.log("openMail reached", mail);
+    dispatch(addMailToDisplay(mail));
+  };
+  console.log("resultEmail :", searchResultEmail);
+
+  const contactResultList = searchResultContacts
+    .slice(0, 3)
+    .map((contact, i) => {
+      const query = searchQuery.toLowerCase();
+      const autor = contact.autor.toLowerCase();
+      const emailAdress = contact.emailAdress.toLowerCase();
+      const boldQuery = `<strong>${query}</strong>`;
+      const boldedAutor = autor.replace(query, boldQuery);
+      const boldedEmailAdress = emailAdress.replace(query, boldQuery);
+
+      return (
+        <div className={styles.resultRow}>
+          <div className={styles.rowPicto}>
+            <Image
+              src="/../public/avatar.png"
+              alt="logo"
+              width={30}
+              height={30}
+            />
+          </div>
+          <div className={styles.contactInfos}>
+            <div
+              className={styles.rowInfoMain}
+              dangerouslySetInnerHTML={{ __html: boldedAutor }}
+            />
+            <div
+              className={styles.rowInfoSecond}
+              dangerouslySetInnerHTML={{ __html: boldedEmailAdress }}
+            />
+          </div>
+        </div>
+      );
+    });
+
+  const mailResultList = searchResultEmail.slice(0, 5).map((mail, i) => {
+    const query = searchQuery.toLowerCase();
+    const object = mail.object.toLowerCase();
+    const emailAdress = mail.emailAdress.toLowerCase();
+    // const content = mail.content.toLowerCase();
+    const boldQuery = `<strong>${query}</strong>`;
+    const boldedObject = object.replace(query, boldQuery);
+    const boldedEmailAdress = emailAdress.replace(query, boldQuery);
+
+    // const boldedContent = content.replace(query, boldQuery);
+    return (
+      <div>
+        <Link href="/fullMail">
+          <div className={styles.resultRow} onClick={() => openMail(mail)}>
+            <div className={styles.rowPicto}>
+              <FontAwesomeIcon icon={faEnvelope} />
+            </div>
+            <div className={styles.contactInfos}>
+              <div
+                className={styles.rowInfoMain}
+                dangerouslySetInnerHTML={{ __html: boldedObject }}
+              />
+              <div
+                className={styles.rowInfoSecond}
+                dangerouslySetInnerHTML={{ __html: boldedEmailAdress }}
+              />
+            </div>
+          </div>
+        </Link>
+      </div>
+    );
+  });
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      setSearchQuery("");
+    }, 100);
+    // let time to Link and dispatch "mailToDisplay"
+  };
 
   return (
     <div>
@@ -80,12 +163,23 @@ console.log('resultEmail :', searchResultEmail)
               type="text"
               placeholder="Rechercher dans les messages"
               value={searchQuery}
-              // onChange={(e) => {setSearchQuery(e.target.value); handleSearchQueryOnChange()}}
+              onBlur={() => handleBlur()}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <div className={styles.iconsRight}>
-              <FontAwesomeIcon icon={faSliders} className={styles.iconsItems} />
-            </div>
+            {searchQuery.length > 0 && (
+              <div className={styles.iconsRight}>
+                <FontAwesomeIcon icon={faXmark} className={styles.iconsItems} />
+              </div>
+            )}
+
+            {searchQuery.length > 0 && (
+              <div className={styles.resultModal}>
+                <div className={styles.resultContainer}>
+                  {contactResultList}
+                </div>
+                <div className={styles.resultContainer}>{mailResultList}</div>
+              </div>
+            )}
           </div>
         </div>
 
