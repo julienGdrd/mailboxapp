@@ -12,9 +12,10 @@ import allMails from "../reducers/allMails";
 import activeTabs from "../reducers/leftTabs";
 import selectedMails from "../reducers/selectedMails";
 import currentMailList from "../reducers/currentMailList";
+import byContactBoxUpdater from "../reducers/byContactBoxUpdater";
 
 const store = configureStore({
-  reducer: { mailDisplayer, allMails, activeTabs, selectedMails, currentMailList },
+  reducer: { mailDisplayer, allMails, activeTabs, selectedMails, currentMailList, byContactBoxUpdater },
 });
 function App({ Component, pageProps }) {
   return (

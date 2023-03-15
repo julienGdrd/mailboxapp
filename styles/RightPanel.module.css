@@ -1,6 +1,8 @@
 .rightPanel {
   border-radius: 10px;
   width: 100%;
+  height: 73vh;
+    background-color: white;
 }
 
 .inboxHeader {
@@ -172,4 +174,31 @@
 
 .optionItem:hover {
   background-color: rgb(225, 225, 225);
+}
+
+.byContactSubHeader{
+  width: 100%;
+  padding: 14px 0;
+  background-color: white;
+  display: flex;
+  
+}
+.contactAvatar{
+  margin-right: 10px;
+}
+.autorDisplayer{
+  width: 10%;
+}
+.emailAdressDisplayer{
+  font-size: 13px;
+  cursor: pointer;
+}
+.emailAdress{
+  color: #15c;
+}
+.emailAdressDisplayer span{
+  margin: 0 5px 0 0 ;
+}
+.emailAdressDisplayer:hover{
+  text-decoration:  #15c underline;
 }

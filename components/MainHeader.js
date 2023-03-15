@@ -17,7 +17,7 @@ import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 
 import { useSelector, useDispatch } from "react-redux";
 import { addMailToDisplay } from "../reducers/mailDisplayer";
-
+import { setContact } from "../reducers/byContactBoxUpdater";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -55,11 +55,17 @@ export default function MainHeader() {
   }, [searchQuery]);
 
   const openMail = (mail) => {
-    console.log("openMail reached", mail);
     dispatch(addMailToDisplay(mail));
+    console.log("openMail reached", mail);
   };
   console.log("resultEmail :", searchResultEmail);
 
+  const handleOpenByContactBox = (contact) => {
+    dispatch(
+      setContact({ emailAdress: contact.emailAdress, autor: contact.autor })
+    );
+    console.log("contact :", contact.emailAdress);
+  };
   const contactResultList = searchResultContacts
     .slice(0, 3)
     .map((contact, i) => {
@@ -71,26 +77,33 @@ export default function MainHeader() {
       const boldedEmailAdress = emailAdress.replace(query, boldQuery);
 
       return (
-        <div className={styles.resultRow}>
-          <div className={styles.rowPicto}>
-            <Image
-              src="/../public/avatar.png"
-              alt="logo"
-              width={30}
-              height={30}
-            />
+        <Link href="/byContactBox">
+          <div
+            className={styles.resultRow}
+            onClick={() => {
+              handleOpenByContactBox(contact);
+            }}
+          >
+            <div className={styles.rowPicto}>
+              <Image
+                src="/../public/avatar.png"
+                alt="logo"
+                width={30}
+                height={30}
+              />
+            </div>
+            <div className={styles.contactInfos}>
+              <div
+                className={styles.rowInfoMain}
+                dangerouslySetInnerHTML={{ __html: boldedAutor }}
+              />
+              <div
+                className={styles.rowInfoSecond}
+                dangerouslySetInnerHTML={{ __html: boldedEmailAdress }}
+              />
+            </div>
           </div>
-          <div className={styles.contactInfos}>
-            <div
-              className={styles.rowInfoMain}
-              dangerouslySetInnerHTML={{ __html: boldedAutor }}
-            />
-            <div
-              className={styles.rowInfoSecond}
-              dangerouslySetInnerHTML={{ __html: boldedEmailAdress }}
-            />
-          </div>
-        </div>
+        </Link>
       );
     });
 
@@ -105,8 +118,8 @@ export default function MainHeader() {
 
     // const boldedContent = content.replace(query, boldQuery);
     return (
-      <div>
-        <Link href="/fullMail">
+      <Link href="/fullMail">
+        <div>
           <div className={styles.resultRow} onClick={() => openMail(mail)}>
             <div className={styles.rowPicto}>
               <FontAwesomeIcon icon={faEnvelope} />
@@ -122,16 +135,16 @@ export default function MainHeader() {
               />
             </div>
           </div>
-        </Link>
-      </div>
+        </div>
+      </Link>
     );
   });
 
   const handleBlur = () => {
     setTimeout(() => {
       setSearchQuery("");
-    }, 100);
-    // let time to Link and dispatch "mailToDisplay"
+    }, 400);
+    // let time to dispatch "mailToDisplay" before linking
   };
 
   return (

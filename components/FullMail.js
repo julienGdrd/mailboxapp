@@ -15,8 +15,14 @@ import { addMailToDisplay } from "../reducers/mailDisplayer";
 
 function FullMail() {
   const dispatch = useDispatch();
-
   const fullMailToDisplay = useSelector((state) => state.mailDisplayer.value);
+  
+  let mailToDisplay;
+
+  useEffect(() => {
+    mailToDisplay = fullMailToDisplay;
+    console.log("useEffect mailTodisplay:", mailToDisplay);
+  }, [fullMailToDisplay]);
 
   // format date
   let deliveryDate = new Date(fullMailToDisplay.deliveryDate);
@@ -63,6 +69,7 @@ function FullMail() {
   useEffect(() => {
     handleUnRead(fullMailToDisplay);
   }, []);
+
   return (
     <div className={styles.mainMessageContainer}>
       <div className={styles.objectContainer}>
