@@ -6,6 +6,7 @@ import { addCurrentList } from "../reducers/currentMailList";
 
 import RowMail from "./RowMail";
 import InBoxHeader from "./InboxHeader";
+import { updateSelectAll } from "../reducers/selectedMails";
 
 export default function PrincipalBox() {
   const dispatch = useDispatch();
@@ -17,12 +18,13 @@ export default function PrincipalBox() {
 
   for (let mail of allMails) {
     if (!mail.archived && mail.principal) {
-        principalList.push(mail);
+      principalList.push(mail);
     }
   }
 
   useEffect(() => {
     dispatch(addCurrentList(principalList));
+    dispatch(updateSelectAll([]));
   }, [allMails]);
 
   let tableMail = principalList.map((mail, i) => {
@@ -31,7 +33,7 @@ export default function PrincipalBox() {
 
   return (
     <div className={styles.rightPanel}>
-      {activeTab==='PrincipalBoxCat' && <InBoxHeader/>}
+      {activeTab === "PrincipalBoxCat" && <InBoxHeader />}
       <div className={styles.mailsPanel}>
         <div className={styles.mailsContainer}>{tableMail}</div>
       </div>

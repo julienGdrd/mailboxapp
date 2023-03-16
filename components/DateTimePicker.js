@@ -1,6 +1,7 @@
 import styles from "../styles/DateTimeModal.module.css";
+import { useRouter } from "next/router";
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/fr";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -10,10 +11,18 @@ import { updateBooleenValueByKey } from "../reducers/allMails";
 
 export default function StaticDateTimePickerLandscape(props) {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const [page, setPage] = useState("");
+
   const selected = useSelector((state) => state.selectedMails.value);
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   console.log("selectedDate:", selectedDate);
+
+  
+  useEffect(() => {
+    setPage(router.pathname);
+  }, [router.pathname]);
 
   const handleClose = () => {
     props.hideModalDateTime();
@@ -59,6 +68,7 @@ export default function StaticDateTimePickerLandscape(props) {
         holdDate: formatDateOk,
       })
     );
+    page === "/fullMail" && router.push("/");
   };
   return (
     <div>

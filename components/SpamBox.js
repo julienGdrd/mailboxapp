@@ -8,6 +8,7 @@ import { addCurrentList } from "../reducers/currentMailList";
 import RowMail from "./RowMail";
 import InBoxHeader from "./InboxHeader";
 import { useEffect } from "react";
+import { updateSelectAll } from "../reducers/selectedMails";
 
 export default function SpamBox() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ export default function SpamBox() {
   useEffect(() => {
     dispatch(setActiveTab("spamBox"));
     dispatch(addCurrentList(spamMailList));
+    dispatch(updateSelectAll([]));
   }, []);
 
   tableMail = spamMailList.map((mail, i) => {

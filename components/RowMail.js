@@ -31,6 +31,7 @@ import { useDetectClickOutside } from "react-detect-click-outside";
 import StaticDateTimePickerLandscape from "./DateTimePicker";
 import ModalOnHold from "./ModalOnHold";
 import { display } from "@mui/system";
+import { addCurrentList } from "../reducers/currentMailList";
 
 function RowMail(props) {
   const dispatch = useDispatch();

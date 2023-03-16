@@ -8,6 +8,7 @@ import { addCurrentList } from "../reducers/currentMailList";
 import RowMail from "./RowMail";
 import InBoxHeader from "./InboxHeader";
 import { useEffect } from "react";
+import { updateSelectAll } from "../reducers/selectedMails";
 
 export default function ProBox() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ export default function ProBox() {
   useEffect(() => {
     dispatch(setActiveTab("proBox"));
     dispatch(addCurrentList(proMailList));
+    dispatch(updateSelectAll([]));
   }, []);
 
   tableMail = proMailList.map((mail, i) => {

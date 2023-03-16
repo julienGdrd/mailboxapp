@@ -6,6 +6,7 @@ import { addCurrentList } from "../reducers/currentMailList";
 
 import RowMail from "./RowMail";
 import InBoxHeader from "./InboxHeader";
+import { updateSelectAll } from "../reducers/selectedMails";
 
 export default function PromotionBox() {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ export default function PromotionBox() {
 
   useEffect(() => {
     dispatch(addCurrentList(promotionList));
+    dispatch(updateSelectAll([]));
   }, []);
 
   let tableMail = promotionList.map((mail, i) => {

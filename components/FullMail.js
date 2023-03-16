@@ -12,6 +12,9 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateBooleenValueByKey } from "../reducers/allMails";
 import { addMailToDisplay } from "../reducers/mailDisplayer";
+import { updateSelectAll } from "../reducers/selectedMails";
+import { addCurrentList } from "../reducers/currentMailList";
+import InBoxHeader from "./InboxHeader";
 
 function FullMail() {
   const dispatch = useDispatch();
@@ -68,10 +71,13 @@ function FullMail() {
 
   useEffect(() => {
     handleUnRead(fullMailToDisplay);
+    dispatch(updateSelectAll([fullMailToDisplay]));
+    dispatch(addCurrentList([fullMailToDisplay]));
   }, []);
 
   return (
     <div className={styles.mainMessageContainer}>
+      <InBoxHeader/>
       <div className={styles.objectContainer}>
         {fullMailToDisplay.object}
         <div

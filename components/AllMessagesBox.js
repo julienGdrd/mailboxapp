@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { setActiveTab } from "../reducers/leftTabs";
 import { addCurrentList } from "../reducers/currentMailList";
+import { updateSelectAll } from "../reducers/selectedMails";
 
 import RowMail from "./RowMail";
 import InBoxHeader from "./InboxHeader";
@@ -18,6 +19,7 @@ export default function AllMessagesBox() {
   useEffect(() => {
     dispatch(setActiveTab("AllMessagesBox"));
     dispatch(addCurrentList(allMails));
+    dispatch(updateSelectAll([]));
   }, []);
 
   let tableMail;

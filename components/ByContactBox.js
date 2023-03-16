@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { updateSelectAll } from "../reducers/selectedMails";
 
 export default function ByContactBox() {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ export default function ByContactBox() {
   useEffect(() => {
     // dispatch(setActiveTab(""));
     dispatch(addCurrentList(byContactMailList));
+    dispatch(updateSelectAll([]));
   }, []);
 
   tableMail = byContactMailList.map((mail, i) => {

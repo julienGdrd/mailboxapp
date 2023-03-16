@@ -6,6 +6,7 @@ import { addCurrentList } from "../reducers/currentMailList";
 
 import RowMail from "./RowMail";
 import InBoxHeader from "./InboxHeader";
+import { updateSelectAll } from "../reducers/selectedMails";
 
 export default function ReseauxBox() {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ export default function ReseauxBox() {
 
   useEffect(() => {
     dispatch(addCurrentList(reseauxList));
+    dispatch(updateSelectAll([]));
   }, []);
 
   let tableMail = reseauxList.map((mail, i) => {

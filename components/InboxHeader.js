@@ -1,5 +1,5 @@
 import styles from "../styles/RightPanel.module.css";
-
+import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArchive,
@@ -21,14 +21,18 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { updateSelectAll } from "../reducers/selectedMails";
 import { deleteMail, updateBooleenValueByKey } from "../reducers/allMails";
+
 import { useEffect, useState, useRef } from "react";
 import ModalOnHold from "./ModalOnHold";
 import StaticDateTimePickerLandscape from "./DateTimePicker";
 
 export default function InBoxHeader() {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const [page, setPage] = useState("");
 
   const selected = useSelector((state) => state.selectedMails.value);
+  const fullMailToDisplay = useSelector((state) => state.mailDisplayer.value);
 
   const currentMailList = useSelector((state) => state.currentMailList.value);
   const [showModalPlus, setShowModalPlus] = useState(false);
@@ -40,6 +44,10 @@ export default function InBoxHeader() {
   const [showModalOnHold, setShowModalOnHold] = useState(false);
   const modalOnHold = useRef(null);
   const [showModalDateTime, setShowModalDateTime] = useState(false);
+
+  useEffect(() => {
+    setPage(router.pathname);
+  }, [router.pathname]);
 
   const handleClickOutside = (event) => {
     if (modalPlus.current && !modalPlus.current.contains(event.target)) {
@@ -115,7 +123,15 @@ export default function InBoxHeader() {
   };
 
   const handleUnRead = () => {
-    selectedContainUnread.length === 0
+    page === "/fullMail"
+      ? dispatch(
+          updateBooleenValueByKey({
+            selectedArr: selected,
+            keyToUpdate: "unRead",
+            forcedValue: true,
+          })
+        )
+      : selectedContainUnread.length === 0
       ? dispatch(
           updateBooleenValueByKey({
             selectedArr: selected,
@@ -129,6 +145,7 @@ export default function InBoxHeader() {
           })
         );
     dispatch(updateSelectAll([]));
+    page === "/fullMail" && router.back();
   };
 
   const handleArchived = () => {
@@ -139,6 +156,7 @@ export default function InBoxHeader() {
       })
     );
     dispatch(updateSelectAll([]));
+    page === "/fullMail" && router.back();
   };
 
   const handlePrincipal = () => {
@@ -150,6 +168,7 @@ export default function InBoxHeader() {
       })
     );
     dispatch(updateSelectAll([]));
+    page === "/fullMail" && router.back();
   };
 
   const handlePromo = () => {
@@ -161,6 +180,7 @@ export default function InBoxHeader() {
       })
     );
     dispatch(updateSelectAll([]));
+    page === "/fullMail" && router.back();
   };
 
   const handleReseaux = () => {
@@ -172,6 +192,7 @@ export default function InBoxHeader() {
       })
     );
     dispatch(updateSelectAll([]));
+    page === "/fullMail" && router.back();
   };
 
   const handleSpam = () => {
@@ -182,6 +203,7 @@ export default function InBoxHeader() {
         forcedValue: true,
       })
     );
+    page === "/fullMail" && router.back();
   };
 
   const handlePerso = () => {
@@ -193,6 +215,7 @@ export default function InBoxHeader() {
       })
     );
     dispatch(updateSelectAll([]));
+    page === "/fullMail" && router.back();
   };
 
   const handlePro = () => {
@@ -204,6 +227,7 @@ export default function InBoxHeader() {
       })
     );
     dispatch(updateSelectAll([]));
+    page === "/fullMail" && router.back();
   };
   const handleupdateBooleenValueByKey = (selectedMails, key, value) => {
     dispatch(
@@ -213,11 +237,13 @@ export default function InBoxHeader() {
         forcedValue: value,
       })
     );
+    page === '/fullMail' && router.back();
   };
 
   const deleteEmail = () => {
     dispatch(deleteMail(selected));
     dispatch(updateSelectAll([]));
+    page === "/fullMail" && router.back();
   };
 
   const handleShowModalDateTime = () => {
@@ -242,71 +268,77 @@ export default function InBoxHeader() {
     <div className={styles.inboxHeader}>
       <div className={styles.leftControls}>
         <div className={styles.selectBox}>
-          <div className={styles.checkBox} onClick={() => handleSelectAll()}>
-            <FontAwesomeIcon
-              icon={selectIcon}
-              className={styles.iconsLeftControl}
-              style={selected.length !== 0 ? { color: "black" } : {}}
-              title="Sélectionner"
-              
-            />
-          </div>
-          <div
-            ref={modalSelect}
-            className={styles.iconCaretDown}
-            onClick={() => setShowModalSelectOptions(!showModalSelectOptions)}
-          >
-            <FontAwesomeIcon
-              icon={faCaretDown}
-              className={styles.iconsLeftControl}
-              title="Sélectionner"
-            />
+          {page !== "/fullMail" && (
+            <div className={styles.checkBox} onClick={() => handleSelectAll()}>
+              <FontAwesomeIcon
+                icon={selectIcon}
+                className={styles.iconsLeftControl}
+                style={selected.length !== 0 ? { color: "black" } : {}}
+                title="Sélectionner"
+              />
+            </div>
+          )}
+
+          {page !== "/fullMail" && (
             <div
-              className={styles.optionsModal}
-              style={showModalSelectOptions ? { display: "block" } : {}}
+              ref={modalSelect}
+              className={styles.iconCaretDown}
+              onClick={() => setShowModalSelectOptions(!showModalSelectOptions)}
             >
+              <FontAwesomeIcon
+                icon={faCaretDown}
+                className={styles.iconsLeftControl}
+                title="Sélectionner"
+              />
               <div
-                className={styles.optionItem}
-                onClick={() => dispatch(updateSelectAll(currentMailList))}
+                className={styles.optionsModal}
+                style={showModalSelectOptions ? { display: "block" } : {}}
               >
-                Tous
-              </div>
-              <div
-                className={styles.optionItem}
-                onClick={() => dispatch(updateSelectAll([]))}
-              >
-                Aucun
-              </div>
-              <div
-                className={styles.optionItem}
-                onClick={() => dispatch(updateSelectAll(currentMailListRead))}
-              >
-                Lus
-              </div>
-              <div
-                className={styles.optionItem}
-                onClick={() => dispatch(updateSelectAll(currentMailListUnRead))}
-              >
-                Non lus
-              </div>
-              <div
-                className={styles.optionItem}
-                onClick={() =>
-                  dispatch(updateSelectAll(currentMailListFollowed))
-                }
-              >
-                Suivis
-              </div>
-              <div
-                className={styles.optionItem}
-                onClick={() =>
-                  dispatch(updateSelectAll(currentMailListUnFollowed))
-                }
-              >
-                Non suivis
+                <div
+                  className={styles.optionItem}
+                  onClick={() => dispatch(updateSelectAll(currentMailList))}
+                >
+                  Tous
+                </div>
+                <div
+                  className={styles.optionItem}
+                  onClick={() => dispatch(updateSelectAll([]))}
+                >
+                  Aucun
+                </div>
+                <div
+                  className={styles.optionItem}
+                  onClick={() => dispatch(updateSelectAll(currentMailListRead))}
+                >
+                  Lus
+                </div>
+                <div
+                  className={styles.optionItem}
+                  onClick={() =>
+                    dispatch(updateSelectAll(currentMailListUnRead))
+                  }
+                >
+                  Non lus
+                </div>
+                <div
+                  className={styles.optionItem}
+                  onClick={() =>
+                    dispatch(updateSelectAll(currentMailListFollowed))
+                  }
+                >
+                  Suivis
+                </div>
+                <div
+                  className={styles.optionItem}
+                  onClick={() =>
+                    dispatch(updateSelectAll(currentMailListUnFollowed))
+                  }
+                >
+                  Non suivis
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
         <div
           className={styles.optionalIconsContainer}
@@ -345,13 +377,20 @@ export default function InBoxHeader() {
             <div
               className={styles.optionalIcons}
               title={
-                selectedContainUnread.length > 0
+                page === "/fullMail"
+                  ? "Marquer comme non lu"
+                  : selectedContainUnread.length > 0
                   ? "Marquer comme lu"
                   : "Marquer comme non lu"
               }
               onClick={() => handleUnRead()}
             >
-              {selectedContainUnread.length > 0 ? (
+              {page === "/fullMail" ? (
+                <FontAwesomeIcon
+                  icon={faEnvelope}
+                  className={styles.iconsLeftControl}
+                />
+              ) : selectedContainUnread.length > 0 ? (
                 <FontAwesomeIcon
                   icon={faEnvelopeOpen}
                   className={styles.iconsLeftControl}

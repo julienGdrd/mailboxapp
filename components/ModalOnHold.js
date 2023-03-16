@@ -1,18 +1,25 @@
 import styles from "../styles/ModalOnHold.module.css";
+import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 
 import { useDispatch, useSelector } from "react-redux";
 import { updateBooleenValueByKey } from "../reducers/allMails";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import moment from "moment";
 import "moment/locale/fr";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 
 export default function ModalOnHold(props) {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const [page, setPage] = useState("");
   const selected = useSelector((state) => state.selectedMails.value);
   const [showModalDateTime, setShowModalDateTime] = useState(false);
+
+  useEffect(() => {
+    setPage(router.pathname);
+  }, [router.pathname]);
 
   const toggleShowModalDateTime = (value) => {
     console.log("click cancel", value);
@@ -113,6 +120,7 @@ export default function ModalOnHold(props) {
         holdDate: newHoldDate,
       })
     );
+    page === "/fullMail" && router.push("/");
   };
 
   const removeOnHold = () => {
@@ -124,6 +132,7 @@ export default function ModalOnHold(props) {
         holdDate: null,
       })
     );
+    page === "/fullMail" && router.push("/");
   };
 
   return (

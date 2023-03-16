@@ -8,6 +8,7 @@ import { addCurrentList } from "../reducers/currentMailList";
 import RowMail from "./RowMail";
 import InBoxHeader from "./InboxHeader";
 import { useEffect } from "react";
+import { updateSelectAll } from "../reducers/selectedMails";
 
 export default function FollowedBox() {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ export default function FollowedBox() {
   useEffect(() => {
     dispatch(setActiveTab("FollowedBox"));
     dispatch(addCurrentList(followedMailList));
+    dispatch(updateSelectAll([]));
   }, []);
 
   tableMail = followedMailList.map((mail, i) => {
