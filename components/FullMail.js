@@ -8,7 +8,7 @@ import {
   faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateBooleenValueByKey } from "../reducers/allMails";
 import { addMailToDisplay } from "../reducers/mailDisplayer";
@@ -19,8 +19,22 @@ import InBoxHeader from "./InboxHeader";
 function FullMail() {
   const dispatch = useDispatch();
   const fullMailToDisplay = useSelector((state) => state.mailDisplayer.value);
-  
+  const [showModalPlus, setShowModalPlus] = useState(false);
+  const modalPlus = useRef(null);
   let mailToDisplay;
+
+  const handleClickOutside = (event) => {
+    if (modalPlus.current && !modalPlus.current.contains(event.target)) {
+      setShowModalPlus(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     mailToDisplay = fullMailToDisplay;
@@ -77,7 +91,7 @@ function FullMail() {
 
   return (
     <div className={styles.mainMessageContainer}>
-      <InBoxHeader/>
+      <InBoxHeader />
       <div className={styles.objectContainer}>
         {fullMailToDisplay.object}
         <div
@@ -132,12 +146,94 @@ function FullMail() {
                       icon={faReply}
                     />
                   </div>
-                  <div className={styles.controlIconContainer}>
+                  <div
+                  ref={modalPlus}
+                    className={styles.controlIconContainer}
+                    onClick={() => setShowModalPlus(!showModalPlus)}
+                  >
                     <FontAwesomeIcon
                       className={styles.controlIcon}
                       icon={faEllipsisVertical}
                     />
+                    <div
+                      className={styles.optionsModal}
+                      style={showModalPlus ? { display: "block" } : {}}
+                    >
+                      <div
+                        className={styles.optionItem}
+                        // onClick={() =>
+                        //   handleupdateBooleenValueByKey(
+                        //     selected,
+                        //     "unRead",
+                        //     false
+                        //   )
+                        // }
+                      >
+                        Répondre
+                      </div>
+                      <div
+                        className={styles.optionItem}
+                        // onClick={() =>
+                        //   handleupdateBooleenValueByKey(
+                        //     selected,
+                        //     "unRead",
+                        //     true
+                        //   )
+                        // }
+                      >
+                        Transférer
+                      </div>
+                      <div
+                        className={styles.optionItem}
+                        // onClick={() =>
+                        //   handleupdateBooleenValueByKey(
+                        //     selected,
+                        //     "important",
+                        //     true
+                        //   )
+                        // }
+                      >
+                        Imprimer
+                      </div>
+                      <div
+                        className={styles.optionItem}
+                        // onClick={() =>
+                        //   handleupdateBooleenValueByKey(
+                        //     selected,
+                        //     "important",
+                        //     false
+                        //   )
+                        // }
+                      >
+                        Supprimer ce message
+                      </div>
+                      <div
+                        className={styles.optionItem}
+                        // onClick={() =>
+                        //   handleupdateBooleenValueByKey(
+                        //     selected,
+                        //     "followed",
+                        //     true
+                        //   )
+                        // }
+                      >
+                        Signaler comme spam
+                      </div>
+                      <div
+                        className={styles.optionItem}
+                        // onClick={() =>
+                        //   handleupdateBooleenValueByKey(
+                        //     selected,
+                        //     "followed",
+                        //     false
+                        //   )
+                        // }
+                      >
+                        Marquer comme non lu
+                      </div>
+                    </div>
                   </div>
+                  
                 </div>
               </div>
             </div>

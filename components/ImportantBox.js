@@ -19,7 +19,7 @@ export default function ImportantBox() {
   let importantMailList = [];
 
   for (let mail of allMails) {
-    if (mail.important) {
+    if (mail.important && !mail.archived) {
       importantMailList.push(mail);
     }
   }

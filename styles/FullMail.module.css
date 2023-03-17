@@ -1,104 +1,127 @@
+.mainMessageContainer {
+  background-color: white;
+}
+.contentContainer {
+  display: flex;
+}
+.leftColumn {
+  width: 72px;
+  height: 65vh;
+  padding: 20px 0 0 0;
+  display: flex;
+  justify-content: center;
+}
+.rightContainer {
+  width: 95%;
+}
+.objectContainer {
+  padding: 20px 0 8px 72px;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+}
+.objectIconContainer {
+  margin: 0 25px;
+  width: 32px;
+  height: 32px;
+  clip-path: circle();
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.objectIcon {
+  font-size: 17px;
+  color: rgb(92, 92, 92);
+}
+.objectIconContainer:hover > .objectIcon {
+  color: black;
+}
+.objectIconContainer:hover {
+  background-color: rgb(225, 225, 225);
+}
+.autorInfos {
+  padding: 20px 0 0;
+}
+.autorInfosUpPart {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 20px;
+}
+.nameContainer {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+.rightDateControlsContainer {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+.deliveryDate {
+  margin: 0 30px 0 0;
+}
+.controlIconsRow {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.controlIconContainer {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 10px;
+  position: relative;
+}
+.controlIcon {
+  font-size: 14px;
+  color: rgb(92, 92, 92);
+}
+.controlIconContainer:hover {
+  background-color: rgb(225, 225, 225);
+}
+.controlIconContainer:hover > .controlIcon {
+  color: black;
+}
 
-.mainMessageContainer{
-    background-color: white;
+.autorInfosDownPart {
+  font-size: 12px;
 }
-.contentContainer{
-    display: flex;
+
+.textContent {
+  padding: 20px 20px 0 0;
+  font-size: 14px;
 }
-.leftColumn{
-    width: 72px;
-    height: 65vh;
-    padding: 20px 0 0 0;
-    display: flex;
-    justify-content: center;
+
+.avatarImg {
+  clip-path: circle();
 }
-.rightContainer{
-    width: 95%;
-}
-.objectContainer{
-    padding: 20px 0 8px 72px;
-    font-size: 22px;
-    display: flex;
-    align-items: center;
-}
-.objectIconContainer{
-    margin: 0 25px;
-    width: 32px;
-    height: 32px;
-    clip-path: circle();
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.optionsModal {
     cursor: pointer;
-
+  display: none;
+  min-width: 200px;
+  max-width: 240px;
+  font-size: 14px;
+  white-space: nowrap;
+  color: rgb(92, 92, 92);
+  background-color: white;
+  padding: 6px 0;
+  position: absolute;
+  top: 100%;
+  right: 0%;
+  z-index: 40;
+  border-radius: 5px;
+  box-shadow: 0px 8px 10px 1px rgb(0 0 0 / 14%),
+    0px 3px 14px 2px rgb(0 0 0 / 12%), 0px 5px 5px -3px rgb(0 0 0 / 20%);
 }
-.objectIcon{
-    font-size: 17px;
-    color: rgb(92, 92, 92);
+.optionItem {
+  padding: 5px 40px;
 }
-.objectIconContainer:hover>.objectIcon{
-    color: black;
-}
-.objectIconContainer:hover{
+.optionItem:hover {
     background-color: rgb(225, 225, 225);
-}
-.autorInfos{
-    padding: 20px 0 0;
-}
-.autorInfosUpPart{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 20px;
-}
-.nameContainer{
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-}
-.rightDateControlsContainer{
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-}
-.deliveryDate{
-    margin: 0 30px 0 0;
-}
-.controlIconsRow{
-    display: flex;
-    align-items: center;
-   
-}
-.controlIconContainer{
-    width: 32px;
-    height: 32px;
-    clip-path: circle();
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    margin: 0 10px
-}
-.controlIcon{
-    font-size: 14px;
-    color: rgb(92, 92, 92);
-}
-.controlIconContainer:hover{
-    background-color: rgb(225, 225, 225);
-}
-.controlIconContainer:hover>.controlIcon{
-    color: black;
-}
-
-.autorInfosDownPart{
-    font-size: 12px;
-}
-
-.textContent{
-    padding: 20px 20px 0 0;
-    font-size: 14px;
-}
-
-.avatarImg{
-    clip-path: circle();
-}
+  }

@@ -8,6 +8,7 @@ import {
   faRotateRight,
   faTriangleExclamation,
   faArrowUpFromBracket,
+  faInbox,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faClock,
@@ -21,6 +22,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { updateSelectAll } from "../reducers/selectedMails";
 import { deleteMail, updateBooleenValueByKey } from "../reducers/allMails";
+import { addMailToDisplay } from "../reducers/mailDisplayer";
 
 import { useEffect, useState, useRef } from "react";
 import ModalOnHold from "./ModalOnHold";
@@ -32,7 +34,6 @@ export default function InBoxHeader() {
   const [page, setPage] = useState("");
 
   const selected = useSelector((state) => state.selectedMails.value);
-  const fullMailToDisplay = useSelector((state) => state.mailDisplayer.value);
 
   const currentMailList = useSelector((state) => state.currentMailList.value);
   const [showModalPlus, setShowModalPlus] = useState(false);
@@ -237,7 +238,14 @@ export default function InBoxHeader() {
         forcedValue: value,
       })
     );
-    page === '/fullMail' && router.back();
+    if(key === 'important'){
+      dispatch(
+        addMailToDisplay({ ...selectedMails[0], important: value })
+      );
+    }
+    if (key === "unRead"){
+      page === '/fullMail' && router.back();
+    }
   };
 
   const deleteEmail = () => {
@@ -345,11 +353,14 @@ export default function InBoxHeader() {
           style={selected.length !== 0 ? { display: "flex" } : {}}
         >
           <div className={styles.optionalGroupIcon}>
-            <div className={styles.optionalIcons} title="Archiver">
+            
+            <div className={styles.optionalIcons} 
+            title={page === '/archiveBox' ? "Annuler l'archivage" :"Archiver"}
+            onClick={() => handleArchived()}
+            >
               <FontAwesomeIcon
-                icon={faArchive}
+                icon={page==='/archiveBox' ? faInbox : faArchive}
                 className={styles.iconsLeftControl}
-                onClick={() => handleArchived()}
               />
             </div>
             <div

@@ -18,7 +18,7 @@ export default function OnHoldBox() {
   let onHoldMailList = [];
 
   for (let mail of allMails) {
-    if (mail.onHold) {
+    if (mail.onHold && !mail.archived) {
       onHoldMailList.push(mail);
     }
   }

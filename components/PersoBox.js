@@ -8,6 +8,7 @@ import { addCurrentList } from "../reducers/currentMailList";
 import RowMail from "./RowMail";
 import InBoxHeader from "./InboxHeader";
 import { useEffect } from "react";
+import { updateSelectAll } from "../reducers/selectedMails";
 
 export default function PersoBox() {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ export default function PersoBox() {
   useEffect(() => {
     dispatch(setActiveTab("persoBox"));
     dispatch(addCurrentList(persoMailList));
+    dispatch(updateSelectAll([]));
   }, []);
 
   tableMail = persoMailList.map((mail, i) => {
