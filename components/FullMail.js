@@ -9,8 +9,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useState, useRef } from "react";
+import ReactToPrint from "react-to-print";
+import { useRouter } from "next/router";
+
 import { useSelector, useDispatch } from "react-redux";
-import { updateBooleenValueByKey } from "../reducers/allMails";
+import { updateBooleenValueByKey, deleteMail } from "../reducers/allMails";
 import { addMailToDisplay } from "../reducers/mailDisplayer";
 import { updateSelectAll } from "../reducers/selectedMails";
 import { addCurrentList } from "../reducers/currentMailList";
@@ -18,9 +21,11 @@ import InBoxHeader from "./InboxHeader";
 
 function FullMail() {
   const dispatch = useDispatch();
+  const router = useRouter();
   const fullMailToDisplay = useSelector((state) => state.mailDisplayer.value);
   const [showModalPlus, setShowModalPlus] = useState(false);
   const modalPlus = useRef(null);
+  let fullMailRef = useRef();
   let mailToDisplay;
 
   const handleClickOutside = (event) => {
@@ -81,6 +86,34 @@ function FullMail() {
         forcedValue: false,
       })
     );
+  };
+
+  const handleDeleteMail = () => {
+    console.log("deleteFunc:", fullMailToDisplay);
+    dispatch(deleteMail([fullMailToDisplay]));
+    router.back();
+  };
+
+  const handleSpam = () => {
+    dispatch(
+      updateBooleenValueByKey({
+        selectedArr: [fullMailToDisplay],
+        keyToUpdate: "spam",
+        forcedValue: true,
+      })
+    );
+    router.back();
+  };
+
+  const markAsUnRead = () => {
+    dispatch(
+      updateBooleenValueByKey({
+        selectedArr: [fullMailToDisplay],
+        keyToUpdate: "unRead",
+        forcedValue: true,
+      })
+    );
+    router.back();
   };
 
   useEffect(() => {
@@ -147,7 +180,7 @@ function FullMail() {
                     />
                   </div>
                   <div
-                  ref={modalPlus}
+                    ref={modalPlus}
                     className={styles.controlIconContainer}
                     onClick={() => setShowModalPlus(!showModalPlus)}
                   >
@@ -157,16 +190,16 @@ function FullMail() {
                     />
                     <div
                       className={styles.optionsModal}
-                      style={showModalPlus ? { display: "block" } : {}}
+                      style={
+                        !showModalPlus
+                          ? { display: "none" }
+                          : { display: "block" }
+                      }
                     >
                       <div
                         className={styles.optionItem}
                         // onClick={() =>
-                        //   handleupdateBooleenValueByKey(
-                        //     selected,
-                        //     "unRead",
-                        //     false
-                        //   )
+                        
                         // }
                       >
                         Répondre
@@ -174,66 +207,40 @@ function FullMail() {
                       <div
                         className={styles.optionItem}
                         // onClick={() =>
-                        //   handleupdateBooleenValueByKey(
-                        //     selected,
-                        //     "unRead",
-                        //     true
-                        //   )
+                        
                         // }
                       >
                         Transférer
                       </div>
                       <div
                         className={styles.optionItem}
-                        // onClick={() =>
-                        //   handleupdateBooleenValueByKey(
-                        //     selected,
-                        //     "important",
-                        //     true
-                        //   )
-                        // }
+                        onClick={() => setShowModalPlus(false)}
                       >
-                        Imprimer
+                        <ReactToPrint
+                          trigger={() => <div>Imprimer</div>}
+                          content={() => fullMailRef}
+                        />
                       </div>
                       <div
                         className={styles.optionItem}
-                        // onClick={() =>
-                        //   handleupdateBooleenValueByKey(
-                        //     selected,
-                        //     "important",
-                        //     false
-                        //   )
-                        // }
+                        onClick={() => handleDeleteMail()}
                       >
                         Supprimer ce message
                       </div>
                       <div
                         className={styles.optionItem}
-                        // onClick={() =>
-                        //   handleupdateBooleenValueByKey(
-                        //     selected,
-                        //     "followed",
-                        //     true
-                        //   )
-                        // }
+                        onClick={() => handleSpam()}
                       >
                         Signaler comme spam
                       </div>
                       <div
                         className={styles.optionItem}
-                        // onClick={() =>
-                        //   handleupdateBooleenValueByKey(
-                        //     selected,
-                        //     "followed",
-                        //     false
-                        //   )
-                        // }
+                        onClick={() => markAsUnRead()}
                       >
                         Marquer comme non lu
                       </div>
                     </div>
                   </div>
-                  
                 </div>
               </div>
             </div>
@@ -242,7 +249,9 @@ function FullMail() {
               <span>moi</span>
             </div>
           </div>
-          <div className={styles.textContent}>{fullMailToDisplay.content}</div>
+          <div className={styles.textContent} ref={(el) => (fullMailRef = el)}>
+            {fullMailToDisplay.content}
+          </div>
         </div>
       </div>
     </div>

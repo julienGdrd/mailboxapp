@@ -27,10 +27,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { updateSelectAll } from "../reducers/selectedMails";
 import { setActiveTab } from "../reducers/leftTabs";
+import MailEditor from "./MailEditor";
 
 export default function LeftPanel() {
   const dispatch = useDispatch();
-
+  const [showModalMailEditor, setShowModalMailEditor] = useState(false);
   const activeTab = useSelector((state) => state.activeTabs.value);
   const allMails = useSelector((state) => state.allMails.value);
   console.log("ativetabLeft", activeTab);
@@ -104,8 +105,14 @@ export default function LeftPanel() {
 
   return (
     <div>
+      {showModalMailEditor && <div className={styles.modalMailEditor}>
+        <MailEditor />
+      </div>}
+      
       <div className={styles.leftPanel}>
-        <div className={styles.newMessageBtn}>
+        <div className={styles.newMessageBtn}
+        onClick={() => setShowModalMailEditor(true)}
+        >
           <div>
             <FontAwesomeIcon
               icon={faPen}
