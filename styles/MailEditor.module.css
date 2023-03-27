@@ -1,0 +1,65 @@
+.editorContainer {
+  width: 30vw;
+  box-shadow: 0px 8px 10px 1px rgb(0 0 0 / 14%),
+    0px 3px 14px 2px rgb(0 0 0 / 12%), 0px 5px 5px -3px rgb(0 0 0 / 20%);
+    border-radius: 0 0 5px 5px;
+}
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  background-color: #d3e3fd;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+.topHeaderIcons{
+    cursor: pointer;
+}
+.editorInputs {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.editorInputs input {
+  border: none;
+  border-bottom: 1px solid rgba(189, 189, 189, 0.492);
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  height: 30px;
+}
+.editorInputs input:focus-visible{
+  outline: unset;
+
+}
+.editorInputs input::-webkit-input-placeholder{
+  font-family: "Roboto", sans-serif;
+}
+.modalBottom{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+}
+.buttonSendding{
+    cursor: pointer;
+    background-color: #0b57d0;
+    color: white;
+    padding: 10px;
+    width: 100px;
+    border-radius: 30px;
+    text-align: center;
+}
+.buttonSendding:hover{
+    opacity: 0.9;
+}
+.deleteIconContainer{
+    cursor: pointer;
+    color: rgb(92, 92, 92);
+    padding: 10px;
+    border-radius: 5px;
+}
+.deleteIconContainer:hover{
+    background-color: rgb(225, 225, 225);
+}

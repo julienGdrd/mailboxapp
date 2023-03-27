@@ -1,10 +1,75 @@
-import 'react-quill/dist/quill.snow.css'
-import dynamic from 'next/dynamic'
-const QuillNoSSRWrapper = dynamic(import('react-quill'), {	
-	ssr: false,
-	loading: () => <p>Loading ...</p>,
-	})
+import "react-quill/dist/quill.snow.css";
+import styles from "../styles/MailEditor.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-    export default function MailEditor() {
-        return <QuillNoSSRWrapper  theme="snow" />
-      }
+import dynamic from "next/dynamic";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { useState } from "react";
+const QuillNoSSRWrapper = dynamic(import("react-quill"), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+});
+
+export default function MailEditor(props) {
+  const [recipients, setRecipients] = useState([]);
+  const [mailObject, setMailObject] = useState("");
+  const [messageContent, setMessageContent] = useState("");
+  const closeModalMailEditor = () => {
+    props.handleCloseModalMailEditor();
+  };
+
+  const handleEditorChange = (content, delta, source, editor) => {
+    setMessageContent(editor.getHTML());
+  };
+  console.log("recipients", recipients);
+  console.log("object", mailObject);
+  console.log("content", messageContent);
+
+  return (
+    <div className={styles.editorContainer}>
+      <div className={styles.modalHeader}>
+        <span>Nouveau message</span>
+        <div className={styles.topHeaderIcons}>
+          <FontAwesomeIcon
+            icon={faXmark}
+            title="Fermer"
+            onClick={() => closeModalMailEditor()}
+          />
+        </div>
+      </div>
+      <div className={styles.editorInputs}>
+        <input
+          type="text"
+          placeholder="Destinataires"
+          value={recipients}
+          onChange={(e) => setRecipients(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Objet"
+          value={mailObject}
+          onChange={(e) => setMailObject(e.target.value)}
+        />
+      </div>
+      <div>
+        <QuillNoSSRWrapper
+          theme="snow"
+          onChange={handleEditorChange}
+        />
+      </div>
+
+      <div className={styles.modalBottom}>
+        <div className={styles.buttonSendding} title="Envoyer le message">
+          Envoyer
+        </div>
+        <div
+          className={styles.deleteIconContainer}
+          title="Supprimer le brouillon"
+        >
+          <FontAwesomeIcon icon={faTrashCan} />
+        </div>
+      </div>
+    </div>
+  );
+}

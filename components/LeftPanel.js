@@ -103,10 +103,15 @@ export default function LeftPanel() {
     }
   }
 
+  const handleCloseModalMailEditor = () => {
+    setShowModalMailEditor(false);
+  }
   return (
     <div>
       {showModalMailEditor && <div className={styles.modalMailEditor}>
-        <MailEditor />
+        <MailEditor 
+        handleCloseModalMailEditor={handleCloseModalMailEditor}
+        />
       </div>}
       
       <div className={styles.leftPanel}>

@@ -62,12 +62,6 @@
 
 }
 
-.searchInput::-webkit-input-placeholder {
-  font-family: "Roboto", sans-serif;
-  font-size: large;
-  /* padding-left: 5px; */
-}
-
 .searchBar:focus-within{
   background-color: white;
   outline: unset;
