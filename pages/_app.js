@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 
 import mailDisplayer from "../reducers/mailDisplayer";
+import sendedMails from "../reducers/sendedMails";
 import allMails from "../reducers/allMails";
 import activeTabs from "../reducers/leftTabs";
 import selectedMails from "../reducers/selectedMails";
@@ -16,7 +17,7 @@ import currentMailList from "../reducers/currentMailList";
 import byContactBoxUpdater from "../reducers/byContactBoxUpdater";
 
 const store = configureStore({
-  reducer: { mailDisplayer, allMails, activeTabs, selectedMails, currentMailList, byContactBoxUpdater },
+  reducer: { mailDisplayer, allMails, sendedMails, activeTabs, selectedMails, currentMailList, byContactBoxUpdater },
 });
 function App({ Component, pageProps }) {
   return (

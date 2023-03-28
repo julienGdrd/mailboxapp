@@ -18,6 +18,7 @@ import {
   faBookmark,
   faClock,
   faFile,
+  faPaperPlane,
   faStar,
 } from "@fortawesome/free-regular-svg-icons";
 
@@ -215,6 +216,26 @@ export default function LeftPanel() {
                     />
                   </div>
                   Important
+                </div>
+                <span className={styles.counterLeft}>
+                  {importantLength > 0 ? importantLength : ""}
+                </span>
+              </div>
+            </Link>
+            <Link href="/sendedMailsBox">
+              <div
+                className={styles.leftTabs}
+                style={activeTab === "SendedBox" ? activeTabStyle : {}}
+                onClick={() => dispatch(updateSelectAll([]))}
+              >
+                <div className={styles.tabLabelIcon}>
+                  <div className={styles.leftTabsIconContainer}>
+                    <FontAwesomeIcon
+                      icon={faPaperPlane}
+                      className={styles.iconLeftTab}
+                    />
+                  </div>
+                  Messages envoyés
                 </div>
                 <span className={styles.counterLeft}>
                   {importantLength > 0 ? importantLength : ""}

@@ -6,12 +6,18 @@ import dynamic from "next/dynamic";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { addSendedMail } from "../reducers/sendedMails";
 const QuillNoSSRWrapper = dynamic(import("react-quill"), {
   ssr: false,
   loading: () => <p>Loading ...</p>,
 });
 
 export default function MailEditor(props) {
+  const dispatch = useDispatch();
+
+
   const [recipients, setRecipients] = useState([]);
   const [mailObject, setMailObject] = useState("");
   const [messageContent, setMessageContent] = useState("");
@@ -25,6 +31,18 @@ export default function MailEditor(props) {
   console.log("recipients", recipients);
   console.log("object", mailObject);
   console.log("content", messageContent);
+
+  const handleSendMessage = () => {
+    const newMessage = {
+      recipients : recipients,
+      object : mailObject,
+      content : messageContent,
+      autor : 'userName',
+      sendingDate : new Date,
+    }
+    dispatch(addSendedMail(newMessage))
+    console.log('newMessage :', newMessage)
+  }
 
   return (
     <div className={styles.editorContainer}>
@@ -60,7 +78,10 @@ export default function MailEditor(props) {
       </div>
 
       <div className={styles.modalBottom}>
-        <div className={styles.buttonSendding} title="Envoyer le message">
+        <div className={styles.buttonSendding} 
+        title="Envoyer le message"
+        onClick={() => handleSendMessage()}
+        >
           Envoyer
         </div>
         <div
