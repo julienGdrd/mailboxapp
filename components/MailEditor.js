@@ -1,14 +1,15 @@
 import "react-quill/dist/quill.snow.css";
 import styles from "../styles/MailEditor.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import moment from "moment";
+import "moment/locale/fr";
 import dynamic from "next/dynamic";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { addSendedMail } from "../reducers/sendedMails";
+import { addSendedMail } from "../reducers/allMails";
 const QuillNoSSRWrapper = dynamic(import("react-quill"), {
   ssr: false,
   loading: () => <p>Loading ...</p>,
@@ -16,7 +17,7 @@ const QuillNoSSRWrapper = dynamic(import("react-quill"), {
 
 export default function MailEditor(props) {
   const dispatch = useDispatch();
-
+  const uid2 = require('uid2');
 
   const [recipients, setRecipients] = useState([]);
   const [mailObject, setMailObject] = useState("");
@@ -34,14 +35,29 @@ export default function MailEditor(props) {
 
   const handleSendMessage = () => {
     const newMessage = {
-      recipients : recipients,
+      _id : uid2(32),
+      sendedTo : recipients,
+      sendedBy : 'user@user.com',
       object : mailObject,
       content : messageContent,
-      autor : 'userName',
-      sendingDate : new Date,
+      autor : 'User Name',
+      deliveryDate : moment().format("YYYY-MM-DDT18:00:00Z"),
+      archived: false,
+      followed : false,
+      important : false,
+      onHold : false,
+      onHoldDate : null,
+      perso : false,
+      principal : false,
+      pro : false,
+      promotion : false,
+      reseaux : false,
+      spam : false,
+      unRead : false,
     }
     dispatch(addSendedMail(newMessage))
     console.log('newMessage :', newMessage)
+    closeModalMailEditor();
   }
 
   return (

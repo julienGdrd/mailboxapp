@@ -27,7 +27,7 @@ export default function ByContactBox() {
   let byContactMailList = [];
 
   for (let mail of allMails) {
-    if (mail.emailAdress === searchedContact.emailAdress) {
+    if (mail.sendedBy === searchedContact.sendedBy) {
       byContactMailList.push(mail);
     }
   }
@@ -59,7 +59,7 @@ export default function ByContactBox() {
           <span className={styles.iconsLeftControl}>
             <FontAwesomeIcon icon={faEnvelope} />
           </span>
-          <span className={styles.emailAdress}>{searchedContact.emailAdress}</span>
+          <span className={styles.emailAdress}>{searchedContact.sendedBy}</span>
         </div>
       </div>
       <div className={styles.mailsPanel}>

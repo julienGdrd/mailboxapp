@@ -15,6 +15,9 @@ export const allMailsSlice = createSlice({
       state.value = sortedEmails;
       console.log("reducer allMails", action.payload);
     },
+    addSendedMail: (state, action) => {
+      state.value.push(action.payload);
+  },
     updateBooleenValueByKey: (state, action) => {
       const keysOnlyOneCanBeTrue = [
         "pro",
@@ -85,6 +88,6 @@ export const allMailsSlice = createSlice({
   },
 });
 
-export const { setAllMailsList, deleteMail, updateBooleenValueByKey } =
+export const { setAllMailsList, addSendedMail, deleteMail, updateBooleenValueByKey } =
   allMailsSlice.actions;
 export default allMailsSlice.reducer;

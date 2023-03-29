@@ -18,6 +18,8 @@ import {
   // faStar,
 } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
 import { useDispatch, useSelector } from "react-redux";
 import { addMailToDisplay } from "../reducers/mailDisplayer";
 import {
@@ -32,12 +34,18 @@ import ModalOnHold from "./ModalOnHold";
 
 function RowMail(props) {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const [page, setPage] = useState("");
 
   const selected = useSelector((state) => state.selectedMails.value);
   const [showModalOnHold, setShowModalOnHold] = useState(false);
   const [showModalDateTime, setShowModalDateTime] = useState(false);
   const modalOnHold = useRef(null);
   let boxIconName = faSquare;
+
+  useEffect(() => {
+    setPage(router.pathname);
+  }, [router.pathname]);
 
   const handleClickOutside = (event) => {
     if (modalOnHold.current && !modalOnHold.current.contains(event.target)) {
@@ -114,6 +122,11 @@ function RowMail(props) {
     year: "numeric",
   });
 
+  // format mail's content to remove html tags
+  const removeTags = () => {
+    return props.content.replace(/<[^>]+>/g, ' ');
+  }
+
   const handleShowModalDateTime = () => {
     setShowModalDateTime(!showModalDateTime);
   };
@@ -159,12 +172,16 @@ function RowMail(props) {
           </div>
           <Link href="/fullMail">
             <div className={styles.midColumn}>
+              <div className={styles.mailAutor}>
+                {page === "/sendedMailsBox"
+                  ? `À  : ${props.sendedTo}`
+                  : props.autor}
+              </div>
               {/* mails autor ---------------------- */}
-              <div className={styles.mailAutor}>{props.autor}</div>
               {/* mail Content ------------------- */}
               <div className={styles.mailAbstract}>
                 <span className={styles.mailObject}>{props.object}</span>
-                <p className={styles.mailContent}>- {props.content}</p>
+                <p className={styles.mailContent}>- {removeTags()}</p>
               </div>
             </div>
           </Link>
@@ -200,10 +217,11 @@ function RowMail(props) {
               <FontAwesomeIcon icon={faBoxArchive} />
             )}
           </div>
-          <div className={styles.overIconItem}>
+          <div className={styles.overIconItem}
+          onClick={() => deleteEmail(props)}
+          >
             <FontAwesomeIcon
               icon={faTrashCan}
-              onClick={() => deleteEmail(props)}
             />
           </div>
           <div

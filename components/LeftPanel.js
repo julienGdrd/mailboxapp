@@ -55,7 +55,6 @@ export default function LeftPanel() {
   let principalLength = 0;
   let promotionLength = 0;
   let reseauxLength = 0;
-
   for (let email of allMails) {
     if (email.important && email.unRead) {
       importantLength++;
@@ -237,9 +236,7 @@ export default function LeftPanel() {
                   </div>
                   Messages envoyés
                 </div>
-                <span className={styles.counterLeft}>
-                  {importantLength > 0 ? importantLength : ""}
-                </span>
+                
               </div>
             </Link>
             <div className={styles.leftTabs}>

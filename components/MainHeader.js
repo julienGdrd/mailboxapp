@@ -36,7 +36,7 @@ export default function MainHeader() {
       const resultsContacts = allMails.filter((mail) => {
         return (
           mail.autor.toLowerCase().includes(query) ||
-          mail.emailAdress.toLowerCase().includes(query)
+          mail.sendedBy.toLowerCase().includes(query)
         );
       });
       const resultEmail = allMails.filter((mail) => {
@@ -62,19 +62,19 @@ export default function MainHeader() {
 
   const handleOpenByContactBox = (contact) => {
     dispatch(
-      setContact({ emailAdress: contact.emailAdress, autor: contact.autor })
+      setContact({ sendedBy: contact.sendedBy, autor: contact.autor })
     );
-    console.log("contact :", contact.emailAdress);
+    console.log("contact :", contact.sendedBy);
   };
   const contactResultList = searchResultContacts
     .slice(0, 3)
     .map((contact, i) => {
       const query = searchQuery.toLowerCase();
       const autor = contact.autor.toLowerCase();
-      const emailAdress = contact.emailAdress.toLowerCase();
+      const sendedBy = contact.sendedBy.toLowerCase();
       const boldQuery = `<strong>${query}</strong>`;
       const boldedAutor = autor.replace(query, boldQuery);
-      const boldedEmailAdress = emailAdress.replace(query, boldQuery);
+      const boldedsendedBy = sendedBy.replace(query, boldQuery);
 
       return (
         <Link href="/byContactBox">
@@ -99,7 +99,7 @@ export default function MainHeader() {
               />
               <div
                 className={styles.rowInfoSecond}
-                dangerouslySetInnerHTML={{ __html: boldedEmailAdress }}
+                dangerouslySetInnerHTML={{ __html: boldedsendedBy }}
               />
             </div>
           </div>
@@ -110,11 +110,11 @@ export default function MainHeader() {
   const mailResultList = searchResultEmail.slice(0, 5).map((mail, i) => {
     const query = searchQuery.toLowerCase();
     const object = mail.object.toLowerCase();
-    const emailAdress = mail.emailAdress.toLowerCase();
+    const sendedBy = mail.sendedBy.toLowerCase();
     // const content = mail.content.toLowerCase();
     const boldQuery = `<strong>${query}</strong>`;
     const boldedObject = object.replace(query, boldQuery);
-    const boldedEmailAdress = emailAdress.replace(query, boldQuery);
+    const boldedsendedBy = sendedBy.replace(query, boldQuery);
 
     // const boldedContent = content.replace(query, boldQuery);
     return (
@@ -131,7 +131,7 @@ export default function MainHeader() {
               />
               <div
                 className={styles.rowInfoSecond}
-                dangerouslySetInnerHTML={{ __html: boldedEmailAdress }}
+                dangerouslySetInnerHTML={{ __html: boldedsendedBy }}
               />
             </div>
           </div>

@@ -1,18 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+// import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  value: [],
-};
+// const initialState = {
+//   value: [],
+// };
 
-export const sendedMailsSlice = createSlice({
-    name: "sendedMails",
-    initialState,
-    reducers: {
-        addSendedMail: (state, action) => {
-            state.value.push(action.payload);
-        },
-    },
-});
+// export const sendedMailsSlice = createSlice({
+//     name: "sendedMails",
+//     initialState,
+//     reducers: {
+//         addSendedMail: (state, action) => {
+//             state.value.push(action.payload);
+//         },
+//     },
+// });
 
-export const {addSendedMail} = sendedMailsSlice.actions;
-export default sendedMailsSlice.reducer;
+// export const {addSendedMail} = sendedMailsSlice.actions;
+// export default sendedMailsSlice.reducer;

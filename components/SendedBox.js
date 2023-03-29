@@ -12,19 +12,20 @@ import { updateSelectAll } from "../reducers/selectedMails";
 export default function SendedBox() {
     const dispatch = useDispatch();
   
-    const sendedMails = useSelector((state) => state.sendedMails.value);
+    const allMails = useSelector((state) => state.allMails.value);
+
   
     let tableMail;
     let sendedMailList = [];
   
-    for (let mail of sendedMails) {
-    //   if (!mail.archived) {
+    for (let mail of allMails) {
+      if (mail.sendedBy === 'user@user.com' && !mail.archived && !mail.spam) {
         sendedMailList.push(mail);
-    //   }
+      }
     }
   
     useEffect(() => {
-      dispatch(setActiveTab("ImportantBox"));
+      dispatch(setActiveTab("SendedBox"));
       dispatch(addCurrentList(sendedMailList));
       dispatch(updateSelectAll([]));
     }, []);

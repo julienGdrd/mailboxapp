@@ -249,9 +249,10 @@ function FullMail() {
               <span>moi</span>
             </div>
           </div>
-          <div className={styles.textContent} ref={(el) => (fullMailRef = el)}>
-            {fullMailToDisplay.content}
-          </div>
+          <div className={styles.textContent} 
+          ref={(el) => (fullMailRef = el)}
+          dangerouslySetInnerHTML={{__html: fullMailToDisplay.content}}
+          />
         </div>
       </div>
     </div>
