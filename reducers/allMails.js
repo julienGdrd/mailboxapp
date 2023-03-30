@@ -13,11 +13,19 @@ export const allMailsSlice = createSlice({
         (a, b) => new Date(b.deliveryDate) - new Date(a.deliveryDate)
       );
       state.value = sortedEmails;
-      console.log("reducer allMails", action.payload);
     },
     addSendedMail: (state, action) => {
       state.value.push(action.payload);
-  },
+    },
+    updateDraft: (state, action) => {
+      state.value = state.value.map((mail) => {
+        if (mail._id === action.payload._id) {
+          return action.payload;
+        } else {
+          return mail;
+        }
+      });
+    },
     updateBooleenValueByKey: (state, action) => {
       const keysOnlyOneCanBeTrue = [
         "pro",
@@ -46,7 +54,7 @@ export const allMailsSlice = createSlice({
               });
             }
             // onholdDate
-            if (action.payload.keyToUpdate === "onHold"){
+            if (action.payload.keyToUpdate === "onHold") {
               updatedEmail["onHoldDate"] = action.payload.holdDate;
             }
             // onholdDate
@@ -88,6 +96,11 @@ export const allMailsSlice = createSlice({
   },
 });
 
-export const { setAllMailsList, addSendedMail, deleteMail, updateBooleenValueByKey } =
-  allMailsSlice.actions;
+export const {
+  setAllMailsList,
+  addSendedMail,
+  updateDraft,
+  deleteMail,
+  updateBooleenValueByKey,
+} = allMailsSlice.actions;
 export default allMailsSlice.reducer;

@@ -28,7 +28,6 @@ export default function MainHeader() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResultContacts, setSearchResultContacts] = useState([]);
   const [searchResultEmail, setSearchResultEmail] = useState([]);
-  console.log("resultContact:", searchResultContacts, "query:", searchQuery);
 
   useEffect(() => {
     const handleSearchQueryOnChange = () => {
@@ -47,24 +46,16 @@ export default function MainHeader() {
       });
       setSearchResultContacts(resultsContacts);
       setSearchResultEmail(resultEmail);
-
-      console.log("resultF:", searchResultContacts, "queryF :", query);
-      console.log("searchQueryF:", searchQuery);
     };
     handleSearchQueryOnChange();
   }, [searchQuery]);
 
   const openMail = (mail) => {
     dispatch(addMailToDisplay(mail));
-    console.log("openMail reached", mail);
   };
-  console.log("resultEmail :", searchResultEmail);
 
   const handleOpenByContactBox = (contact) => {
-    dispatch(
-      setContact({ sendedBy: contact.sendedBy, autor: contact.autor })
-    );
-    console.log("contact :", contact.sendedBy);
+    dispatch(setContact({ sendedBy: contact.sendedBy, autor: contact.autor }));
   };
   const contactResultList = searchResultContacts
     .slice(0, 3)
@@ -111,12 +102,10 @@ export default function MainHeader() {
     const query = searchQuery.toLowerCase();
     const object = mail.object.toLowerCase();
     const sendedBy = mail.sendedBy.toLowerCase();
-    // const content = mail.content.toLowerCase();
     const boldQuery = `<strong>${query}</strong>`;
     const boldedObject = object.replace(query, boldQuery);
     const boldedsendedBy = sendedBy.replace(query, boldQuery);
 
-    // const boldedContent = content.replace(query, boldQuery);
     return (
       <Link href="/fullMail">
         <div>

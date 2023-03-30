@@ -7,7 +7,6 @@ import {
   faStar,
   faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useState, useRef } from "react";
 import ReactToPrint from "react-to-print";
 import { useRouter } from "next/router";
@@ -43,7 +42,6 @@ function FullMail() {
 
   useEffect(() => {
     mailToDisplay = fullMailToDisplay;
-    console.log("useEffect mailTodisplay:", mailToDisplay);
   }, [fullMailToDisplay]);
 
   // format date
@@ -199,7 +197,7 @@ function FullMail() {
                       <div
                         className={styles.optionItem}
                         // onClick={() =>
-                        
+
                         // }
                       >
                         Répondre
@@ -207,7 +205,7 @@ function FullMail() {
                       <div
                         className={styles.optionItem}
                         // onClick={() =>
-                        
+
                         // }
                       >
                         Transférer
@@ -249,9 +247,10 @@ function FullMail() {
               <span>moi</span>
             </div>
           </div>
-          <div className={styles.textContent} 
-          ref={(el) => (fullMailRef = el)}
-          dangerouslySetInnerHTML={{__html: fullMailToDisplay.content}}
+          <div
+            className={styles.textContent}
+            ref={(el) => (fullMailRef = el)}
+            dangerouslySetInnerHTML={{ __html: fullMailToDisplay.content }}
           />
         </div>
       </div>

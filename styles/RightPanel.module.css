@@ -2,7 +2,7 @@
   border-radius: 10px;
   width: 100%;
   height: 73vh;
-    background-color: white;
+  background-color: white;
 }
 
 .inboxHeader {
@@ -176,29 +176,28 @@
   background-color: rgb(225, 225, 225);
 }
 
-.byContactSubHeader{
+.byContactSubHeader {
   width: 100%;
   padding: 14px 0;
   background-color: white;
   display: flex;
-  
 }
-.contactAvatar{
+.contactAvatar {
   margin-right: 10px;
 }
-.autorDisplayer{
+.autorDisplayer {
   width: 10%;
 }
-.emailAdressDisplayer{
+.emailAdressDisplayer {
   font-size: 13px;
   cursor: pointer;
 }
-.emailAdress{
+.emailAdress {
   color: #15c;
 }
-.emailAdressDisplayer span{
-  margin: 0 5px 0 0 ;
+.emailAdressDisplayer span {
+  margin: 0 5px 0 0;
 }
-.emailAdressDisplayer:hover{
-  text-decoration:  #15c underline;
+.emailAdressDisplayer:hover {
+  text-decoration: #15c underline;
 }

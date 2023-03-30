@@ -16,11 +16,12 @@ export const selectedMailsSlice = createSlice({
         (email) => email._id !== action.payload._id
       );
     },
-    updateSelectAll: (state, action) =>{
-      state.value = action.payload
-    }
+    updateSelectAll: (state, action) => {
+      state.value = action.payload;
+    },
   },
 });
 
-export const { addSelectedMail, removeSelectedMail, updateSelectAll } = selectedMailsSlice.actions;
+export const { addSelectedMail, removeSelectedMail, updateSelectAll } =
+  selectedMailsSlice.actions;
 export default selectedMailsSlice.reducer;

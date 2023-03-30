@@ -1,5 +1,4 @@
 import styles from "../styles/LeftPanel.module.css";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleDown,
@@ -21,9 +20,7 @@ import {
   faPaperPlane,
   faStar,
 } from "@fortawesome/free-regular-svg-icons";
-
 import { useSelector, useDispatch } from "react-redux";
-
 import Link from "next/link";
 import { useState } from "react";
 import { updateSelectAll } from "../reducers/selectedMails";
@@ -35,7 +32,6 @@ export default function LeftPanel() {
   const [showModalMailEditor, setShowModalMailEditor] = useState(false);
   const activeTab = useSelector((state) => state.activeTabs.value);
   const allMails = useSelector((state) => state.allMails.value);
-  console.log("ativetabLeft", activeTab);
   const [moreTabs, setMoreTabs] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const activeTabStyle = {
@@ -55,7 +51,11 @@ export default function LeftPanel() {
   let principalLength = 0;
   let promotionLength = 0;
   let reseauxLength = 0;
+  let draftLength = 0;
   for (let email of allMails) {
+    if (email.draft) {
+      draftLength++;
+    }
     if (email.important && email.unRead) {
       importantLength++;
     }
@@ -105,18 +105,19 @@ export default function LeftPanel() {
 
   const handleCloseModalMailEditor = () => {
     setShowModalMailEditor(false);
-  }
+  };
   return (
     <div>
-      {showModalMailEditor && <div className={styles.modalMailEditor}>
-        <MailEditor 
-        handleCloseModalMailEditor={handleCloseModalMailEditor}
-        />
-      </div>}
-      
+      {showModalMailEditor && (
+        <>
+          <MailEditor handleCloseModalMailEditor={handleCloseModalMailEditor} />
+        </>
+      )}
+
       <div className={styles.leftPanel}>
-        <div className={styles.newMessageBtn}
-        onClick={() => setShowModalMailEditor(true)}
+        <div
+          className={styles.newMessageBtn}
+          onClick={() => setShowModalMailEditor(true)}
         >
           <div>
             <FontAwesomeIcon
@@ -236,21 +237,27 @@ export default function LeftPanel() {
                   </div>
                   Messages envoyés
                 </div>
-                
               </div>
             </Link>
-            <div className={styles.leftTabs}>
-              <div className={styles.tabLabelIcon}>
-                <div className={styles.leftTabsIconContainer}>
-                  <FontAwesomeIcon
-                    icon={faFile}
-                    className={styles.iconLeftTab}
-                  />
+            <Link href="/draftBox">
+              <div
+                className={styles.leftTabs}
+                style={activeTab === "draftBox" ? activeTabStyle : {}}
+              >
+                <div className={styles.tabLabelIcon}>
+                  <div className={styles.leftTabsIconContainer}>
+                    <FontAwesomeIcon
+                      icon={faFile}
+                      className={styles.iconLeftTab}
+                    />
+                  </div>
+                  Brouillons
                 </div>
-                Brouillons
+                <span className={styles.counterLeft}>
+                  {draftLength > 0 ? draftLength : ""}
+                </span>
               </div>
-            </div>
-
+            </Link>
             <div
               className={styles.leftTabs}
               onClick={() => setShowCategories(!showCategories)}

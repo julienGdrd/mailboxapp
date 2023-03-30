@@ -80,7 +80,6 @@ export default function InBoxHeader() {
     selected.length === currentMailList.length &&
     currentMailList.length !== 0
   ) {
-    console.log("longeure égale");
     selectIcon = faSquareCheck;
   } else if (selected.length === 0 || currentMailList.length === 0) {
     selectIcon = faSquare;
@@ -238,13 +237,11 @@ export default function InBoxHeader() {
         forcedValue: value,
       })
     );
-    if(key === 'important'){
-      dispatch(
-        addMailToDisplay({ ...selectedMails[0], important: value })
-      );
+    if (key === "important") {
+      dispatch(addMailToDisplay({ ...selectedMails[0], important: value }));
     }
-    if (key === "unRead"){
-      page === '/fullMail' && router.back();
+    if (key === "unRead") {
+      page === "/fullMail" && router.back();
     }
   };
 
@@ -260,18 +257,11 @@ export default function InBoxHeader() {
 
   useEffect(() => {
     if (currentMailList === 0) {
-      console.log("useEffect reset selected");
       dispatch(updateSelectAll([]));
       selectIcon = faSquare;
     }
   }, [currentMailList]);
 
-  console.log(
-    "selected:",
-    selected.length,
-    "currentlength:",
-    currentMailList.length
-  );
   return (
     <div className={styles.inboxHeader}>
       <div className={styles.leftControls}>
@@ -353,13 +343,15 @@ export default function InBoxHeader() {
           style={selected.length !== 0 ? { display: "flex" } : {}}
         >
           <div className={styles.optionalGroupIcon}>
-            
-            <div className={styles.optionalIcons} 
-            title={page === '/archiveBox' ? "Annuler l'archivage" :"Archiver"}
-            onClick={() => handleArchived()}
+            <div
+              className={styles.optionalIcons}
+              title={
+                page === "/archiveBox" ? "Annuler l'archivage" : "Archiver"
+              }
+              onClick={() => handleArchived()}
             >
               <FontAwesomeIcon
-                icon={page==='/archiveBox' ? faInbox : faArchive}
+                icon={page === "/archiveBox" ? faInbox : faArchive}
                 className={styles.iconsLeftControl}
               />
             </div>

@@ -1,12 +1,7 @@
 import styles from "../styles/RightPanel.module.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faInbox,
-  faTag,
-  faUserGroup,
-} from "@fortawesome/free-solid-svg-icons";
-import { faSquare } from "@fortawesome/free-regular-svg-icons";
+import { faInbox, faTag, faUserGroup } from "@fortawesome/free-solid-svg-icons";
 
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -68,7 +63,7 @@ export default function TabContainer(props) {
       <div
         className={styles.tabItem}
         onClick={() => {
-            setTab("promotion"),
+          setTab("promotion"),
             props.selectTab("promotion"),
             tab !== "promotion" && dispatch(updateSelectAll([]));
         }}

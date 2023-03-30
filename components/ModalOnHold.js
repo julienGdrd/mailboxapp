@@ -22,7 +22,6 @@ export default function ModalOnHold(props) {
   }, [router.pathname]);
 
   const toggleShowModalDateTime = (value) => {
-    console.log("click cancel", value);
     setShowModalDateTime(value);
     props.displayModalDateTime(!showModalDateTime);
   };

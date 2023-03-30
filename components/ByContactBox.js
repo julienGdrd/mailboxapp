@@ -2,8 +2,6 @@ import styles from "../styles/RightPanel.module.css";
 import Image from "next/image";
 
 import { useSelector, useDispatch } from "react-redux";
-
-import { setActiveTab } from "../reducers/leftTabs";
 import { addCurrentList } from "../reducers/currentMailList";
 
 import RowMail from "./RowMail";

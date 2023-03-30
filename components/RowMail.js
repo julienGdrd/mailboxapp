@@ -1,12 +1,10 @@
 import styles from "../styles/Rowmail.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPaperclip,
   faBookmark,
   faStar,
   faBoxArchive,
   faSquareUpRight,
-  faCalendarDays,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faClock,
@@ -31,6 +29,7 @@ import { deleteMail, updateBooleenValueByKey } from "../reducers/allMails";
 import { useRef, useState, useEffect } from "react";
 import StaticDateTimePickerLandscape from "./DateTimePicker";
 import ModalOnHold from "./ModalOnHold";
+import MailEditor from "./MailEditor";
 
 function RowMail(props) {
   const dispatch = useDispatch();
@@ -40,6 +39,8 @@ function RowMail(props) {
   const selected = useSelector((state) => state.selectedMails.value);
   const [showModalOnHold, setShowModalOnHold] = useState(false);
   const [showModalDateTime, setShowModalDateTime] = useState(false);
+  const [showModalMailEditor, setShowModalMailEditor] = useState(false);
+
   const modalOnHold = useRef(null);
   let boxIconName = faSquare;
 
@@ -68,16 +69,13 @@ function RowMail(props) {
 
   const handleSelectedMail = (props) => {
     if (boxIconName === faSquare) {
-      console.log("addselected", props);
       dispatch(addSelectedMail(props));
     } else {
       dispatch(removeSelectedMail(props));
-      console.log("removeSelected", props);
     }
   };
 
   const openMail = (props) => {
-    console.log("openMail reached", props);
     dispatch(addMailToDisplay(props));
   };
 
@@ -124,15 +122,26 @@ function RowMail(props) {
 
   // format mail's content to remove html tags
   const removeTags = () => {
-    return props.content.replace(/<[^>]+>/g, ' ');
-  }
+    return props.content.replace(/<[^>]+>/g, " ");
+  };
 
   const handleShowModalDateTime = () => {
     setShowModalDateTime(!showModalDateTime);
   };
+  const handleCloseModalMailEditor = () => {
+    setShowModalMailEditor(false);
+  };
 
   return (
     <div>
+      {showModalMailEditor && (
+        <>
+          <MailEditor
+            handleCloseModalMailEditor={handleCloseModalMailEditor}
+            draftData={props}
+          />
+        </>
+      )}
       <div
         className={styles.mailRow}
         style={
@@ -170,17 +179,29 @@ function RowMail(props) {
               />
             </div>
           </div>
-          <Link href="/fullMail">
-            <div className={styles.midColumn}>
-              <div className={styles.mailAutor}>
+          <Link href={page !== "/draftBox" ? "/fullMail" : ""}>
+            <div
+              className={styles.midColumn}
+              onClick={
+                page === "/draftBox" ? () => setShowModalMailEditor(true) : null
+              }
+            >
+              <div
+                className={styles.mailAutor}
+                style={page === "/draftBox?" ? { color: "red" } : {}}
+              >
                 {page === "/sendedMailsBox"
                   ? `À  : ${props.sendedTo}`
+                  : page === "/draftBox"
+                  ? `${props.sendedTo} - Brouillon`
                   : props.autor}
               </div>
               {/* mails autor ---------------------- */}
               {/* mail Content ------------------- */}
               <div className={styles.mailAbstract}>
-                <span className={styles.mailObject}>{props.object}</span>
+                <span className={styles.mailObject}>
+                  {props.object === "" ? "(Aucun objet)" : props.object}
+                </span>
                 <p className={styles.mailContent}>- {removeTags()}</p>
               </div>
             </div>
@@ -217,12 +238,11 @@ function RowMail(props) {
               <FontAwesomeIcon icon={faBoxArchive} />
             )}
           </div>
-          <div className={styles.overIconItem}
-          onClick={() => deleteEmail(props)}
+          <div
+            className={styles.overIconItem}
+            onClick={() => deleteEmail(props)}
           >
-            <FontAwesomeIcon
-              icon={faTrashCan}
-            />
+            <FontAwesomeIcon icon={faTrashCan} />
           </div>
           <div
             className={styles.overIconItem}
