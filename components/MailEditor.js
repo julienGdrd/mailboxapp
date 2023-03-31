@@ -20,13 +20,50 @@ export default function MailEditor(props) {
   const uid2 = require("uid2");
   const [showModalAlerte, setShowModalAlerte] = useState(false);
   const [alerteMessage, setAlerteMessage] = useState("");
-  const [recipients, setRecipients] = useState(
-    props.draftData === undefined ? "" : props.draftData.sendedTo
-  );
-  const [mailObject, setMailObject] = useState(
-    props.draftData === undefined ? "" : props.draftData.object
-  );
-  const [messageContent, setMessageContent] = useState("");
+  const [recipients, setRecipients] = useState(() => {
+    if (
+      props.draftData !== undefined &&
+      props.draftData.sendedTo !== undefined
+    ) {
+      return props.draftData.sendedTo;
+    } else if (props.isTransfered === true) {
+      return "";
+    } else if (
+      props.replyData !== undefined &&
+      props.replyData.sendedBy !== undefined
+    ) {
+      return props.replyData.sendedBy;
+    } else {
+      return "";
+    }
+  });
+  const [mailObject, setMailObject] = useState(() => {
+    if (props.draftData !== undefined && props.draftData.object !== undefined) {
+      return props.draftData.object;
+    } else if (
+      props.replyData !== undefined &&
+      props.replyData.object !== undefined
+    ) {
+      return props.replyData.object;
+    } else {
+      return "";
+    }
+  });
+  const [messageContent, setMessageContent] = useState(() => {
+    if (props.isTransfered) {
+      return (HTMLBodyElement = `<p>---------- Forwarded message ---------</p>
+      <div>De ${props.replyData.autor} -${props.replyData.sendedBy}-</div>
+      <div>Date : ${props.replyData.deliveryDate}</div>
+      <div>Objet : ${props.replyData.object}</div>
+      <div>À : ${props.replyData.sendedTo}</div>
+      <br/>
+      <div>${props.replyData.content}</div>`);
+    } else {
+      return "";
+    }
+  });
+
+  console.log("istransfered :", props.isTransfered);
 
   const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const newMessage = {
@@ -129,7 +166,13 @@ export default function MailEditor(props) {
         )}
 
         <div className={styles.modalHeader}>
-          <span>Nouveau message</span>
+          {props.isTransfered && (
+            <span>{`Tranférer le message de ${recipients} : ${mailObject}`}</span>
+          )}
+          {props.replyData !== undefined && !props.isTransfered && (
+            <span>{`Répondre à ${recipients} : ${mailObject}`}</span>
+          )}
+          {!props.replyData && !props.draftData && "Nouveau message"}
           <div className={styles.topHeaderIcons}>
             <FontAwesomeIcon
               icon={faXmark}
@@ -139,25 +182,39 @@ export default function MailEditor(props) {
           </div>
         </div>
         <div className={styles.editorInputs}>
-          <input
-            type="text"
-            placeholder="Destinataires"
-            value={recipients}
-            onChange={(e) => setRecipients(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Objet"
-            value={mailObject}
-            onChange={(e) => setMailObject(e.target.value)}
-          />
+          {props.isTransfered === true && (
+            <input
+              type="text"
+              placeholder="Destinataires"
+              value={recipients}
+              onChange={(e) => setRecipients(e.target.value)}
+            />
+          )}
+          {props.replyData === undefined && (
+            <input
+              type="text"
+              placeholder="Destinataires"
+              value={recipients}
+              onChange={(e) => setRecipients(e.target.value)}
+            />
+          )}
+
+          {props.replyData === undefined && (
+            <input
+              type="text"
+              placeholder="Objet"
+              value={mailObject}
+              onChange={(e) => setMailObject(e.target.value)}
+            />
+          )}
         </div>
         <div>
           <QuillNoSSRWrapper
             theme="snow"
             onChange={handleEditorChange}
             defaultValue={
-              props.draftData === undefined ? "" : props.draftData.content
+              messageContent
+              // props.draftData === undefined ? "" : props.draftData.content
             }
           />
         </div>

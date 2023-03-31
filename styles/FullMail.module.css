@@ -131,3 +131,22 @@
 .optionItem:hover {
   background-color: rgb(225, 225, 225);
 }
+
+.responseOptionsContainer{
+  display: flex;
+}
+.responseButton{
+  cursor: pointer;
+  margin: 20px 0 20px 20px;
+  padding: 10px 25px;
+  border: solid 1px rgb(162, 162, 162);
+  border-radius: 50px;
+  font-size: 15px;
+  color: rgb(92, 92, 92);
+}
+.responseButton span{
+  padding-left: 10px;
+}
+.responseButton:hover{
+  background-color: rgb(225, 225, 225);
+}

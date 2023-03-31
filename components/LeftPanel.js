@@ -34,6 +34,7 @@ export default function LeftPanel() {
   const allMails = useSelector((state) => state.allMails.value);
   const [moreTabs, setMoreTabs] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
+  const [isTransfered, setIsTransfered] = useState(false);
   const activeTabStyle = {
     backgroundColor: "#d3e3fd",
     color: "black",
@@ -110,7 +111,7 @@ export default function LeftPanel() {
     <div>
       {showModalMailEditor && (
         <>
-          <MailEditor handleCloseModalMailEditor={handleCloseModalMailEditor} />
+          <MailEditor handleCloseModalMailEditor={handleCloseModalMailEditor} isTransfered={isTransfered}/>
         </>
       )}
 

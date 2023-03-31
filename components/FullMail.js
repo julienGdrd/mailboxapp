@@ -6,6 +6,8 @@ import {
   faReply,
   faStar,
   faBookmark,
+  faArrowTurnDown,
+  faArrowTurnUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState, useRef } from "react";
 import ReactToPrint from "react-to-print";
@@ -17,15 +19,28 @@ import { addMailToDisplay } from "../reducers/mailDisplayer";
 import { updateSelectAll } from "../reducers/selectedMails";
 import { addCurrentList } from "../reducers/currentMailList";
 import InBoxHeader from "./InboxHeader";
+import MailEditor from "./MailEditor";
 
 function FullMail() {
   const dispatch = useDispatch();
   const router = useRouter();
   const fullMailToDisplay = useSelector((state) => state.mailDisplayer.value);
   const [showModalPlus, setShowModalPlus] = useState(false);
+  const [showModalMailEditorn, setShowModalMailEditor] = useState(false);
   const modalPlus = useRef(null);
+  const [isTransfered, setIsTransfered] = useState(false);
   let fullMailRef = useRef();
   let mailToDisplay;
+
+  const handleCloseModalMailEditor = () => {
+    setShowModalMailEditor(false);
+    setIsTransfered(false)
+  };
+
+  const handleTransfer = () => {
+    setShowModalMailEditor(true);
+    setIsTransfered(true);
+  };
 
   const handleClickOutside = (event) => {
     if (modalPlus.current && !modalPlus.current.contains(event.target)) {
@@ -122,6 +137,13 @@ function FullMail() {
 
   return (
     <div className={styles.mainMessageContainer}>
+      {showModalMailEditorn && (
+        <MailEditor
+          handleCloseModalMailEditor={handleCloseModalMailEditor}
+          replyData={fullMailToDisplay}
+          isTransfered={isTransfered}
+        />
+      )}
       <InBoxHeader />
       <div className={styles.objectContainer}>
         {fullMailToDisplay.object}
@@ -162,6 +184,11 @@ function FullMail() {
                   <div
                     className={styles.controlIconContainer}
                     onClick={() => handleFollowed(fullMailToDisplay)}
+                    title={
+                      fullMailToDisplay.followed
+                        ? "Désactiver le suivi"
+                        : "Activer le suivi"
+                    }
                   >
                     <FontAwesomeIcon
                       className={styles.controlIcon}
@@ -171,10 +198,11 @@ function FullMail() {
                       }
                     />
                   </div>
-                  <div className={styles.controlIconContainer}>
+                  <div className={styles.controlIconContainer} title="Répondre">
                     <FontAwesomeIcon
                       className={styles.controlIcon}
-                      icon={faReply}
+                      icon={faArrowTurnUp}
+                      rotation={270}
                     />
                   </div>
                   <div
@@ -185,6 +213,7 @@ function FullMail() {
                     <FontAwesomeIcon
                       className={styles.controlIcon}
                       icon={faEllipsisVertical}
+                      title="Plus"
                     />
                     <div
                       className={styles.optionsModal}
@@ -196,17 +225,13 @@ function FullMail() {
                     >
                       <div
                         className={styles.optionItem}
-                        // onClick={() =>
-
-                        // }
+                        onClick={() => setShowModalMailEditor(true)}
                       >
                         Répondre
                       </div>
                       <div
                         className={styles.optionItem}
-                        // onClick={() =>
-
-                        // }
+                        onClick={() => handleTransfer()}
                       >
                         Transférer
                       </div>
@@ -244,7 +269,7 @@ function FullMail() {
             </div>
             <div className={styles.autorInfosDownPart}>
               <span>À </span>
-              <span>moi</span>
+              <span>{fullMailToDisplay.sendedTo}</span>
             </div>
           </div>
           <div
@@ -252,6 +277,21 @@ function FullMail() {
             ref={(el) => (fullMailRef = el)}
             dangerouslySetInnerHTML={{ __html: fullMailToDisplay.content }}
           />
+        </div>
+      </div>
+      <div className={styles.responseOptionsContainer}>
+        <div
+          className={styles.responseButton}
+          onClick={() => setShowModalMailEditor(true)}
+        >
+          <FontAwesomeIcon icon={faArrowTurnUp} rotation={270} />
+          <span>Répondre</span>
+        </div>
+        <div className={styles.responseButton}
+        onClick={() => handleTransfer()}
+        >
+          <FontAwesomeIcon icon={faArrowTurnDown} rotation={270} />
+          <span>Transférer</span>
         </div>
       </div>
     </div>
