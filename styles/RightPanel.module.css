@@ -201,3 +201,8 @@
 .emailAdressDisplayer:hover {
   text-decoration: #15c underline;
 }
+.noMessageAlerte{
+  width: 100%;
+  padding: 50px;
+  text-align: center;
+}

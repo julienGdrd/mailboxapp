@@ -143,6 +143,7 @@
   border-radius: 50px;
   font-size: 15px;
   color: rgb(92, 92, 92);
+  background-color: white;
 }
 .responseButton span{
   padding-left: 10px;

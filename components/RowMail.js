@@ -226,8 +226,11 @@ function RowMail(props) {
         </div>
         <div
           className={styles.overIconsContainer}
-          style={showModalOnHold ? { display: "flex" } : {}}
-        >
+          style={{
+            display: showModalOnHold && 'flex',
+            backgroundColor: props.unRead ? 'white' : '#e7efff'
+          }}
+       >
           <div
             className={styles.overIconItem}
             onClick={() => handleArchived(props)}

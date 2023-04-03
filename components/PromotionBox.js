@@ -35,6 +35,7 @@ export default function PromotionBox() {
     <div className={styles.rightPanel}>
       {activeTab === "PromotionBoxCat" && <InBoxHeader />}
       <div className={styles.mailsPanel}>
+      {tableMail.length === 0 && <div className={styles.noMessageAlerte}>Aucun message.</div>}
         <div className={styles.mailsContainer}>{tableMail}</div>
       </div>
     </div>

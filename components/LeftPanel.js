@@ -108,7 +108,7 @@ export default function LeftPanel() {
     setShowModalMailEditor(false);
   };
   return (
-    <div>
+    <>
       {showModalMailEditor && (
         <>
           <MailEditor handleCloseModalMailEditor={handleCloseModalMailEditor} isTransfered={isTransfered}/>
@@ -429,9 +429,6 @@ export default function LeftPanel() {
           <div className={styles.secondaryLeftSelectorsContainer}>
             <div className={styles.secondarySelectorTitle}>
               Libellés
-              <div className={styles.iconsRight}>
-                <FontAwesomeIcon icon={faPlus} className={styles.iconLeftTab} />
-              </div>
             </div>
 
             <Link href="/proBox">
@@ -452,12 +449,6 @@ export default function LeftPanel() {
                 <span className={styles.labelCounter}>
                   {proLength > 0 ? proLength : ""}
                 </span>
-                <div className={styles.secondTabOptionIcon}>
-                  <FontAwesomeIcon
-                    icon={faEllipsisVertical}
-                    className={styles.iconLeftTab}
-                  />
-                </div>
               </div>
             </Link>
 
@@ -479,17 +470,11 @@ export default function LeftPanel() {
                 <span className={styles.labelCounter}>
                   {persoLength > 0 ? persoLength : ""}
                 </span>
-                <div className={styles.secondTabOptionIcon}>
-                  <FontAwesomeIcon
-                    icon={faEllipsisVertical}
-                    className={styles.iconLeftTab}
-                  />
-                </div>
               </div>
             </Link>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

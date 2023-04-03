@@ -57,7 +57,6 @@
 
 .iconLeftTab {
   font-size: 17px;
-  /* margin: 0 20px; */
 }
 .counterLeft,
 .labelCounter {
@@ -85,24 +84,9 @@
 .tabLabelIcon {
   display: flex;
 }
-
-.secondTabOptionIcon {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  clip-path: circle();
-  color: black;
-}
-
 .leftTabs:hover > .secondTabOptionIcon {
   display: flex;
 }
 .leftTabs:hover > .labelCounter {
   display: none;
-}
-
-.secondTabOptionIcon:hover {
-  background-color: rgb(201, 201, 201);
 }

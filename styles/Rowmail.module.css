@@ -55,6 +55,7 @@
     display: flex;
     align-items: center;
     max-width: 50vw;
+    min-width: 45vw;
   }
   
   .mailObject {
@@ -64,7 +65,7 @@
   
   .mailContent {
     font-weight: 400 !important;
-    max-width: 40vw;
+    max-width: 52vw;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -102,6 +103,7 @@
     position: absolute;
     right: 0%;
     margin: 0 15px 0 0;
+    background-color: white;
   }
   .mailRow:hover>.overIconsContainer{
     display: flex;

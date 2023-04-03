@@ -51,13 +51,16 @@ export default function MailEditor(props) {
   });
   const [messageContent, setMessageContent] = useState(() => {
     if (props.isTransfered) {
+      let deliveryDateFormatted = moment(props.replyData.deliveryDate).format('L, h:mm')
       return (HTMLBodyElement = `<p>---------- Forwarded message ---------</p>
       <div>De ${props.replyData.autor} -${props.replyData.sendedBy}-</div>
-      <div>Date : ${props.replyData.deliveryDate}</div>
+      <div>Date : ${deliveryDateFormatted}</div>
       <div>Objet : ${props.replyData.object}</div>
       <div>À : ${props.replyData.sendedTo}</div>
       <br/>
       <div>${props.replyData.content}</div>`);
+    } else if (props.draftData !== undefined) {
+      return props.draftData.content;
     } else {
       return "";
     }
@@ -167,12 +170,13 @@ export default function MailEditor(props) {
 
         <div className={styles.modalHeader}>
           {props.isTransfered && (
-            <span>{`Tranférer le message de ${recipients} : ${mailObject}`}</span>
+            <span>{`Tranférer le message de ${recipients} - ${mailObject}`}</span>
           )}
           {props.replyData !== undefined && !props.isTransfered && (
-            <span>{`Répondre à ${recipients} : ${mailObject}`}</span>
+            <span>{`Répondre à ${recipients} - ${mailObject}`}</span>
           )}
           {!props.replyData && !props.draftData && "Nouveau message"}
+          {props.draftData !== undefined && "Brouillon"}
           <div className={styles.topHeaderIcons}>
             <FontAwesomeIcon
               icon={faXmark}
@@ -208,14 +212,11 @@ export default function MailEditor(props) {
             />
           )}
         </div>
-        <div>
+        <div className={styles.quillEditor}>
           <QuillNoSSRWrapper
             theme="snow"
             onChange={handleEditorChange}
-            defaultValue={
-              messageContent
-              // props.draftData === undefined ? "" : props.draftData.content
-            }
+            defaultValue={messageContent}
           />
         </div>
 
