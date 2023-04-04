@@ -13,7 +13,6 @@ import { updateSelectAll } from "../reducers/selectedMails";
 export default function ProBox() {
   const dispatch = useDispatch();
 
-
   const allMails = useSelector((state) => state.allMails.value);
 
   let tableMail;
@@ -21,7 +20,7 @@ export default function ProBox() {
 
   for (let mail of allMails) {
     if (mail.pro) {
-        proMailList.push(mail);
+      proMailList.push(mail);
     }
   }
 
@@ -39,7 +38,9 @@ export default function ProBox() {
     <div className={styles.rightPanel}>
       <InBoxHeader />
       <div className={styles.mailsPanel}>
-      {tableMail.length === 0 && <div className={styles.noMessageAlerte}>Aucun message.</div>}
+        {tableMail.length === 0 && (
+          <div className={styles.noMessageAlerte}>Aucun message.</div>
+        )}
         <div className={styles.mailsContainer}>{tableMail}</div>
       </div>
     </div>

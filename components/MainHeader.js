@@ -9,11 +9,9 @@ import {
   faEnvelope,
   faGear,
   faMagnifyingGlass,
-  faSliders,
   faUser,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 
 import { useSelector, useDispatch } from "react-redux";
 import { addMailToDisplay } from "../reducers/mailDisplayer";
@@ -108,21 +106,19 @@ export default function MainHeader() {
 
     return (
       <Link href="/fullMail">
-        <div>
-          <div className={styles.resultRow} onClick={() => openMail(mail)}>
-            <div className={styles.rowPicto}>
-              <FontAwesomeIcon icon={faEnvelope} />
-            </div>
-            <div className={styles.contactInfos}>
-              <div
-                className={styles.rowInfoMain}
-                dangerouslySetInnerHTML={{ __html: boldedObject }}
-              />
-              <div
-                className={styles.rowInfoSecond}
-                dangerouslySetInnerHTML={{ __html: boldedsendedBy }}
-              />
-            </div>
+        <div className={styles.resultRow} onClick={() => openMail(mail)}>
+          <div className={styles.rowPicto}>
+            <FontAwesomeIcon icon={faEnvelope} />
+          </div>
+          <div className={styles.contactInfos}>
+            <div
+              className={styles.rowInfoMain}
+              dangerouslySetInnerHTML={{ __html: boldedObject }}
+            />
+            <div
+              className={styles.rowInfoSecond}
+              dangerouslySetInnerHTML={{ __html: boldedsendedBy }}
+            />
           </div>
         </div>
       </Link>
@@ -137,75 +133,68 @@ export default function MainHeader() {
   };
 
   return (
-    <div>
-      <header className={styles.header}>
-        <div className={styles.headerLeft}>
-          <div className={styles.divBarsIcon}>
-            <FontAwesomeIcon icon={faBars} className={styles.iconBars} />
-          </div>
+    <header className={styles.header}>
+      <div className={styles.headerLeft}>
+        <div className={styles.divBarsIcon}>
+          <FontAwesomeIcon icon={faBars} className={styles.iconBars} />
+        </div>
 
-          <Image
-            src="/../public/logo_gmail.png"
-            alt="logo"
-            width={109}
-            height={40}
+        <Image
+          src="/../public/logo_gmail.png"
+          alt="logo"
+          width={109}
+          height={40}
+        />
+      </div>
+
+      <div className={styles.headerMid}>
+        <div className={styles.searchBar}>
+          <div className={styles.iconsRight}>
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              className={styles.iconsItems}
+            />
+          </div>
+          <input
+            className={styles.searchInput}
+            type="text"
+            placeholder="Rechercher dans les messages"
+            value={searchQuery}
+            onBlur={() => handleBlur()}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchQuery.length > 0 && (
+            <div className={styles.iconsRight}>
+              <FontAwesomeIcon icon={faXmark} className={styles.iconsItems} />
+            </div>
+          )}
+
+          {searchQuery.length > 0 && (
+            <div className={styles.resultModal}>
+              <div className={styles.resultContainer}>{contactResultList}</div>
+              <div className={styles.resultContainer}>{mailResultList}</div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className={styles.headerRight}>
+        <div className={styles.iconsRight}>
+          <FontAwesomeIcon icon={faCircleInfo} className={styles.iconsItems} />
+        </div>
+        <div className={styles.iconsRight}>
+          <FontAwesomeIcon icon={faGear} className={styles.iconsItems} />
+        </div>
+        <div className={styles.iconsRight}>
+          <FontAwesomeIcon
+            icon={faCircleChevronDown}
+            className={styles.iconsItems}
           />
         </div>
-
-        <div className={styles.headerMid}>
-          <div className={styles.searchBar}>
-            <div className={styles.iconsRight}>
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                className={styles.iconsItems}
-              />
-            </div>
-            <input
-              className={styles.searchInput}
-              type="text"
-              placeholder="Rechercher dans les messages"
-              value={searchQuery}
-              onBlur={() => handleBlur()}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            {searchQuery.length > 0 && (
-              <div className={styles.iconsRight}>
-                <FontAwesomeIcon icon={faXmark} className={styles.iconsItems} />
-              </div>
-            )}
-
-            {searchQuery.length > 0 && (
-              <div className={styles.resultModal}>
-                <div className={styles.resultContainer}>
-                  {contactResultList}
-                </div>
-                <div className={styles.resultContainer}>{mailResultList}</div>
-              </div>
-            )}
-          </div>
+        <div className={styles.iconsRight}>
+          <FontAwesomeIcon icon={faUser} className={styles.iconsItems} />
         </div>
-
-        <div className={styles.headerRight}>
-          <div className={styles.iconsRight}>
-            <FontAwesomeIcon
-              icon={faCircleInfo}
-              className={styles.iconsItems}
-            />
-          </div>
-          <div className={styles.iconsRight}>
-            <FontAwesomeIcon icon={faGear} className={styles.iconsItems} />
-          </div>
-          <div className={styles.iconsRight}>
-            <FontAwesomeIcon
-              icon={faCircleChevronDown}
-              className={styles.iconsItems}
-            />
-          </div>
-          <div className={styles.iconsRight}>
-            <FontAwesomeIcon icon={faUser} className={styles.iconsItems} />
-          </div>
-        </div>
-      </header>
-    </div>
+      </div>
+    </header>
   );
 }

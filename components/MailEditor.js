@@ -51,7 +51,9 @@ export default function MailEditor(props) {
   });
   const [messageContent, setMessageContent] = useState(() => {
     if (props.isTransfered) {
-      let deliveryDateFormatted = moment(props.replyData.deliveryDate).format('L, h:mm')
+      let deliveryDateFormatted = moment(props.replyData.deliveryDate).format(
+        "L, h:mm"
+      );
       return (HTMLBodyElement = `<p>---------- Forwarded message ---------</p>
       <div>De ${props.replyData.autor} -${props.replyData.sendedBy}-</div>
       <div>Date : ${deliveryDateFormatted}</div>
@@ -180,7 +182,7 @@ export default function MailEditor(props) {
           <div className={styles.topHeaderIcons}>
             <FontAwesomeIcon
               icon={faXmark}
-              title="Fermer"
+              title="Fermer et enregister le brouillon"
               onClick={() => handleSaveDraft()}
             />
           </div>

@@ -34,7 +34,7 @@ function FullMail() {
 
   const handleCloseModalMailEditor = () => {
     setShowModalMailEditor(false);
-    setIsTransfered(false)
+    setIsTransfered(false);
   };
 
   const handleTransfer = () => {
@@ -198,7 +198,9 @@ function FullMail() {
                       }
                     />
                   </div>
-                  <div className={styles.controlIconContainer} title="Répondre">
+                  <div className={styles.controlIconContainer} title="Répondre"
+                  onClick={() => setShowModalMailEditor(true)}
+                  >
                     <FontAwesomeIcon
                       className={styles.controlIcon}
                       icon={faArrowTurnUp}
@@ -287,9 +289,7 @@ function FullMail() {
           <FontAwesomeIcon icon={faArrowTurnUp} rotation={270} />
           <span>Répondre</span>
         </div>
-        <div className={styles.responseButton}
-        onClick={() => handleTransfer()}
-        >
+        <div className={styles.responseButton} onClick={() => handleTransfer()}>
           <FontAwesomeIcon icon={faArrowTurnDown} rotation={270} />
           <span>Transférer</span>
         </div>

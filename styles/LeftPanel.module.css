@@ -1,7 +1,6 @@
 .leftPanel {
   width: 14%;
   min-width: 268px;
-  /* border: solid 1px red; */
   height: 90vh;
 }
 
@@ -84,9 +83,5 @@
 .tabLabelIcon {
   display: flex;
 }
-.leftTabs:hover > .secondTabOptionIcon {
-  display: flex;
-}
-.leftTabs:hover > .labelCounter {
-  display: none;
-}
+
+

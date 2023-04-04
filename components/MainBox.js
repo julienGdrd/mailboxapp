@@ -33,7 +33,6 @@ export default function MainBox() {
   const [tab, setTab] = useState("principal");
 
   const selectTab = (name) => {
-    console.log("selectTab", name);
     setTab(name);
   };
 
@@ -48,16 +47,13 @@ export default function MainBox() {
 
   return (
     <div className={styles.rightPanel}>
-      <div>
-        <InBoxHeader />
-        {/* mails Panel --------------------- */}
-        <div className={styles.mailsPanel}>
-          {/* categories tabs --------------------- */}
-          <TabContainer selectTab={selectTab} />
-          {/* mails container ---------------------- */}
-          {tableMail.length === 0 && <div className={styles.noMessageAlerte}>Aucun message.</div>}
-          <div className={styles.mailsContainer}>{tableMail}</div>
-        </div>
+      <InBoxHeader />
+      <div className={styles.mailsPanel}>
+        <TabContainer selectTab={selectTab} />
+        {tableMail.length === 0 && (
+          <div className={styles.noMessageAlerte}>Aucun message.</div>
+        )}
+        <div className={styles.mailsContainer}>{tableMail}</div>
       </div>
     </div>
   );

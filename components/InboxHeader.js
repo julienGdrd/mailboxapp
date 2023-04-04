@@ -72,6 +72,7 @@ export default function InBoxHeader() {
     };
   }, []);
 
+
   let selectIcon = faSquare;
 
   if (selected.length > 0 && selected.length != currentMailList.length) {
@@ -258,7 +259,8 @@ export default function InBoxHeader() {
   useEffect(() => {
     if (currentMailList === 0) {
       dispatch(updateSelectAll([]));
-      selectIcon = faSquare;
+      // selectIcon = faSquare;
+      setSelectIcon(faSquare)
     }
   }, [currentMailList]);
 

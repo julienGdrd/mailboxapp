@@ -10,11 +10,9 @@ export const mailDisplayerSlice = createSlice({
   reducers: {
     addMailToDisplay: (state, action) => {
       state.value = action.payload;
-      console.log("reducer reached", action.payload);
     },
     resetMailToDisplay: (state, action) => {
       state.value = {};
-      console.log("reducer reset");
     },
   },
 });

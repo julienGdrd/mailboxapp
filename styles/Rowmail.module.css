@@ -1,131 +1,129 @@
-
 .mailRow {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: white;
-    border-bottom: solid 1px rgb(232, 232, 232);
-    font-size: 14px;
-    cursor: pointer;
-    position: relative;
-  }
-  .mailRow:hover{
-    box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-    z-index: 10;  
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border-bottom: solid 1px rgb(232, 232, 232);
+  font-size: 14px;
+  cursor: pointer;
+  position: relative;
 }
-  
-  .leftColumns {
-    display: flex;
-    align-items: center;
-  }
-  
-  .rowIcons {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100px;
-    margin: 0 15px;
-  }
-  
-  .mailIcon {
-    width: 30px;
-    height: 30px;
-    clip-path: circle();
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-  
-  .mailIcon:hover {
-    background-color: rgb(225, 225, 225);
-  }
-  .midColumn{
-    display: flex;
-    align-items: center;
-  }
-  
-  .mailAutor {
-  
-    width: 168px;
-  }
-  
-  .mailAbstract {
-    display: flex;
-    align-items: center;
-    max-width: 50vw;
-    min-width: 45vw;
-  }
-  
-  .mailObject {
-    margin-right: 10px;
-    white-space: nowrap;
-  }
-  
-  .mailContent {
-    font-weight: 400 !important;
-    max-width: 52vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    flex-shrink: 1;
-    text-align: left;
-    flex-basis: 0;
-    flex-grow: 1;
-  }
-  
-  .mailContent,
-  .mailDate,
-  .enclosedIcon {
-    color: #5f6368;
-  }
-  
-  .rightColumns {
-    display: flex;
-    margin-right: 20px;
-  }
-  
-  .enclosedIcon {
-    width: 28px;
-    text-align: center;
-    cursor: pointer;
-  }
-  
-  .mailDate {
-    width: 72px;
-    text-align: center;
-  }
+.mailRow:hover {
+  box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0,
+    0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+  z-index: 10;
+}
 
-  .overIconsContainer{
-    display: none;
-    align-items: center;
-    position: absolute;
-    right: 0%;
-    margin: 0 15px 0 0;
-    background-color: white;
-  }
-  .mailRow:hover>.overIconsContainer{
-    display: flex;
-  }
-  .overIconItem{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-   border-radius: 50px;
-    color: #5f6368;
-    font-size: 15px;
-    width: 35px;
-    height: 35px;
-    text-align: center;
-    cursor: pointer;
-    margin: 0 5px;
-  }
-  .overIconItem:hover{
-    background-color: rgb(225, 225, 225);
-  }
-  
-  .mailRow:hover>.rightColumns{
-    display: none;
-  }
-  
+.leftColumns {
+  display: flex;
+  align-items: center;
+}
+
+.rowIcons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100px;
+  margin: 0 15px;
+}
+
+.mailIcon {
+  width: 30px;
+  height: 30px;
+  clip-path: circle();
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.mailIcon:hover {
+  background-color: rgb(225, 225, 225);
+}
+.midColumn {
+  display: flex;
+  align-items: center;
+}
+
+.mailAutor {
+  width: 168px;
+}
+
+.mailAbstract {
+  display: flex;
+  align-items: center;
+  max-width: 50vw;
+  min-width: 45vw;
+}
+
+.mailObject {
+  margin-right: 10px;
+  white-space: nowrap;
+}
+
+.mailContent {
+  font-weight: 400 !important;
+  max-width: 52vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-shrink: 1;
+  text-align: left;
+  flex-basis: 0;
+  flex-grow: 1;
+}
+
+.mailContent,
+.mailDate,
+.enclosedIcon {
+  color: #5f6368;
+}
+
+.rightColumns {
+  display: flex;
+  margin-right: 20px;
+}
+
+.enclosedIcon {
+  width: 28px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.mailDate {
+  width: 72px;
+  text-align: center;
+}
+
+.overIconsContainer {
+  display: none;
+  align-items: center;
+  position: absolute;
+  right: 0%;
+  margin: 0 15px 0 0;
+  background-color: white;
+}
+.mailRow:hover > .overIconsContainer {
+  display: flex;
+}
+.overIconItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  color: #5f6368;
+  font-size: 15px;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  cursor: pointer;
+  margin: 0 5px;
+}
+.overIconItem:hover {
+  background-color: rgb(225, 225, 225);
+}
+
+.mailRow:hover > .rightColumns {
+  display: none;
+}

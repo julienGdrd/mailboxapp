@@ -10,7 +10,6 @@ export const activeTabsSlice = createSlice({
   reducers: {
     setActiveTab: (state, action) => {
       state.value = action.payload;
-      console.log("reducer activeTab", action.payload);
     },
   },
 });

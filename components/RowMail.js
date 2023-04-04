@@ -133,7 +133,7 @@ function RowMail(props) {
   };
 
   return (
-    <div>
+    <>
       {showModalMailEditor && (
         <>
           <MailEditor
@@ -227,10 +227,10 @@ function RowMail(props) {
         <div
           className={styles.overIconsContainer}
           style={{
-            display: showModalOnHold && 'flex',
-            backgroundColor: props.unRead ? 'white' : '#e7efff'
+            display: showModalOnHold && "flex",
+            backgroundColor: props.unRead ? "white" : "#e7efff",
           }}
-       >
+        >
           <div
             className={styles.overIconItem}
             onClick={() => handleArchived(props)}
@@ -274,7 +274,6 @@ function RowMail(props) {
               />
             )}
           </div>
-
           {showModalDateTime && (
             <StaticDateTimePickerLandscape
               hideModalDateTime={handleShowModalDateTime}
@@ -283,7 +282,7 @@ function RowMail(props) {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

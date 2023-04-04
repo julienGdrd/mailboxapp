@@ -135,41 +135,39 @@ export default function ModalOnHold(props) {
   };
 
   return (
-    <div>
-      <div
-        className={styles.onHoldModal}
-        style={showModalDateTime ? { display: "none" } : {}}
-      >
-        <p>Mettre en attente jusqu'à...</p>
-        {optionsRows}
-        <div className={styles.optionItem} title="">
-          <div
-            className={styles.onHoldOption}
-            onClick={() => toggleShowModalDateTime()}
-          >
-            <span>
-              <FontAwesomeIcon
-                icon={faCalendarDays}
-                className={styles.iconCalendar}
-              />
-              Choisir heure et date
-            </span>
-          </div>
-        </div>
+    <div
+      className={styles.onHoldModal}
+      style={showModalDateTime ? { display: "none" } : {}}
+    >
+      <p>Mettre en attente jusqu'à...</p>
+      {optionsRows}
+      <div className={styles.optionItem} title="">
         <div
-          className={styles.optionItem}
-          title=""
-          onClick={() => removeOnHold()}
+          className={styles.onHoldOption}
+          onClick={() => toggleShowModalDateTime()}
         >
-          <div className={styles.onHoldOption}>
-            <span>
-              <FontAwesomeIcon
-                icon={faCircleXmark}
-                className={styles.iconCalendar}
-              />
-              Annuler la mise en attente
-            </span>
-          </div>
+          <span>
+            <FontAwesomeIcon
+              icon={faCalendarDays}
+              className={styles.iconCalendar}
+            />
+            Choisir heure et date
+          </span>
+        </div>
+      </div>
+      <div
+        className={styles.optionItem}
+        title=""
+        onClick={() => removeOnHold()}
+      >
+        <div className={styles.onHoldOption}>
+          <span>
+            <FontAwesomeIcon
+              icon={faCircleXmark}
+              className={styles.iconCalendar}
+            />
+            Annuler la mise en attente
+          </span>
         </div>
       </div>
     </div>

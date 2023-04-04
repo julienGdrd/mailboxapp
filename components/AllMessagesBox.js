@@ -24,13 +24,13 @@ export default function AllMessagesBox() {
   // let tableMail;
   let allReveciedMailList = [];
 
-  for (let mail of allMails){
-    if (mail.draft === false && mail.sendedBy !=='user@user.com'){
-      allReveciedMailList.push(mail)
+  for (let mail of allMails) {
+    if (mail.draft === false && mail.sendedBy !== "user@user.com") {
+      allReveciedMailList.push(mail);
     }
   }
 
-   const tableMail = allReveciedMailList.map((mail, i) => {
+  const tableMail = allReveciedMailList.map((mail, i) => {
     return <RowMail key={i} {...mail} />;
   });
 
@@ -38,7 +38,9 @@ export default function AllMessagesBox() {
     <div className={styles.rightPanel}>
       <InBoxHeader />
       <div className={styles.mailsPanel}>
-      {tableMail.length === 0 && <div className={styles.noMessageAlerte}>Aucun message.</div>}
+        {tableMail.length === 0 && (
+          <div className={styles.noMessageAlerte}>Aucun message.</div>
+        )}
         <div className={styles.mailsContainer}>{tableMail}</div>
       </div>
     </div>

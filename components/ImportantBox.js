@@ -38,7 +38,9 @@ export default function ImportantBox() {
     <div className={styles.rightPanel}>
       <InBoxHeader />
       <div className={styles.mailsPanel}>
-      {tableMail.length === 0 && <div className={styles.noMessageAlerte}>Aucun message.</div>}
+        {tableMail.length === 0 && (
+          <div className={styles.noMessageAlerte}>Aucun message.</div>
+        )}
         <div className={styles.mailsContainer}>{tableMail}</div>
       </div>
     </div>

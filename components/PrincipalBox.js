@@ -35,7 +35,9 @@ export default function PrincipalBox() {
     <div className={styles.rightPanel}>
       {activeTab === "PrincipalBoxCat" && <InBoxHeader />}
       <div className={styles.mailsPanel}>
-      {tableMail.length === 0 && <div className={styles.noMessageAlerte}>Aucun message.</div>}
+        {tableMail.length === 0 && (
+          <div className={styles.noMessageAlerte}>Aucun message.</div>
+        )}
         <div className={styles.mailsContainer}>{tableMail}</div>
       </div>
     </div>

@@ -59,43 +59,43 @@
   font-family: "Roboto", sans-serif;
   font-size: large;
   padding-left: 10px;
-
 }
 
-.searchBar:focus-within{
+.searchBar:focus-within {
   background-color: white;
   outline: unset;
-  box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-
+  box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0,
+    0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
 }
-.searchInput:focus-visible{
+.searchInput:focus-visible {
   outline: unset;
 }
 
-.resultModal{
+.resultModal {
   position: absolute;
   top: 98%;
   left: 0;
   background-color: white;
   z-index: 100;
   width: 100%;
-  box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+  box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0,
+    0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
   border-radius: 0 0 5px 5px;
 }
-.resultContainer{
+.resultContainer {
   border-bottom: 1px solid rgba(236, 236, 236, 0.492);
 }
-.resultRow{
+.resultRow {
   display: flex;
   padding: 10px;
   cursor: pointer;
   border-left: 2px solid white;
 }
-.resultRow:hover{
+.resultRow:hover {
   background-color: rgba(236, 236, 236, 0.492);
   border-left: 2px solid #0b57d0;
 }
-.rowPicto{
+.rowPicto {
   margin-right: 10px;
   display: flex;
   align-items: center;
@@ -105,17 +105,17 @@
   font-size: 16px;
   color: rgb(92, 92, 92);
 }
-.rowInfoMain{
+.rowInfoMain {
   font-size: 14px;
 }
-.rowInfoSecond{
+.rowInfoSecond {
   color: rgb(92, 92, 92);
   font-size: 13px;
 }
-.resultDate{
- margin-left: auto;
- align-content: center;
- font-size: 12px;
+.resultDate {
+  margin-left: auto;
+  align-content: center;
+  font-size: 12px;
 }
 
 .headerRight {

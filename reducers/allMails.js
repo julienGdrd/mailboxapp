@@ -57,7 +57,6 @@ export const allMailsSlice = createSlice({
             if (action.payload.keyToUpdate === "onHold") {
               updatedEmail["onHoldDate"] = action.payload.holdDate;
             }
-            // onholdDate
             return updatedEmail;
           }
           return email;

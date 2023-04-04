@@ -9,8 +9,7 @@ export const currentMailListSlice = createSlice({
   initialState,
   reducers: {
     addCurrentList: (state, action) => {
-        state.value= action.payload
-        console.log('currentListReducer',action.payload)
+      state.value = action.payload;
     },
   },
 });

@@ -10,7 +10,6 @@ export const byContactBoxUpdaterSlice = createSlice({
   reducers: {
     setContact: (state, action) => {
       state.value = action.payload;
-      console.log("reducer byContact", action.payload);
     },
   },
 });

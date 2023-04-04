@@ -19,7 +19,6 @@ export default function StaticDateTimePickerLandscape(props) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   console.log("selectedDate:", selectedDate);
 
-  
   useEffect(() => {
     setPage(router.pathname);
   }, [router.pathname]);

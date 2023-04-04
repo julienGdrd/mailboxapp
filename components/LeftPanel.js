@@ -111,7 +111,10 @@ export default function LeftPanel() {
     <>
       {showModalMailEditor && (
         <>
-          <MailEditor handleCloseModalMailEditor={handleCloseModalMailEditor} isTransfered={isTransfered}/>
+          <MailEditor
+            handleCloseModalMailEditor={handleCloseModalMailEditor}
+            isTransfered={isTransfered}
+          />
         </>
       )}
 
@@ -427,9 +430,7 @@ export default function LeftPanel() {
 
           {/* left selectors secondary --------------------- */}
           <div className={styles.secondaryLeftSelectorsContainer}>
-            <div className={styles.secondarySelectorTitle}>
-              Libellés
-            </div>
+            <div className={styles.secondarySelectorTitle}>Libellés</div>
 
             <Link href="/proBox">
               <div
