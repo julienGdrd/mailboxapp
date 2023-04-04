@@ -46,7 +46,7 @@ export default function ByContactBox() {
       <div className={styles.byContactSubHeader}>
         <div className={styles.contactAvatar}>
           <Image
-            src="/../public/avatar.png"
+            src="/avatar.png"
             alt="logo"
             width={45}
             height={45}

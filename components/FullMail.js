@@ -162,7 +162,7 @@ function FullMail() {
         <div className={styles.leftColumn}>
           <div className={styles.avatarContainer}>
             <Image
-              src="/../public/avatar.png"
+              src="/avatar.png"
               alt="avatar"
               width={45}
               height={45}

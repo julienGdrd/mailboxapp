@@ -75,7 +75,7 @@ export default function MainHeader() {
           >
             <div className={styles.rowPicto}>
               <Image
-                src="/../public/avatar.png"
+                src="/avatar.png"
                 alt="logo"
                 width={30}
                 height={30}
