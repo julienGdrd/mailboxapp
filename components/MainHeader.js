@@ -140,7 +140,7 @@ export default function MainHeader() {
         </div>
 
         <Image
-          src="/../public/logo_gmail.png"
+          src="/logo_gmail.png"
           alt="logo"
           width={109}
           height={40}
