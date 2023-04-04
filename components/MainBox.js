@@ -20,7 +20,7 @@ export default function MainBox() {
     dispatch(setActiveTab("MainBox"));
     // fetch only on first render or if all messages deleted
     if (allMails.length < 1) {
-      fetch("https://mail-box-backend-nine.vercel.app/mails")
+      fetch("https://mail-box-backend-juliengdrd.vercel.app/mails")
         .then((response) => response.json())
         .then((data) => {
           dispatch(setAllMailsList(data.mailList));
